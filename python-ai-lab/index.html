@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Python & AI Analytics Lab | Muhammad Safdar</title>
+  <meta name="description" content="Four verified Python, machine learning and recurrent neural network projects by Muhammad Safdar.">
+  <meta name="theme-color" content="#07121f">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="lab.css"><link rel="stylesheet" href="charts.css">
+</head>
+<body>
+  <header><a href="../" class="back">← Portfolio</a><div class="brand"><b>MS</b><span>PYTHON & AI ANALYTICS LAB</span></div><a href="https://github.com/safdar404" target="_blank" rel="noreferrer">GitHub ↗</a></header>
+  <main>
+    <section class="hero"><div><p class="eyebrow">VERIFIED PROJECT RESULTS · AUGUST 2026</p><h1>From raw datasets to <em>explainable model results.</em></h1><p>Four end-to-end Python projects covering exploratory data analysis, classification, regression, clustering, ensembles and recurrent neural-network forecasting.</p><div class="stack">NumPy <i>•</i> Pandas <i>•</i> scikit-learn <i>•</i> TensorFlow/Keras <i>•</i> Matplotlib <i>•</i> Seaborn</div></div><div class="hero-stat"><strong>4</strong><span>Completed projects</span><strong>14+</strong><span>Models evaluated</span><strong>100%</strong><span>Reproducible outputs</span></div></section>
+    <nav class="tabs" aria-label="Python projects"><button class="active" data-tab="heart">01 Heart Disease</button><button data-tab="hospitals">02 USA Hospitals</button><button data-tab="stocks">03 Stock RNN</button><button data-tab="fda">04 FDA Device RNN</button></nav>
+
+    <section id="heart" class="project active">
+      <div class="project-head"><div><p class="eyebrow">CLASSIFICATION · REGRESSION · CLUSTERING</p><h2>Heart Disease Machine-Learning Analysis</h2><p>Patient records were cleaned, explored, transformed and evaluated through multiple supervised and unsupervised models.</p></div><a href="source/Question_1_Heart_Disease.py" download>Download Python source ↓</a></div>
+      <div class="metrics"><article><small>BEST ROC-AUC</small><strong>0.929</strong><span>Soft Voting Ensemble</span></article><article><small>RF ACCURACY</small><strong>85.9%</strong><span>Classification</span></article><article><small>REGRESSION RMSE</small><strong>22.06</strong><span>Maximum heart rate</span></article><article><small>CLUSTERS</small><strong>5</strong><span>Highest silhouette</span></article></div>
+      <div class="visuals"><figure><div class="chart"><canvas id="q1Models"></canvas></div><figcaption>Verified classification ROC-AUC comparison</figcaption></figure><figure><div class="chart"><canvas id="q1Clusters"></canvas></div><figcaption>K-Means silhouette score by cluster count</figcaption></figure></div>
+      <div class="explain"><article><h3>Workflow</h3><p>Missing-value treatment, descriptive statistics, scaling, train/test split, five classifiers, soft-voting ensemble, two regressors and K-Means cluster selection.</p></article><article><h3>Decision insight</h3><p>The ensemble produced the strongest discrimination, while the cluster analysis revealed five data-driven patient profiles for exploratory segmentation.</p></article><article><h3>Responsible interpretation</h3><p>This is an educational data-science demonstration—not a clinical diagnostic system. Medical decisions require validated clinical models and professional review.</p></article></div>
+    </section>
+
+    <section id="hospitals" class="project">
+      <div class="project-head"><div><p class="eyebrow">HEALTHCARE INFRASTRUCTURE ANALYTICS</p><h2>USA Hospital Capacity & Helipad Intelligence</h2><p>National hospital records were used for bed-capacity regression, helipad classification and facility clustering.</p></div><a href="source/Question_2_USA_Hospitals.py" download>Download Python source ↓</a></div>
+      <div class="metrics"><article><small>HELIPAD ROC-AUC</small><strong>0.976</strong><span>Soft voting classifier</span></article><article><small>HELIPAD F1</small><strong>0.970</strong><span>Classification</span></article><article><small>BED RMSE</small><strong>115.03</strong><span>Voting regressor</span></article><article><small>FACILITY CLUSTERS</small><strong>5</strong><span>Hospital profiles</span></article></div>
+      <div class="visuals"><figure><div class="chart"><canvas id="q2Models"></canvas></div><figcaption>Verified helipad model comparison</figcaption></figure><figure><div class="chart"><canvas id="q2Beds"></canvas></div><figcaption>Bed-regression error comparison</figcaption></figure></div>
+      <div class="explain"><article><h3>Workflow</h3><p>Data cleaning, hospital-type profiling, capacity modelling, ensemble classification, regression evaluation and K-Means segmentation.</p></article><article><h3>Decision insight</h3><p>Helipad availability was highly classifiable in the prepared feature space; bed prediction was useful but retained substantial uncertainty.</p></article><article><h3>Responsible interpretation</h3><p>Facility locations and attributes require current authoritative validation before planning emergency access or healthcare investments.</p></article></div>
+    </section>
+
+    <section id="stocks" class="project">
+      <div class="project-head"><div><p class="eyebrow">TIME SERIES · RNN · LSTM · GRU</p><h2>Healthcare Stock Price Forecasting</h2><p>Historical daily prices were transformed into sequences and evaluated with recurrent neural networks and an honest baseline comparison.</p></div><a href="source/Question_3_Healthcare_Stock_RNN.py" download>Download Python source ↓</a></div>
+      <div class="metrics"><article><small>BEST MODEL MAE</small><strong>$4.43</strong><span>LSTM</span></article><article><small>DIRECTIONAL ACCURACY</small><strong>52.5%</strong><span>LSTM</span></article><article><small>TEST R²</small><strong>0.996</strong><span>Price-level fit</span></article><article><small>NEXT-CLOSE ENSEMBLE</small><strong>$478.16</strong><span>After supplied history</span></article></div>
+      <div class="visuals"><figure><div class="chart"><canvas id="q3Mae"></canvas></div><figcaption>Test MAE across baseline and recurrent models</figcaption></figure><figure><div class="chart"><canvas id="q3Direction"></canvas></div><figcaption>Directional accuracy of recurrent models</figcaption></figure></div>
+      <div class="explain"><article><h3>Workflow</h3><p>Time-series feature creation, chronological split, scaling, sequence generation, SimpleRNN/LSTM/GRU training, back-testing and ensemble forecasting.</p></article><article><h3>Decision insight</h3><p>Neural models closely tracked price levels, but directional accuracy remained near 50–52% and the previous-close baseline was highly competitive.</p></article><article><h3>Responsible interpretation</h3><p>This is a learning demonstration, not financial advice. High price-level R² does not guarantee profitable or reliable directional forecasts.</p></article></div>
+    </section>
+
+    <section id="fda" class="project">
+      <div class="project-head"><div><p class="eyebrow">REGULATORY TIME SERIES · DEEP LEARNING</p><h2>FDA AI Medical-Device Authorization Forecast</h2><p>Monthly authorization counts were modelled with seasonal features and three recurrent neural-network architectures.</p></div><a href="source/Question_4_FDA_Device_RNN.py" download>Download Python source ↓</a></div>
+      <div class="metrics"><article><small>BEST MAE</small><strong>4.96</strong><span>LSTM</span></article><article><small>BEST TEST R²</small><strong>0.243</strong><span>LSTM</span></article><article><small>BASELINE MAE</small><strong>7.70</strong><span>Previous-year seasonal</span></article><article><small>3-MONTH OUTLOOK</small><strong>28 · 28 · 27</strong><span>Ensemble counts</span></article></div>
+      <div class="visuals"><figure><div class="chart"><canvas id="q4Mae"></canvas></div><figcaption>Model MAE versus seasonal baseline</figcaption></figure><figure><div class="chart"><canvas id="q4Forecast"></canvas></div><figcaption>Verified three-month ensemble outlook</figcaption></figure></div>
+      <div class="explain"><article><h3>Workflow</h3><p>Monthly aggregation, seasonal encoding, rolling features, chronological split, SimpleRNN/LSTM/GRU training and three-month ensemble projection.</p></article><article><h3>Decision insight</h3><p>The LSTM outperformed the seasonal baseline in this run; the ensemble projected 28, 28 and 27 monthly authorizations after the supplied period.</p></article><article><h3>Responsible interpretation</h3><p>These are model outputs from a supplied dataset—not official FDA forecasts. Neural-network results can vary slightly between training runs.</p></article></div>
+    </section>
+
+    <section class="method"><div><p class="eyebrow">COMMON MODEL PIPELINE</p><h2>Inspect → clean → explore → model → evaluate → explain</h2></div><ol><li><b>01</b> Load and inspect</li><li><b>02</b> Clean and prepare</li><li><b>03</b> Explore patterns</li><li><b>04</b> Train models</li><li><b>05</b> Compare metrics</li><li><b>06</b> Communicate limits</li></ol></section>
+  </main>
+  <footer><span>Muhammad Safdar · GIS & GeoAI Specialist</span><a href="mailto:safdar404@gmail.com">safdar404@gmail.com</a><span>Educational portfolio demonstration · 2026</span></footer>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="lab.js"></script>
+</body></html>
