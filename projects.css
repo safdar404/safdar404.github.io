@@ -19,3 +19,7 @@
 .live-python{border-color:#4b8755;background:linear-gradient(145deg,#11352d,#07151e 70%)}
 .live-python:after{content:"LIVE";position:absolute;right:28px;bottom:25px;color:#9ee94f33;font:700 52px Space Grotesk;letter-spacing:-.05em;pointer-events:none}
 @media(max-width:760px){.repo-grid{grid-template-columns:1fr}.repo-card{min-height:300px}.case-label{align-items:flex-start;flex-direction:column;gap:5px}}
+
+.resume-card{grid-column:1/-1;min-height:265px;background:linear-gradient(120deg,#112c3b,#111d2e 58%,#231632);border-color:#7761a3}
+.resume-card h3{max-width:760px}
+@media(max-width:760px){.resume-card{grid-column:auto}}
