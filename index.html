@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css?v=20260811-2">
-  <link rel="stylesheet" href="projects.css?v=20260811-2">
+  <link rel="stylesheet" href="projects.css?v=20260811-3">
   <!-- portfolio-build: 2026-08-11-card-order-width-fix -->
 </head>
 <body>
@@ -92,13 +92,32 @@
       </div>
       <div class="case-label reveal"><span>PROFESSIONAL CASE STUDIES</span><p>Selected delivery experience across utilities, disasters, land, agriculture and the environment.</p></div>
       <div class="project-grid">
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/nwc-wastewater-gis.jpg" alt="NWC wastewater network GIS asset map in Riyadh" loading="lazy" decoding="async"></figure><span>UTILITIES · RIYADH</span><h3>NWC Wastewater Network GIS</h3><p>Spatial data structuring, mapping and quality-controlled network intelligence supporting utility operations.</p><div><b>Enterprise GIS</b><b>Utilities</b><b>Data QA</b></div></article>
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/pdma-flood-intelligence.jpg" alt="PDMA Punjab flood inundation and early-warning map" loading="lazy" decoding="async"></figure><span>DISASTER MANAGEMENT</span><h3>PDMA Punjab Flood Decision Support</h3><p>Flood exposure, evacuation access and early-warning mapping focused on the Chenab and Sutlej systems.</p><div><b>Risk mapping</b><b>Remote sensing</b><b>DRR</b></div></article>
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/fgeha-cad-gis.jpg" alt="FGEHA cadastral and infrastructure geodatabase quality-assurance map" loading="lazy" decoding="async"></figure><span>LAND & INFRASTRUCTURE</span><h3>FGEHA Enterprise Geodatabase</h3><p>CAD-to-GIS conversion, cadastral topology and infrastructure databases for Islamabad housing sectors.</p><div><b>Cadastre</b><b>Topology</b><b>ArcGIS</b></div></article>
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/terrasense-wheat-estimation.jpg" alt="TerraSense satellite wheat crop area estimation map" loading="lazy" decoding="async"></figure><span>AGRICULTURE · GEOAI</span><h3>Crop & Wheat Intelligence</h3><p>Satellite-based crop monitoring, estimation and predictive spatial analytics for agricultural decisions.</p><div><b>GEE</b><b>Sentinel</b><b>GeoAI</b></div></article>
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/riyadh-roads-gnss.jpg" alt="Riyadh road infrastructure and GNSS survey integration map" loading="lazy" decoding="async"></figure><span>URBAN & INFRASTRUCTURE</span><h3>Integrated Spatial Systems</h3><p>Web GIS, field data, enterprise databases and dashboards connecting complex infrastructure information.</p><div><b>Web GIS</b><b>Enterprise</b><b>Automation</b></div></article>
-        <article class="project-card reveal"><figure class="case-image"><img src="assets/case-studies/taif-mining-suitability.jpg" alt="Taif mining site UAV orthomosaic, survey control and contours map" loading="lazy" decoding="async"></figure><span>ENVIRONMENT · TAIF</span><h3>Mining Site Spatial Assessment</h3><p>Environmental and geospatial screening supporting site understanding and evidence-based selection.</p><div><b>Suitability</b><b>Environment</b><b>RS</b></div></article>
+        <article class="project-card reveal case-study-card" data-case="nwc" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/nwc-wastewater-gis.jpg" alt="NWC wastewater network GIS asset map in Riyadh" loading="lazy" decoding="async"></figure><span>UTILITIES · RIYADH</span><h3>NWC Wastewater Network GIS</h3><p>Spatial data structuring, mapping and quality-controlled network intelligence supporting utility operations.</p><div><b>Enterprise GIS</b><b>Utilities</b><b>Data QA</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
+        <article class="project-card reveal case-study-card" data-case="pdma" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/pdma-flood-intelligence.jpg" alt="PDMA Punjab flood inundation and early-warning map" loading="lazy" decoding="async"></figure><span>DISASTER MANAGEMENT</span><h3>PDMA Punjab Flood Decision Support</h3><p>Flood exposure, evacuation access and early-warning mapping focused on the Chenab and Sutlej systems.</p><div><b>Risk mapping</b><b>Remote sensing</b><b>DRR</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
+        <article class="project-card reveal case-study-card" data-case="fgeha" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/fgeha-cad-gis.jpg" alt="FGEHA cadastral and infrastructure geodatabase quality-assurance map" loading="lazy" decoding="async"></figure><span>LAND & INFRASTRUCTURE</span><h3>FGEHA Enterprise Geodatabase</h3><p>CAD-to-GIS conversion, cadastral topology and infrastructure databases for Islamabad housing sectors.</p><div><b>Cadastre</b><b>Topology</b><b>ArcGIS</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
+        <article class="project-card reveal case-study-card" data-case="crop" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/terrasense-wheat-estimation.jpg" alt="TerraSense satellite wheat crop area estimation map" loading="lazy" decoding="async"></figure><span>AGRICULTURE · GEOAI</span><h3>Crop & Wheat Intelligence</h3><p>Satellite-based crop monitoring, estimation and predictive spatial analytics for agricultural decisions.</p><div><b>GEE</b><b>Sentinel</b><b>GeoAI</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
+        <article class="project-card reveal case-study-card" data-case="infrastructure" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/riyadh-roads-gnss.jpg" alt="Riyadh road infrastructure and GNSS survey integration map" loading="lazy" decoding="async"></figure><span>URBAN & INFRASTRUCTURE</span><h3>Integrated Spatial Systems</h3><p>Web GIS, field data, enterprise databases and dashboards connecting complex infrastructure information.</p><div><b>Web GIS</b><b>Enterprise</b><b>Automation</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
+        <article class="project-card reveal case-study-card" data-case="taif" role="button" tabindex="0" aria-haspopup="dialog"><figure class="case-image"><img src="assets/case-studies/taif-mining-suitability.jpg" alt="Taif mining site UAV orthomosaic, survey control and contours map" loading="lazy" decoding="async"></figure><span>ENVIRONMENT · TAIF</span><h3>Mining Site Spatial Assessment</h3><p>Environmental and geospatial screening supporting site understanding and evidence-based selection.</p><div><b>Suitability</b><b>Environment</b><b>RS</b></div><button class="case-open" type="button" tabindex="-1">View facts &amp; outcomes <span>↗</span></button></article>
       </div>
+      <dialog id="case-study-dialog" class="case-dialog" aria-labelledby="case-dialog-title">
+        <div class="case-dialog-shell">
+          <button class="case-close" type="button" aria-label="Close case study">×</button>
+          <div class="case-dialog-visual"><img id="case-dialog-image" src="" alt=""></div>
+          <div class="case-dialog-content">
+            <p class="case-dialog-kicker" id="case-dialog-kicker"></p>
+            <h2 id="case-dialog-title"></h2>
+            <p class="case-dialog-summary" id="case-dialog-summary"></p>
+            <div class="case-facts" id="case-dialog-facts"></div>
+            <div class="case-detail-grid">
+              <section><h3>Challenge</h3><p id="case-dialog-challenge"></p></section>
+              <section><h3>Approach</h3><p id="case-dialog-approach"></p></section>
+              <section><h3>Outcomes</h3><ul id="case-dialog-outcomes"></ul></section>
+              <section><h3>Technology</h3><div class="case-tools" id="case-dialog-tools"></div></section>
+            </div>
+            <p class="case-evidence" id="case-dialog-evidence"></p>
+          </div>
+        </div>
+      </dialog>
     </section>
 
     <section id="experience" class="section experience">
@@ -172,6 +191,6 @@
     </section>
   </main>
   <footer><a class="brand" href="#home"><span>MS</span><div><strong>MUHAMMAD SAFDAR</strong><small>Data Science · AI/ML · GeoAI</small></div></a><p>Engineering intelligence through location.</p><span>© 2026 Muhammad Safdar</span></footer>
-  <script src="script.js"></script>
+  <script src="script.js?v=20260811-3"></script>
 </body>
 </html>
