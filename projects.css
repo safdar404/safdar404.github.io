@@ -67,3 +67,16 @@
 body.dialog-open{overflow:hidden}
 @media(max-width:800px){.case-dialog-shell{grid-template-columns:1fr}.case-dialog-visual{height:230px;min-height:0}.case-dialog-content{padding:28px 22px}.case-facts{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.case-dialog{width:calc(100vw - 16px);max-height:calc(100vh - 16px)}.case-dialog-visual{height:190px}.case-detail-grid{grid-template-columns:1fr}.case-facts{grid-template-columns:1fr 1fr}.case-dialog-content>h2{font-size:26px}}
+
+/* Preserve complete cartographic layouts in cards and detail viewer */
+.case-image{height:205px;display:grid;place-items:center;padding:7px;background:#f5f2e9;border-bottom:1px solid rgba(231,190,92,.28)}
+.case-image img,.project-card:hover .case-image img{width:100%;height:100%;object-fit:contain;object-position:center;transform:none;filter:saturate(.96) contrast(1.02)}
+.case-dialog-shell{grid-template-columns:minmax(420px,1fr) minmax(520px,1.18fr)}
+.case-dialog-visual{position:sticky;top:0;align-self:start;height:calc(100vh - 34px);min-height:610px;display:flex;align-items:center;justify-content:center;padding:58px 16px 16px;background:linear-gradient(145deg,#f8f5ed,#e9e2d5);overflow:hidden}
+.case-dialog-visual img{display:block;width:100%;height:100%;max-height:calc(100vh - 108px);object-fit:contain;object-position:center;filter:none;box-shadow:0 10px 30px rgba(21,9,36,.16)}
+.case-map-toolbar{position:absolute;z-index:2;left:16px;right:16px;top:14px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:1px solid rgba(39,18,64,.16);color:#2c1940;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.case-map-toolbar a{padding:7px 10px;border-radius:5px;background:#2b1748;color:#f4d680;font-size:9px;letter-spacing:.04em;text-transform:none}
+.case-map-toolbar a:hover{background:#3a205c}
+@media(max-width:980px){.case-dialog-shell{grid-template-columns:minmax(360px,.9fr) minmax(460px,1.1fr)}}
+@media(max-width:800px){.case-dialog-shell{grid-template-columns:1fr}.case-dialog-visual{position:relative;height:auto;min-height:0;padding:55px 10px 10px}.case-dialog-visual img{height:auto;max-height:62vh;object-fit:contain}.case-map-toolbar{left:10px;right:10px}.case-dialog-content{padding-top:28px}}
+@media(max-width:520px){.case-image{height:180px}.case-dialog-visual img{max-height:50vh}.case-map-toolbar span{display:none}.case-map-toolbar{justify-content:flex-end}}
