@@ -43,3 +43,8 @@
 .resume-card{min-height:220px;background:linear-gradient(120deg,#301a4d,#201034 58%,#3b2152);border-color:rgba(231,190,92,.42)}
 .project-grid .project-card{min-height:350px}.case-image{height:150px;margin:-20px -20px 16px;background:#170a29;border-color:var(--line)}
 @media(max-width:760px){.repo-card{min-height:245px}}
+
+/* Keep SMHIS aligned with the standard project-card grid */
+.repo-grid .resume-card{grid-column:auto;min-height:270px}
+.repo-grid .resume-card h3{max-width:520px}
+@media(max-width:760px){.repo-grid .resume-card{min-height:245px}}
