@@ -48,3 +48,22 @@
 .repo-grid .resume-card{grid-column:auto;min-height:270px}
 .repo-grid .resume-card h3{max-width:520px}
 @media(max-width:760px){.repo-grid .resume-card{min-height:245px}}
+
+/* Interactive professional case studies */
+.case-study-card{cursor:pointer;outline:none;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.case-study-card:hover,.case-study-card:focus-visible{transform:translateY(-4px);border-color:rgba(240,191,85,.72);box-shadow:0 18px 42px rgba(5,1,10,.52)}
+.case-open{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:18px;padding:10px 0 0;border:0;border-top:1px solid rgba(231,190,92,.25);background:transparent;color:var(--gold);font:800 11px Manrope,sans-serif;letter-spacing:.04em;text-align:left;cursor:pointer}
+.case-dialog{width:min(1080px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:1px solid rgba(231,190,92,.45);border-radius:14px;background:#170a29;color:var(--ink);box-shadow:0 30px 100px #050108d9;overflow:auto}
+.case-dialog::backdrop{background:rgba(7,2,13,.82);backdrop-filter:blur(8px)}
+.case-dialog-shell{position:relative;display:grid;grid-template-columns:minmax(300px,.8fr) 1.2fr;min-height:610px}
+.case-close{position:absolute;z-index:3;right:16px;top:14px;width:38px;height:38px;border:1px solid rgba(231,190,92,.38);border-radius:50%;background:#211039;color:#f4d680;font-size:25px;line-height:1;cursor:pointer}
+.case-dialog-visual{min-height:100%;background:#211039;overflow:hidden}.case-dialog-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.04)}
+.case-dialog-content{padding:38px 42px}.case-dialog-kicker{margin:0 0 10px;color:var(--gold);font-size:10px;font-weight:800;letter-spacing:.17em}.case-dialog-content>h2{max-width:600px;margin:0;color:#f6d579;font:700 clamp(28px,4vw,43px)/1.08 "Space Grotesk",sans-serif}
+.case-dialog-summary{color:#d0c2d8;line-height:1.65;margin:16px 0 22px}
+.case-facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px}.case-fact{padding:12px;background:#24123e;border:1px solid rgba(231,190,92,.2)}.case-fact b,.case-fact span{display:block}.case-fact b{color:#f4d680;font:700 16px "Space Grotesk",sans-serif}.case-fact span{margin-top:4px;color:#aF9ebe;font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+.case-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.case-detail-grid section{padding-top:14px;border-top:1px solid rgba(231,190,92,.2)}.case-detail-grid h3{margin:0 0 8px;color:#e9c96d;font:700 13px "Space Grotesk",sans-serif;text-transform:uppercase;letter-spacing:.08em}.case-detail-grid p,.case-detail-grid li{color:#c5b7d2;font-size:12px;line-height:1.65}.case-detail-grid ul{margin:0;padding-left:18px}
+.case-tools{display:flex;flex-wrap:wrap;gap:6px}.case-tools b{padding:5px 8px;border-radius:999px;background:#3a2052;color:#f0d78f;font-size:9px}
+.case-evidence{margin:24px 0 0;padding:12px 14px;border-left:3px solid var(--gold);background:rgba(231,190,92,.06);color:#aa99b8;font-size:10px;line-height:1.55}
+body.dialog-open{overflow:hidden}
+@media(max-width:800px){.case-dialog-shell{grid-template-columns:1fr}.case-dialog-visual{height:230px;min-height:0}.case-dialog-content{padding:28px 22px}.case-facts{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.case-dialog{width:calc(100vw - 16px);max-height:calc(100vh - 16px)}.case-dialog-visual{height:190px}.case-detail-grid{grid-template-columns:1fr}.case-facts{grid-template-columns:1fr 1fr}.case-dialog-content>h2{font-size:26px}}
