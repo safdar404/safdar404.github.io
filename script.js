@@ -21,3 +21,36 @@ if(caseDialog){
   caseDialog.addEventListener("click",event=>{if(event.target===caseDialog)closeCaseDialog()});
   caseDialog.addEventListener("close",()=>document.body.classList.remove("dialog-open"));
 }
+
+
+/* Verified public GitHub footprint */
+const githubMetricIds=['github-followers','github-public-repos','github-stars','github-last-active'];
+if(githubMetricIds.some(id=>document.getElementById(id))){
+  const setGitHubMetric=(id,value)=>{const node=document.getElementById(id);if(node)node.textContent=value};
+  Promise.all([
+    fetch('https://api.github.com/users/safdar404',{headers:{Accept:'application/vnd.github+json'}}),
+    fetch('https://api.github.com/users/safdar404/repos?type=owner&sort=pushed&per_page=100',{headers:{Accept:'application/vnd.github+json'}})
+  ]).then(async([userResponse,reposResponse])=>{
+    if(!userResponse.ok||!reposResponse.ok)throw new Error('GitHub metrics unavailable');
+    const [user,repos]=await Promise.all([userResponse.json(),reposResponse.json()]);
+    const publicRepos=repos.filter(repo=>!repo.fork&&!repo.archived);
+    const totalStars=publicRepos.reduce((sum,repo)=>sum+(repo.stargazers_count||0),0);
+    const latest=publicRepos.reduce((value,repo)=>{
+      const candidate=new Date(repo.pushed_at||repo.updated_at||0);
+      return candidate>value?candidate:value;
+    },new Date(0));
+    setGitHubMetric('github-followers',Number(user.followers||0).toLocaleString());
+    setGitHubMetric('github-public-repos',Number(user.public_repos||publicRepos.length).toLocaleString());
+    setGitHubMetric('github-stars',totalStars.toLocaleString());
+    setGitHubMetric('github-last-active',latest.getTime()?relativeTime(latest).replace('Updated ',''):'—');
+    const status=document.getElementById('github-metrics-status');
+    if(status)status.textContent='Live GitHub API data';
+  }).catch(()=>{
+    setGitHubMetric('github-followers','Live');
+    setGitHubMetric('github-public-repos','Public');
+    setGitHubMetric('github-stars','Verified');
+    setGitHubMetric('github-last-active','GitHub');
+    const status=document.getElementById('github-metrics-status');
+    if(status)status.textContent='Open GitHub for current metrics';
+  });
+}
