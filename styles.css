@@ -84,3 +84,15 @@ footer{padding:20px 0 28px;color:#a995b7}
 .technology-groups article>span{color:var(--gold);font-size:9px;font-weight:800;letter-spacing:.14em}.technology-groups h4{margin:7px 0 14px;color:#eadfbf;font:700 16px "Space Grotesk",sans-serif}
 .technology-groups article>div{display:flex;flex-wrap:wrap;gap:6px}.technology-groups b{padding:5px 8px;border:1px solid rgba(231,190,92,.18);border-radius:999px;background:#382050;color:#ead79c;font-size:9px;font-weight:700}
 @media(max-width:760px){.technology-matrix-head{grid-template-columns:1fr;padding:20px}.technology-matrix-head .overline{grid-row:auto;margin-bottom:8px}.technology-groups{grid-template-columns:1fr}.technology-groups article,.technology-groups article:nth-child(2n),.technology-groups article:last-child{grid-column:auto;border-right:0}.technology-groups article{padding:20px}}
+
+
+/* Verified GitHub footprint */
+.github-proof{max-width:var(--max);margin:18px auto 0;border:1px solid rgba(231,190,92,.3);background:linear-gradient(135deg,rgba(42,21,70,.94),rgba(22,10,39,.96));border-radius:11px;overflow:hidden}
+.github-proof-head{display:flex;align-items:flex-end;justify-content:space-between;gap:30px;padding:23px 25px;border-bottom:1px solid rgba(231,190,92,.2)}
+.github-proof-head .overline{margin:0 0 7px}.github-proof-head h2{margin:0;color:#f4d477;font:700 clamp(25px,3vw,35px)/1.1 "Space Grotesk",sans-serif}.github-proof-head p{margin:7px 0 0;color:var(--muted);font-size:12px}.github-proof-head>a{flex:none;color:var(--gold);font-size:12px;font-weight:800;border-bottom:1px solid rgba(231,190,92,.42)}
+.github-proof-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.github-proof-grid>a{min-height:132px;padding:21px 24px;border-right:1px solid rgba(231,190,92,.16);transition:.22s ease}.github-proof-grid>a:last-child{border-right:0}.github-proof-grid>a:hover{background:rgba(231,190,92,.06)}
+.github-proof-grid strong,.github-proof-grid span,.github-proof-grid small{display:block}.github-proof-grid strong{color:var(--gold);font:700 28px "Space Grotesk",sans-serif}.github-proof-grid span{margin-top:4px;color:#f5ead0;font-size:12px;font-weight:800}.github-proof-grid small{margin-top:12px;color:var(--muted);font-size:10px}
+.github-proof-note{margin:0;padding:12px 24px;border-top:1px solid rgba(231,190,92,.15);color:#a995b7;font-size:10px}
+@media(max-width:820px){.github-proof{margin-left:18px;margin-right:18px}.github-proof-grid{grid-template-columns:repeat(2,1fr)}.github-proof-grid>a:nth-child(2){border-right:0}.github-proof-grid>a:nth-child(-n+2){border-bottom:1px solid rgba(231,190,92,.16)}}
+@media(max-width:520px){.github-proof-head{align-items:flex-start;flex-direction:column}.github-proof-grid{grid-template-columns:1fr}.github-proof-grid>a{min-height:105px;border-right:0;border-bottom:1px solid rgba(231,190,92,.16)}}
