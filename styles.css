@@ -87,3 +87,24 @@ footer{padding:20px 0 28px;color:#a995b7}
 
 /* Compact professional GeoAI map atlas */
 .geoai-atlas{margin:16px 0 18px;border:1px solid rgba(231,190,92,.28);border-radius:8px;background:rgba(12,5,24,.36);overflow:hidden}.geoai-atlas summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:11px 13px;color:#f2cf70;font-size:11px;font-weight:800;list-style:none}.geoai-atlas summary::-webkit-details-marker{display:none}.geoai-atlas[open] summary{border-bottom:1px solid rgba(231,190,92,.2)}.geoai-atlas-strip{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,42%);gap:10px;overflow-x:auto;padding:12px;scroll-snap-type:x mandatory}.geoai-atlas-strip a{display:block;min-width:0;scroll-snap-align:start;color:#f5e5b5}.geoai-atlas-strip img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid rgba(231,190,92,.3);border-radius:5px}.geoai-atlas-strip b{display:block;margin-top:7px;font-size:10px}.geoai-atlas-strip a:hover img{border-color:#f0c95e;box-shadow:0 8px 22px rgba(0,0,0,.35)}@media(max-width:680px){.geoai-atlas-strip{grid-auto-columns:84%}}
+
+
+/* Flood Intelligence visual synchronization · 15 Aug 2026 */
+:root{--bg:#030a0f;--panel:#07151c;--panel2:#0b202b;--ink:#eafcff;--muted:#91abb5;--line:rgba(32,216,255,.24);--cyan:#20d8ff;--lime:#9be84f;--gold:#f5c85b;--purple:#55a9ff}
+html{background:var(--bg)}
+body{background:radial-gradient(circle at 78% 0,rgba(17,40,74,.82) 0,transparent 34%),radial-gradient(circle at 12% 34%,rgba(20,46,37,.68) 0,transparent 36%),linear-gradient(180deg,#030a0f,#06141c 54%,#041019);color:var(--ink)}
+.ambient{background-image:linear-gradient(rgba(32,216,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(32,216,255,.04) 1px,transparent 1px)}
+.site-header{background:rgba(3,10,15,.92);border-color:rgba(32,216,255,.2)}
+.brand>span{border-color:var(--cyan);color:var(--cyan);box-shadow:0 0 18px rgba(32,216,255,.2)}.brand strong{color:#dff9ff}.brand small,.site-header nav a{color:#9dbcca}.site-header nav a:hover{color:var(--cyan)}
+.nav-cta,.primary,.project-links a:first-child{background:linear-gradient(105deg,var(--lime),var(--cyan));color:#041019;border-color:var(--cyan)}
+.status{color:#bceccd;background:#0b2824;border-color:#267a6a}.status i,.live-dot{background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.overline{color:var(--cyan)}.hero h1,.section-heading h2,.contact h2,.career-title h3{color:#eafcff;text-shadow:0 2px 22px rgba(32,216,255,.08)}em,.about-copy strong{color:var(--lime)}
+.secondary,.skills-line,.credential-grid article{background:rgba(7,25,35,.78);border-color:var(--line)}
+.profile-card,.capability,.project-card,.delivery-card{background:linear-gradient(145deg,#0b202b,#06141c);border-color:var(--line)}
+.profile-meta span,.signal-card b,.icon,.capability b,.delivery-meta span,.delivery-links a{color:var(--cyan)}
+.orbit{border-color:rgba(32,216,255,.25)}.orbit.two{border-color:rgba(155,232,79,.2)}.network{stroke:var(--cyan)}.network circle{fill:var(--lime)}
+.metrics{background:linear-gradient(110deg,#081d28,#0c251f)}.metrics strong{color:var(--gold)}
+.projects{background:rgba(3,10,15,.58)}.project-feature{background:#081d27;border-color:#285f70}.project-map{background:radial-gradient(circle,#21462f,#071820 66%)}.project-type,.project-card>span{color:var(--cyan)}.project-copy h3,.project-card h3,.capability h3,.delivery-card h3,.credential-grid b{color:#dff9ff}
+.contact{background:linear-gradient(120deg,#10382f,#0c2538 62%,#11284a);border-color:#399482}
+.technology-matrix{border-color:rgba(32,216,255,.25);background:linear-gradient(145deg,rgba(11,32,43,.9),rgba(3,10,15,.94))}.technology-matrix-head h3{color:#dff9ff}.technology-groups article{border-color:rgba(32,216,255,.14)}.technology-groups article>span{color:var(--cyan)}.technology-groups h4{color:#dff9ff}.technology-groups b,.project-card b{background:#112f38;color:#bfeef5;border-color:rgba(32,216,255,.18)}
+.geoai-atlas{border-color:rgba(32,216,255,.28);background:rgba(3,10,15,.42)}.geoai-atlas summary{color:var(--cyan)}.geoai-atlas-strip a{color:#dff9ff}.geoai-atlas-strip img{border-color:rgba(32,216,255,.32)}
