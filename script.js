@@ -21,3 +21,13 @@ if(caseDialog){
   caseDialog.addEventListener("click",event=>{if(event.target===caseDialog)closeCaseDialog()});
   caseDialog.addEventListener("close",()=>document.body.classList.remove("dialog-open"));
 }
+
+/* Restore both applied-AI projects while keeping the compact portfolio layout. */
+const projectGrid=document.querySelector('.repo-grid');
+if(projectGrid){
+  const combined=[...projectGrid.querySelectorAll('.repo-card')].find(card=>card.querySelector('h3')?.textContent.includes('MEP Scanner + HIS Bill Scanner'));
+  if(combined){
+    combined.outerHTML=`<article class="repo-card reveal"><div class="repo-top"><span>04 · DOCUMENT AI</span><i>Live</i></div><h3>HIS Bill Scanner</h3><p>Privacy-first browser OCR that converts invoices and receipts into structured financial data with review and CSV export.</p><div class="repo-tech"><b>OCR</b><b>Tesseract.js</b><b>React</b><b>TypeScript</b></div><div class="dual-links"><a href="https://his-bill-scanner.neat-grove-8624.chatgpt.site/" target="_blank" rel="noreferrer">Open scanner ↗</a><a href="https://github.com/safdar404/HIS-Bill-Scanner" target="_blank" rel="noreferrer">Source ↗</a></div></article><article class="repo-card reveal"><div class="repo-top"><span>05 · ENGINEERING AI</span><i>Live</i></div><h3>MEP Drawing Scanner</h3><p>AI-assisted engineering drawing OCR extracting MEP components, dimensions and airflow with confidence-based QA and Excel reporting.</p><div class="repo-tech"><b>Python</b><b>EasyOCR</b><b>OpenCV</b><b>Streamlit</b></div><div class="dual-links"><a href="https://mep-scanner-system.neat-grove-8624.chatgpt.site/" target="_blank" rel="noreferrer">Open scanner ↗</a><a href="https://github.com/safdar404/HIS-MEP-Scanner-System." target="_blank" rel="noreferrer">Source ↗</a></div></article>`;
+    document.querySelectorAll('.repo-card.reveal').forEach(el=>observer.observe(el));
+  }
+}
