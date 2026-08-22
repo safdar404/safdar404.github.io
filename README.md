@@ -13,16 +13,20 @@ The website presents 10+ years of data and geospatial delivery experience, inclu
 
 ## Featured live projects
 
+- [Pakistan Infrastructure GIS Command Centre](https://pmu-pdp-infrastructure-gis.neat-grove-8624.chatgpt.site/) — GIS dashboard for infrastructure and transportation planning, project monitoring and spatial decision support.
 - [Pakistan National Flood Intelligence System](https://pakistan-flood-intelligence-2026.neat-grove-8624.chatgpt.site)
+- [GeoAI Resilience Intelligence Suite](https://geoai-resilience-intelligence-suite.neat-grove-8624.chatgpt.site)
 - [Python & AI Analytics Lab](https://safdar404.github.io/python-ai-lab/)
 - [Planora AI — AI CAD, BIM & GIS Flow](https://ai-cad-bim-flow.lovable.app/)
 - [SMHIS Resume](https://smhisresume.com/)
 
 ## Public project repositories
 
+- [Pakistan Infrastructure GIS Command Centre](https://pmu-pdp-infrastructure-gis.neat-grove-8624.chatgpt.site/) — Live demonstration
 - [Python Full Stack AI Coursework & Assessment Projects](https://github.com/safdar404/Fullstack-AI-BOOTCAMP-B-10)
 - [LangChain RAG Document Assistant](https://github.com/safdar404/LangChain-RAG-Application)
 - [Pakistan National Flood Intelligence](https://github.com/safdar404/pakistan-national-flood-intelligence)
+- [GeoAI Resilience Research Lab](https://github.com/safdar404/geoai-resilience-research-lab)
 - [Planora AI — AI CAD, BIM & GIS Flow](https://github.com/safdar404/ai-cad-bim-flow)
 - [MEP Drawing Analyzer](https://github.com/safdar404/mep-analyzer)
 - [Alfanar MEP OCR](https://github.com/safdar404/alfanar-mep-ocr)
