@@ -1,17 +1,38 @@
 # Muhammad Safdar — Data Science, AI/ML, GeoAI & Spatial Intelligence Portfolio
 
-Source for [safdar404.github.io](https://safdar404.github.io), the public portfolio of Muhammad Safdar — Python data and AI practitioner, Data Scientist, AI/ML Engineer and GeoAI Specialist.
+Source for [safdar404.github.io](https://safdar404.github.io), the public portfolio of Muhammad Safdar — Data Scientist, AI/ML Engineer, Python practitioner and GeoAI Specialist.
 
-The website presents 10+ years of data and geospatial delivery experience, including Python, NumPy, Pandas, scikit-learn, TensorFlow/Keras, RAG, APIs, enterprise GIS, remote sensing, UAV, BIM/Digital Twin and spatial decision-support work.
+The portfolio brings together 10+ years of data and geospatial delivery across enterprise GIS, remote sensing, infrastructure, utilities, agriculture, disaster intelligence, engineering AI and spatial decision support.
+
+## Featured: GeoAI Site Intelligence Suite
+
+A three-application AI/GeoAI spatial decision-support case study combining **Python, AI/ML, GIS, Leaflet, MCDA, remote sensing and site-selection workflows**.
+
+### Applications
+
+- **[MERIDIAN PRO — AI Geospatial Suitability Platform](https://safdar404.github.io/geoai-site-intelligence/meridian-pro.html)** — configurable suitability criteria, spatial scoring, candidate ranking and map-based decision support.
+- **[GEOSENTINEL PRO — Flood Mitigation Siting Platform](https://safdar404.github.io/geoai-site-intelligence/geosentinel-pro.html)** — flood hazard, exposure and spatial suitability for intervention prioritization.
+- **[SOLARIS PRO — Utility-Scale Solar Siting Platform](https://safdar404.github.io/geoai-site-intelligence/solaris-pro.html)** — terrain, infrastructure, environmental constraints and candidate solar-site screening.
+
+**[🚀 Open the complete GeoAI Site Intelligence Suite](https://safdar404.github.io/geoai-site-intelligence/)** · **[📁 Open project source folder](https://github.com/safdar404/safdar404.github.io/tree/main/geoai-site-intelligence)**
+
+### Analytical workflow
+
+`Problem definition → spatial/EO data → preprocessing → criteria → weights/MCDA → AI/ML/GeoAI analysis → candidate scoring → ranking → interactive decision support`
+
+> These applications are portfolio-grade decision-support prototypes. Operational use requires authoritative datasets, documented data provenance, uncertainty/sensitivity analysis, engineering and regulatory checks, and expert validation.
 
 ## Technology
 
 - Semantic HTML5
 - Responsive CSS
 - Vanilla JavaScript
-- GitHub Pages
+- Leaflet web mapping
+- Python / AI/ML / GeoAI concepts
+- GIS / remote sensing / MCDA
+- GitHub Pages deployment
 
-## Featured live projects
+## Other featured live projects
 
 - [Pakistan Infrastructure GIS Command Centre](https://pmu-pdp-infrastructure-gis.neat-grove-8624.chatgpt.site/) — GIS dashboard for infrastructure and transportation planning, project monitoring and spatial decision support.
 - [Pakistan National Flood Intelligence System](https://pakistan-flood-intelligence-2026.neat-grove-8624.chatgpt.site)
