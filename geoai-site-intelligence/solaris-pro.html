@@ -1,1 +1,1120 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SOLARIS PRO — GeoAI Site Intelligence</title><style>body{margin:0;background:#07131d;color:#edf4f6;font:16px/1.6 Arial,sans-serif}main{max-width:1050px;margin:auto;padding:48px 24px}h1{font-size:52px;margin:0 0 10px;color:#f3c64d}.eyebrow{letter-spacing:.12em;color:#8fa9b3;font-size:12px}.card{margin-top:28px;padding:28px;border:1px solid #294552;border-radius:18px;background:#0c202b}a{color:#f3c64d;text-decoration:none}</style></head><body><main><p class="eyebrow">PYTHON · AI/ML · GEOAI · SOLAR · GIS · SUITABILITY</p><h1>SOLARIS PRO</h1><div class="card"><h2>Utility-Scale Solar Siting Platform</h2><p>Spatial screening of terrain, infrastructure and environmental constraints for utility-scale solar site selection.</p><p><a href="index.html">← GeoAI Site Intelligence Suite</a></p></div></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SOLARIS PRO · Utility-Scale Solar Siting Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+  :root{
+    --clay:#2B3A4A; --sand:#C9A24B; --field:#E0A526; --river:#8A6D3B;
+    --ink:#2A2118; --ink-soft:#5B4E3A; --paper:#F5EEDD; --paper-dark:#EADFC0;
+    --panel:#FAF4E4; --border:#E2D2A0; --muted:#7A6A45; --rust:#D97B29;
+    --rust-dark:#A85A18; --flag-ink:#2A2118;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;height:100%;}
+  body{
+    background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased; display:flex; flex-direction:column; height:100vh; overflow:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- top bar ---------- */
+  header{
+    display:flex; align-items:center; gap:18px; padding:11px 18px;
+    background:var(--ink); color:var(--paper); flex:none; z-index:1000; flex-wrap:wrap;
+  }
+  .brand{display:flex; align-items:center; gap:9px; flex:none;}
+  .brand .dot{width:8px;height:8px;background:var(--rust);border-radius:50%;flex:none;}
+  .brand h1{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;letter-spacing:.02em;margin:0;}
+  .brand h1 span{color:#B9AF97;font-weight:400;}
+  .search-box{display:flex;align-items:center;gap:0;flex:1;max-width:420px;min-width:180px;}
+  .search-box input{
+    flex:1;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:8px 10px;
+    border:1px solid #4A5860;background:#2B383F;color:var(--paper);outline:none;
+  }
+  .search-box input::placeholder{color:#8A9299;}
+  .search-box button{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;text-transform:uppercase;
+    letter-spacing:.05em;background:var(--rust);color:#fff;border:none;padding:8px 12px;cursor:pointer;
+  }
+  .search-box button:hover{background:var(--rust-dark);}
+  .basemap-select{display:flex;gap:4px;flex:none;}
+  .basemap-select button{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;background:transparent;color:#B9AF97;
+    border:1px solid #4A5860;padding:7px 10px;cursor:pointer;letter-spacing:.03em;
+  }
+  .basemap-select button.active{background:var(--paper);color:var(--ink);border-color:var(--paper);font-weight:600;}
+  .basemap-select button:hover:not(.active){border-color:var(--rust);color:var(--paper);}
+  .header-status{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#9AA39C;margin-left:auto;flex:none;}
+
+  /* ---------- body layout ---------- */
+  .body-row{flex:1;display:flex;min-height:0;}
+  .sidebar{
+    width:326px;flex:none;background:var(--panel);border-right:1px solid var(--border);
+    overflow-y:auto;display:flex;flex-direction:column;
+  }
+  .panel-head{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    font-weight:600;color:var(--ink-soft);padding:10px 15px;border-bottom:1px solid var(--border);
+    border-top:1px solid var(--border); background:var(--paper-dark);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .sidebar>.panel-head:first-child{border-top:none;}
+  .panel-body{padding:13px 15px;}
+  .hint{font-size:10.5px;color:var(--muted);line-height:1.5;margin-bottom:9px;}
+  .row-line{display:flex;justify-content:space-between;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-soft);margin-bottom:5px;}
+  .row-line b{color:var(--ink);font-weight:600;}
+
+  .btn{
+    width:100%;font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:11.5px;
+    letter-spacing:.05em;text-transform:uppercase;padding:10px 12px;border:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:7px;margin-top:7px;transition:background .15s;
+  }
+  .btn-primary{background:var(--rust);color:#fff;}
+  .btn-primary:hover:not(:disabled){background:var(--rust-dark);}
+  .btn-primary:disabled{background:#bdae8f;cursor:progress;}
+  .btn-secondary{background:transparent;color:var(--ink-soft);border:1px solid var(--border);}
+  .btn-secondary:hover:not(:disabled){border-color:var(--ink-soft);color:var(--ink);}
+  .btn-secondary:disabled{opacity:.45;cursor:not-allowed;}
+
+  .status-line{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--muted);margin-top:8px;line-height:1.5;min-height:14px;}
+  .status-line.active{color:var(--rust-dark);}
+  .status-line.ok{color:var(--field);}
+  .status-line.err{color:var(--clay);}
+
+  .criterion{margin-bottom:13px;}
+  .criterion:last-of-type{margin-bottom:4px;}
+  .criterion-label{display:flex;justify-content:space-between;align-items:baseline;font-family:'IBM Plex Mono',monospace;font-size:11.5px;margin-bottom:5px;}
+  .criterion-label .pct{color:var(--rust-dark);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;width:100%;height:4px;background:var(--border);border-radius:2px;outline:none;cursor:pointer;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:2px;background:var(--rust);border:2px solid var(--flag-ink);cursor:pointer;margin-top:-1px;}
+  input[type=range]::-moz-range-thumb{width:12px;height:12px;border-radius:2px;background:var(--rust);border:2px solid var(--flag-ink);cursor:pointer;}
+  .criterion .sub{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.4;}
+
+  .param-table{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);border-top:1px dashed var(--border);margin-top:6px;padding-top:8px;line-height:1.7;}
+  .param-table b{color:var(--ink-soft);}
+
+  .layer-toggle{display:flex;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-soft);padding:5px 0;cursor:pointer;}
+  .layer-toggle input{accent-color:var(--rust);width:13px;height:13px;}
+  .layer-toggle .badge-live{font-size:8.5px;background:var(--field);color:#fff;padding:1px 5px;letter-spacing:.04em;}
+  .layer-toggle .badge-model{font-size:8.5px;background:var(--muted);color:#fff;padding:1px 5px;letter-spacing:.04em;}
+
+  .file-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-soft);margin-bottom:7px;}
+  .file-row input[type=file]{max-width:104px;font-size:9px;color:var(--muted);}
+
+  .scenario-chip{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--border);background:var(--paper);padding:6px 8px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10.5px;margin-bottom:6px;}
+  .scenario-chip:hover{border-color:var(--rust);}
+  .scenario-chip .sc-name{font-weight:600;}
+  .scenario-chip .sc-score{color:var(--field);}
+  .scenario-chip .sc-del{color:var(--muted);cursor:pointer;}
+  .scenario-chip .sc-del:hover{color:var(--clay);}
+
+  /* ---------- map ---------- */
+  .map-col{flex:1;display:flex;flex-direction:column;min-width:0;}
+  #map{flex:1;min-height:0;background:var(--paper-dark);}
+  .leaflet-container{font-family:'IBM Plex Sans', sans-serif;background:var(--paper-dark);}
+
+  .coord-bar{
+    flex:none;display:flex;justify-content:space-between;align-items:center;
+    background:var(--ink);color:#B9AF97;font-family:'IBM Plex Mono',monospace;font-size:10.5px;
+    padding:6px 14px;letter-spacing:.02em;
+  }
+  .coord-bar span b{color:var(--paper);}
+
+  .map-legend{
+    background:var(--panel);border:1px solid var(--ink);padding:8px 10px;font-family:'IBM Plex Mono',monospace;
+    font-size:10px;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  .map-legend .grad{height:9px;width:150px;background:linear-gradient(90deg,var(--clay),var(--sand),var(--field));border:1px solid var(--ink);margin:4px 0;}
+  .map-legend .lr{display:flex;justify-content:space-between;color:var(--muted);}
+  .map-legend .hatch{display:inline-block;width:12px;height:8px;border:1px solid var(--ink);vertical-align:middle;margin-right:5px;
+    background-image:repeating-linear-gradient(45deg, var(--ink) 0 1px, transparent 1px 4px); background-color:var(--paper-dark);}
+
+  .north-arrow{
+    width:30px;height:38px;display:flex;flex-direction:column;align-items:center;
+    font-family:'IBM Plex Mono',monospace;color:var(--ink);background:rgba(246,242,230,.92);
+    border:1px solid var(--ink);padding:4px 0 3px;box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  .north-arrow svg{width:14px;height:18px;}
+  .north-arrow span{font-size:9px;font-weight:700;margin-top:1px;}
+
+  /* ---------- results drawer ---------- */
+  .results-drawer{flex:none;max-height:34vh;overflow-y:auto;background:var(--panel);border-top:1px solid var(--border);}
+  .results-head{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--border);}
+  .results-head .t{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);}
+  .results-actions{display:flex;gap:8px;}
+  .mini-btn{font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:600;background:transparent;border:1px solid var(--ink);color:var(--ink);padding:6px 11px;cursor:pointer;}
+  .mini-btn:hover:not(:disabled){background:var(--ink);color:var(--paper);}
+  .mini-btn:disabled{opacity:.4;cursor:not-allowed;}
+  .empty-state{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);padding:22px;text-align:center;}
+  .site-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;padding:12px 16px;}
+  .site-card{border:1px solid var(--border);background:var(--paper);padding:11px 12px;opacity:0;transform:translateY(6px);transition:opacity .35s ease, transform .35s ease, border-color .15s ease;cursor:pointer;}
+  .site-card.show{opacity:1;transform:translateY(0);}
+  .site-card:hover{border-color:var(--rust);}
+  .site-card .row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;}
+  .rank{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;background:var(--flag-ink);color:var(--paper);width:20px;height:20px;display:flex;align-items:center;justify-content:center;flex:none;}
+  .site-card .zone{font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:12px;}
+  .site-card .score{font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:700;color:var(--field);}
+  .breakdown{display:flex;height:6px;overflow:hidden;border:1px solid var(--ink);margin-bottom:6px;}
+  .breakdown div{height:100%;}
+  .factor-tag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--muted);display:flex;justify-content:space-between;}
+  .factor-tag b{color:var(--ink-soft);}
+
+  ::-webkit-scrollbar{width:9px;height:9px;}
+  ::-webkit-scrollbar-track{background:var(--paper-dark);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border:2px solid var(--paper-dark);}
+
+  @media (max-width:880px){
+    .sidebar{position:absolute;left:0;top:52px;bottom:0;z-index:900;transform:translateX(-100%);transition:transform .2s;}
+    .sidebar.open{transform:translateX(0);box-shadow:4px 0 12px rgba(0,0,0,.25);}
+    .search-box{display:none;}
+  }
+
+  @media print{
+    header, .sidebar, .coord-bar, .results-actions, .leaflet-control { display:none !important; }
+    body{overflow:visible;height:auto;}
+    .body-row{display:block;}
+    #map{height:70vh;}
+    .results-drawer{max-height:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="dot"></span><h1>SOLARIS <span>PRO</span></h1></div>
+  <div class="search-box">
+    <input type="text" id="geocodeInput" placeholder="Search a site region to study (e.g. Islamabad, Pakistan)…" />
+    <button id="geocodeBtn">Go</button>
+  </div>
+  <div class="basemap-select" id="basemapSelect">
+    <button data-layer="streets" class="active">Streets</button>
+    <button data-layer="satellite">Satellite</button>
+    <button data-layer="topo">Topo</button>
+  </div>
+  <div class="header-status" id="headerStatus">AI Siting Platform for Utility-Scale Solar Development</div>
+</header>
+
+<div class="body-row">
+  <aside class="sidebar" id="sidebar">
+
+    <div class="panel-head">Study Area</div>
+    <div class="panel-body">
+      <div class="hint">Pan/zoom or search a location, then lock the current map view as your study area grid.</div>
+      <div class="row-line"><span>Current view</span><b id="viewBoxLabel">—</b></div>
+      <div class="row-line"><span>Approx. cell size</span><b id="cellSizeLabel">—</b></div>
+      <select id="resSelect" class="mono" style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px;border:1px solid var(--border);background:var(--paper);margin-top:4px;">
+        <option value="30x18">Coarse · 30×18 cells (fast)</option>
+        <option value="40x24" selected>Standard · 40×24 cells</option>
+        <option value="52x32">Fine · 52×32 cells (slower)</option>
+      </select>
+      <button class="btn btn-primary" id="lockAreaBtn">▣ Generate Study Grid</button>
+      <div class="status-line" id="areaStatus">No grid generated yet.</div>
+    </div>
+
+    <div class="panel-head">Live &amp; Modeled Data</div>
+    <div class="panel-body">
+      <div class="hint">Fetch real OpenStreetMap roads/transmission-adjacent waterlines/protected land and real elevation for the study area. Falls back to a modeled surface if a source is unreachable.</div>
+      <button class="btn btn-secondary" id="fetchOsmBtn" disabled>⇩ Fetch Live OSM Data</button>
+      <button class="btn btn-secondary" id="fetchElevBtn" disabled>⇩ Fetch Live Elevation</button>
+      <div class="status-line" id="dataStatus">Generate a study grid first.</div>
+      <div class="param-table" style="margin-top:11px;">Manual override (GeoJSON, optional):</div>
+      <div class="file-row" style="margin-top:8px;"><span>Roads</span><input type="file" id="importRoads" accept=".json,.geojson" disabled></div>
+      <div class="file-row"><span>Waterway</span><input type="file" id="importWater" accept=".json,.geojson" disabled></div>
+      <div class="file-row"><span>Protected land</span><input type="file" id="importReserve" accept=".json,.geojson" disabled></div>
+    </div>
+
+    <div class="panel-head">Siting Criteria</div>
+    <div class="panel-body">
+      <div class="criterion" data-key="slope">
+        <div class="criterion-label"><span>Terrain Buildability</span><span class="pct">20%</span></div>
+        <input type="range" min="0" max="100" value="20">
+        <div class="sub">Favors flatter ground for panel racking and grading cost.</div>
+      </div>
+      <div class="criterion" data-key="flood">
+        <div class="criterion-label"><span>Transmission Corridor Proximity</span><span class="pct">25%</span></div>
+        <input type="range" min="0" max="100" value="25">
+        <div class="sub">Favors proximity to transmission lines, outside the ROW easement.</div>
+      </div>
+      <div class="criterion" data-key="road">
+        <div class="criterion-label"><span>Road &amp; Construction Access</span><span class="pct">20%</span></div>
+        <input type="range" min="0" max="100" value="20">
+        <div class="sub">Rewards nearness to roads for construction and O&amp;M access.</div>
+      </div>
+      <div class="criterion" data-key="util">
+        <div class="criterion-label"><span>Substation Interconnection</span><span class="pct">15%</span></div>
+        <input type="range" min="0" max="100" value="15">
+        <div class="sub">Rewards nearness to modeled substation/interconnection corridors.</div>
+      </div>
+      <div class="criterion" data-key="demand">
+        <div class="criterion-label"><span>Grid Demand Alignment</span><span class="pct">20%</span></div>
+        <input type="range" min="0" max="100" value="20">
+        <div class="sub">Balances proximity to the load-center marker against available, low-value land.</div>
+      </div>
+      <div class="param-table" id="paramTable">Buffers: transmission ROW 100m · growth boundary 400m<br>Decay: road 600m · substation 700m · demand peak 2000m / σ1500m</div>
+      <button class="btn btn-primary" id="runBtn" disabled>▶ Run Automated Siting</button>
+      <div class="status-line" id="runStatus">Generate a study grid to begin.</div>
+    </div>
+
+    <div class="panel-head">Map Layers</div>
+    <div class="panel-body">
+      <label class="layer-toggle"><input type="checkbox" id="toggleSuit" checked> Suitability surface</label>
+      <label class="layer-toggle"><input type="checkbox" id="toggleRoads" checked> Roads <span class="badge-model" id="roadsBadge">MODELED</span></label>
+      <label class="layer-toggle"><input type="checkbox" id="toggleWater" checked> Waterway <span class="badge-model" id="waterBadge">MODELED</span></label>
+      <label class="layer-toggle"><input type="checkbox" id="toggleReserve" checked> Protected land <span class="badge-model" id="reserveBadge">MODELED</span></label>
+      <label class="layer-toggle"><input type="checkbox" id="toggleSites" checked> Candidate sites</label>
+    </div>
+
+    <div class="panel-head">Scenarios</div>
+    <div class="panel-body">
+      <div class="hint">Save the current weighting to compare planning priorities. Persists via shared storage when opened through Claude.</div>
+      <div style="display:flex;gap:6px;">
+        <input type="text" id="scenarioName" placeholder="e.g. Flood-first" maxlength="24" style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:7px;border:1px solid var(--border);background:var(--paper);">
+        <button class="mini-btn" id="saveScenarioBtn">Save</button>
+      </div>
+      <div id="scenarioList" style="margin-top:9px;"></div>
+      <div class="status-line" id="scenarioStatus">Checking storage…</div>
+    </div>
+
+  </aside>
+
+  <div class="map-col">
+    <div id="map"></div>
+    <div class="coord-bar">
+      <span>Lat/Lon: <b id="coordReadout">—</b></span>
+      <span>Zoom: <b id="zoomReadout">—</b></span>
+      <span>Grid: <b id="gridReadout">Not generated</b></span>
+      <span>Eligible area: <b id="eligReadout">—</b></span>
+    </div>
+    <div class="results-drawer">
+      <div class="results-head">
+        <span class="t">Ranked Candidate Solar Sites</span>
+        <div class="results-actions">
+          <button class="mini-btn" id="printBtn" disabled>Print Report ⎙</button>
+          <button class="mini-btn" id="exportBtn" disabled>Export CSV ↓</button>
+        </div>
+      </div>
+      <div id="resultsBody"><div class="empty-state">No siting run yet. Generate a study grid, then run automated siting to identify optimal parcels.</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============================================================
+   GEO HELPERS
+   ============================================================ */
+function toRad(d){ return d*Math.PI/180; }
+function haversine(lat1,lon1,lat2,lon2){
+  const R=6371000;
+  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
+  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(a));
+}
+// local equirectangular projection (meters) around an origin — adequate for a single study area
+function makeProjector(originLat, originLon){
+  const mPerDegLat = 110540;
+  const mPerDegLon = 111320*Math.cos(toRad(originLat));
+  return function(lat,lon){
+    return { x:(lon-originLon)*mPerDegLon, y:(lat-originLat)*mPerDegLat };
+  };
+}
+function distToSegmentXY(px,py,x1,y1,x2,y2){
+  const dx=x2-x1, dy=y2-y1; const lenSq=dx*dx+dy*dy;
+  let t = lenSq ? ((px-x1)*dx+(py-y1)*dy)/lenSq : 0;
+  t = Math.max(0,Math.min(1,t));
+  const cx=x1+t*dx, cy=y1+t*dy;
+  return Math.hypot(px-cx,py-cy);
+}
+function distToPolylineXY(px,py,pts){
+  let m=Infinity;
+  for(let i=0;i<pts.length-1;i++){
+    const d=distToSegmentXY(px,py,pts[i].x,pts[i].y,pts[i+1].x,pts[i+1].y);
+    if(d<m) m=d;
+  }
+  return m;
+}
+function pointInPolygonXY(px,py,ring){
+  let inside=false;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const xi=ring[i].x, yi=ring[i].y, xj=ring[j].x, yj=ring[j].y;
+    const intersect = ((yi>py)!==(yj>py)) && (px < (xj-xi)*(py-yi)/((yj-yi)||1e-9)+xi);
+    if(intersect) inside=!inside;
+  }
+  return inside;
+}
+function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+function gaussian(d,peak,sigma){ const diff=d-peak; return Math.exp(-(diff*diff)/(2*sigma*sigma)); }
+function mulberry32(seed){
+  return function(){
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+function smoothstep(t){ return t*t*(3-2*t); }
+function makeCoarseGrid(rng,w,h){ const g=[]; for(let y=0;y<h;y++){ const row=[]; for(let x=0;x<w;x++) row.push(rng()); g.push(row); } return g; }
+function sampleBilinear(grid,gw,gh,u,v){
+  const x=u*(gw-1), y=v*(gh-1);
+  const x0=Math.floor(x), y0=Math.floor(y);
+  const x1=Math.min(x0+1,gw-1), y1=Math.min(y0+1,gh-1);
+  const sx=smoothstep(x-x0), sy=smoothstep(y-y0);
+  const top=grid[y0][x0]*(1-sx)+grid[y0][x1]*sx;
+  const bot=grid[y1][x0]*(1-sx)+grid[y1][x1]*sx;
+  return top*(1-sy)+bot*sy;
+}
+function colLetters(n){ let s=''; n+=1; while(n>0){ const rem=(n-1)%26; s=String.fromCharCode(65+rem)+s; n=Math.floor((n-1)/26); } return s; }
+
+/* ============================================================
+   MODEL PARAMETERS (planning-grade, meters)
+   ============================================================ */
+const PARAMS = {
+  waterwayBuffer: 100, coreBuffer: 400,
+  roadDecay: 600, utilDecay: 700, floodDecay: 500,
+  demandPeak: 2000, demandSigma: 1500,
+  seed: 20260825
+};
+const COLORS = { clay:[166,67,43], sand:[217,196,141], field:[76,122,70] };
+function lerp(a,b,t){ return a+(b-a)*t; }
+function lerpColor(c1,c2,t){ return [lerp(c1[0],c2[0],t),lerp(c1[1],c2[1],t),lerp(c1[2],c2[2],t)]; }
+function threeStop(v){
+  v=clamp(v,0,1);
+  const c = v<0.5 ? lerpColor(COLORS.clay,COLORS.sand,v*2) : lerpColor(COLORS.sand,COLORS.field,(v-0.5)*2);
+  return `rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
+}
+
+/* ============================================================
+   MAP INIT
+   ============================================================ */
+const map = L.map('map', { zoomControl:true, attributionControl:true }).setView([33.7180,73.0650], 13); // Islamabad default
+
+const baseLayers = {
+  streets: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19, attribution:'© OpenStreetMap contributors' }),
+  // Same host (server.arcgisonline.com) for both imagery and topo — one domain to whitelist instead of two,
+  // which avoids the silent blank-tile failure some sandboxed/CSP-restricted viewers show for less common tile hosts.
+  satellite: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Esri World Imagery' }),
+  topo: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', { maxZoom:19, attribution:'Esri World Topo Map' })
+};
+baseLayers.streets.addTo(map);
+
+// Surface tile failures instead of leaving a silently blank map — most common cause is a
+// network/CSP restriction in the viewing environment, not a broken URL.
+let tileFailCount = { satellite:0, topo:0 };
+['satellite','topo'].forEach(key=>{
+  baseLayers[key].on('tileerror', ()=>{
+    tileFailCount[key]++;
+    if(tileFailCount[key]===6){
+      const statusEl = document.getElementById('headerStatus');
+      statusEl.textContent = `${key==='satellite'?'Satellite':'Topo'} tiles are being blocked by this viewer's network policy — open the downloaded file directly in your browser to load them.`;
+      statusEl.style.color = '#E8B4A0';
+    }
+  });
+  baseLayers[key].on('load', ()=>{ tileFailCount[key]=0; });
+});
+
+document.querySelectorAll('.basemap-select button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    Object.values(baseLayers).forEach(l=>map.removeLayer(l));
+    baseLayers[btn.dataset.layer].addTo(map);
+    document.querySelectorAll('.basemap-select button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+L.control.scale({ position:'bottomleft', metric:true, imperial:false }).addTo(map);
+
+const NorthArrow = L.Control.extend({
+  options:{ position:'topright' },
+  onAdd: function(){
+    const div = L.DomUtil.create('div','north-arrow');
+    div.innerHTML = '<svg viewBox="0 0 14 18"><polygon points="7,0 14,18 7,13 0,18" fill="#202B30"/></svg><span>N</span>';
+    return div;
+  }
+});
+map.addControl(new NorthArrow());
+
+const LegendCtrl = L.Control.extend({
+  options:{ position:'bottomright' },
+  onAdd: function(){
+    const div = L.DomUtil.create('div','map-legend');
+    div.innerHTML = `<b>Suitability</b><div class="grad"></div>
+      <div class="lr"><span>Low</span><span>High</span></div>
+      <div style="margin-top:6px;"><span class="hatch"></span>Excluded (constraint)</div>`;
+    return div;
+  }
+});
+map.addControl(new LegendCtrl());
+
+map.on('mousemove', (e)=>{
+  document.getElementById('coordReadout').textContent = e.latlng.lat.toFixed(5)+', '+e.latlng.lng.toFixed(5);
+});
+map.on('zoomend moveend', ()=>{
+  document.getElementById('zoomReadout').textContent = map.getZoom();
+  updateViewBoxLabel();
+});
+function updateViewBoxLabel(){
+  const b = map.getBounds();
+  document.getElementById('viewBoxLabel').textContent =
+    `${b.getSouth().toFixed(3)},${b.getWest().toFixed(3)} → ${b.getNorth().toFixed(3)},${b.getEast().toFixed(3)}`;
+  const widthM = haversine(b.getCenter().lat,b.getWest(),b.getCenter().lat,b.getEast());
+  const heightM = haversine(b.getSouth(),b.getCenter().lng,b.getNorth(),b.getCenter().lng);
+  document.getElementById('cellSizeLabel').textContent = widthM>50000
+    ? 'Zoom in — area too large' : `~${Math.round(widthM)}m × ${Math.round(heightM)}m view`;
+}
+updateViewBoxLabel();
+
+/* ============================================================
+   GEOCODING (Nominatim)
+   ============================================================ */
+document.getElementById('geocodeBtn').addEventListener('click', geocode);
+document.getElementById('geocodeInput').addEventListener('keydown', e=>{ if(e.key==='Enter') geocode(); });
+async function geocode(){
+  const q = document.getElementById('geocodeInput').value.trim();
+  if(!q) return;
+  const statusEl = document.getElementById('headerStatus');
+  statusEl.textContent = 'Searching…';
+  try{
+    const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(q)}`);
+    const data = await res.json();
+    if(data && data[0]){
+      const lat=parseFloat(data[0].lat), lon=parseFloat(data[0].lon);
+      map.setView([lat,lon], 13);
+      statusEl.textContent = 'Located: '+data[0].display_name.split(',').slice(0,3).join(',');
+    } else {
+      statusEl.textContent = 'No match found for "'+q+'".';
+    }
+  } catch(e){
+    statusEl.textContent = 'Search unavailable — check your connection.';
+  }
+  setTimeout(()=>{ statusEl.textContent='AI Siting Platform for Utility-Scale Solar Development'; }, 5000);
+}
+
+/* ============================================================
+   STUDY GRID
+   ============================================================ */
+let grid = null;        // { COLS,ROWS,bounds,origin,project,cells[r][c]={lat,lon,x,y} }
+let cityCenterMarker = null;
+let layers = { roads:null, water:null, reserves:null };     // {lines/rings in latlng, source:'live'|'modeled'|'imported'}
+let elevationGrid = null; // {coarse grid + w,h} or null
+let world = null;       // computed eligibility/score grids
+let compositeCache = null;
+let selectedSites = [];
+let suitLayerGroup = L.layerGroup().addTo(map);
+let vectorLayerGroup = L.layerGroup().addTo(map);
+let siteLayerGroup = L.layerGroup().addTo(map);
+let animating = false;
+
+document.getElementById('lockAreaBtn').addEventListener('click', generateStudyGrid);
+
+function parseRes(){
+  const v = document.getElementById('resSelect').value.split('x');
+  return { cols: parseInt(v[0],10), rows: parseInt(v[1],10) };
+}
+
+function generateStudyGrid(){
+  const b = map.getBounds();
+  const widthM = haversine(b.getCenter().lat,b.getWest(),b.getCenter().lat,b.getEast());
+  if(widthM > 60000){
+    document.getElementById('areaStatus').textContent = 'View is too large (>60km) — zoom in before generating a grid.';
+    document.getElementById('areaStatus').className='status-line err';
+    return;
+  }
+  const { cols, rows } = parseRes();
+  const south=b.getSouth(), north=b.getNorth(), west=b.getWest(), east=b.getEast();
+  const originLat=(south+north)/2, originLon=(west+east)/2;
+  const project = makeProjector(originLat, originLon);
+
+  const cells = [];
+  for(let r=0;r<rows;r++){
+    const row=[];
+    for(let c=0;c<cols;c++){
+      const lat = north - (r+0.5)/rows*(north-south);
+      const lon = west + (c+0.5)/cols*(east-west);
+      const p = project(lat,lon);
+      row.push({ lat, lon, x:p.x, y:p.y });
+    }
+    cells.push(row);
+  }
+  grid = { COLS:cols, ROWS:rows, bounds:b, originLat, originLon, project, cells };
+
+  // city center defaults to view center; draggable so the planner can mark the real CBD
+  if(cityCenterMarker) map.removeLayer(cityCenterMarker);
+  cityCenterMarker = L.marker([originLat,originLon], {
+    draggable:true,
+    icon: L.divIcon({ className:'', html:'<div style="width:16px;height:16px;background:#202B30;border:2px solid #C1481F;border-radius:50%;box-shadow:0 0 0 3px rgba(32,43,48,.18);"></div>', iconSize:[16,16], iconAnchor:[8,8] })
+  }).addTo(map).bindTooltip('Grid load center — drag to reposition', {permanent:false});
+  cityCenterMarker.on('dragend', ()=>{ if(world) recomputeAndRedraw(); });
+
+  // reset layers to modeled synthetic versions covering this bbox
+  layers.roads = makeSyntheticLines('road');
+  layers.water = makeSyntheticLines('water');
+  layers.reserves = makeSyntheticReserves();
+  elevationGrid = null;
+  setBadge('roadsBadge','MODELED'); setBadge('waterBadge','MODELED'); setBadge('reserveBadge','MODELED');
+
+  document.getElementById('gridReadout').textContent = `${cols}×${rows} cells`;
+  document.getElementById('areaStatus').textContent = `Grid locked — ${cols*rows} cells over current view.`;
+  document.getElementById('areaStatus').className='status-line ok';
+  ['fetchOsmBtn','fetchElevBtn','runBtn','importRoads','importWater','importReserve'].forEach(id=>document.getElementById(id).disabled=false);
+  document.getElementById('dataStatus').textContent = 'Using modeled roads/waterway/protected land — fetch live data or import GeoJSON to override.';
+  document.getElementById('runStatus').textContent = 'Ready — adjust criteria or run siting.';
+
+  recomputeAndRedraw();
+  drawVectorLayers();
+}
+
+function setBadge(id, text){
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = text==='LIVE' ? 'badge-live' : 'badge-model';
+}
+
+/* ---- synthetic fallback generators (bounded to current grid, in real lat/lon) ---- */
+function makeSyntheticLines(kind){
+  const rng = mulberry32(PARAMS.seed + (kind==='road'?1:2));
+  const { bounds } = grid;
+  const south=bounds.getSouth(), north=bounds.getNorth(), west=bounds.getWest(), east=bounds.getEast();
+  const phase = rng()*Math.PI*2;
+  const yBase = kind==='water' ? south+(north-south)*0.58 : south+(north-south)*0.25;
+  const amp = (north-south)*(kind==='water'?0.13:0.05);
+  const pts = [];
+  for(let i=0;i<=10;i++){
+    const t=i/10, lon = west+(east-west)*t;
+    const lat = yBase + Math.sin(t*Math.PI*2+phase)*amp + (rng()-0.5)*(north-south)*0.02;
+    pts.push({lat,lon});
+  }
+  return [{ latlngs: pts, source:'modeled', name: kind==='water'?'Modeled transmission corridor':'Modeled arterial road' }];
+}
+function makeSyntheticReserves(){
+  const rng = mulberry32(PARAMS.seed+3);
+  const { bounds } = grid;
+  const south=bounds.getSouth(), north=bounds.getNorth(), west=bounds.getWest(), east=bounds.getEast();
+  function rect(){
+    const w=(east-west)*(0.10+rng()*0.08), h=(north-south)*(0.12+rng()*0.10);
+    const x0=west+(east-west)*(0.5+rng()*0.35), y0=south+(north-south)*(0.1+rng()*0.6);
+    return [{lat:y0,lon:x0},{lat:y0,lon:x0+w},{lat:y0+h,lon:x0+w},{lat:y0+h,lon:x0},{lat:y0,lon:x0}];
+  }
+  return [
+    { ring: rect(), source:'modeled', name:'Modeled prime farmland protection' },
+    { ring: rect(), source:'modeled', name:'Modeled conservation easement' }
+  ];
+}
+
+/* ============================================================
+   LIVE OSM FETCH (Overpass API)
+   ============================================================ */
+document.getElementById('fetchOsmBtn').addEventListener('click', fetchLiveOSM);
+async function fetchLiveOSM(){
+  if(!grid) return;
+  const btn = document.getElementById('fetchOsmBtn'); btn.disabled=true;
+  const statusEl = document.getElementById('dataStatus');
+  statusEl.textContent = 'Querying OpenStreetMap (Overpass API)…'; statusEl.className='status-line active';
+  const b = grid.bounds;
+  const bbox = `${b.getSouth()},${b.getWest()},${b.getNorth()},${b.getEast()}`;
+  const query = `[out:json][timeout:25];(
+    way["highway"](${bbox});
+    way["waterway"~"river|stream|canal"](${bbox});
+    way["leisure"="nature_reserve"](${bbox});
+    way["landuse"~"forest|farmland"](${bbox});
+  );out geom;`;
+  try{
+    const res = await fetch('https://overpass-api.de/api/interpreter', { method:'POST', body:'data='+encodeURIComponent(query) });
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    const roads=[], water=[], reserves=[];
+    (data.elements||[]).forEach(el=>{
+      if(!el.geometry || el.geometry.length<2) return;
+      const pts = el.geometry.map(g=>({lat:g.lat,lon:g.lon}));
+      const tags = el.tags||{};
+      if(tags.highway) roads.push({ latlngs:pts, source:'live', name: tags.name||('Road: '+tags.highway) });
+      else if(tags.waterway) water.push({ latlngs:pts, source:'live', name: tags.name||('Waterway: '+tags.waterway) });
+      else if(tags.leisure==='nature_reserve' || tags.landuse){
+        const closed = pts.length>3 && pts[0].lat===pts[pts.length-1].lat && pts[0].lon===pts[pts.length-1].lon;
+        if(closed) reserves.push({ ring:pts, source:'live', name: tags.name||(tags.leisure||tags.landuse) });
+      }
+    });
+    if(roads.length) { layers.roads = roads; setBadge('roadsBadge','LIVE'); }
+    if(water.length) { layers.water = water; setBadge('waterBadge','LIVE'); }
+    if(reserves.length) { layers.reserves = reserves; setBadge('reserveBadge','LIVE'); }
+    statusEl.textContent = `Live OSM loaded: ${roads.length} road segments, ${water.length} waterway segments, ${reserves.length} protected polygons.`;
+    statusEl.className='status-line ok';
+  } catch(e){
+    statusEl.textContent = 'Overpass API unreachable — keeping modeled layers. (Public endpoint can rate-limit; try again shortly.)';
+    statusEl.className='status-line err';
+  }
+  btn.disabled=false;
+  drawVectorLayers();
+  if(world) recomputeAndRedraw();
+}
+
+/* ============================================================
+   LIVE ELEVATION FETCH (Open-Elevation)
+   ============================================================ */
+document.getElementById('fetchElevBtn').addEventListener('click', fetchLiveElevation);
+async function fetchLiveElevation(){
+  if(!grid) return;
+  const btn = document.getElementById('fetchElevBtn'); btn.disabled=true;
+  const statusEl = document.getElementById('dataStatus');
+  statusEl.textContent = 'Requesting elevation samples (Open-Elevation)…'; statusEl.className='status-line active';
+  const gw=10, gh=7;
+  const b = grid.bounds;
+  const south=b.getSouth(), north=b.getNorth(), west=b.getWest(), east=b.getEast();
+  const locations=[];
+  for(let y=0;y<gh;y++) for(let x=0;x<gw;x++){
+    locations.push({ latitude: south+(north-south)*y/(gh-1), longitude: west+(east-west)*x/(gw-1) });
+  }
+  try{
+    const ctrl = new AbortController();
+    const timeout = setTimeout(()=>ctrl.abort(), 9000);
+    const res = await fetch('https://api.open-elevation.com/api/v1/lookup', {
+      method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({locations}), signal: ctrl.signal
+    });
+    clearTimeout(timeout);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const data = await res.json();
+    const elevs = data.results.map(r=>r.elevation);
+    const eGrid=[]; for(let y=0;y<gh;y++){ eGrid.push(elevs.slice(y*gw,(y+1)*gw)); }
+    elevationGrid = { grid:eGrid, w:gw, h:gh };
+    statusEl.textContent = `Live elevation loaded (${locations.length} samples, ${Math.round(Math.min(...elevs))}–${Math.round(Math.max(...elevs))}m).`;
+    statusEl.className='status-line ok';
+  } catch(e){
+    statusEl.textContent = 'Elevation API unreachable — using modeled terrain instead.';
+    statusEl.className='status-line err';
+    elevationGrid = null;
+  }
+  btn.disabled=false;
+  if(world) recomputeAndRedraw();
+}
+
+/* ============================================================
+   GEOJSON IMPORT (manual override)
+   ============================================================ */
+function readFileAsJSON(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=>{ try{ resolve(JSON.parse(reader.result)); } catch(e){ reject(e); } };
+    reader.onerror = reject; reader.readAsText(file);
+  });
+}
+function extractLinesLL(geojson){
+  const out=[];
+  (geojson.features||[]).forEach(f=>{
+    const g=f.geometry; if(!g) return;
+    const name = (f.properties&&(f.properties.name))||'Imported feature';
+    if(g.type==='LineString') out.push({ latlngs:g.coordinates.map(([lon,lat])=>({lat,lon})), source:'imported', name });
+    else if(g.type==='MultiLineString') g.coordinates.forEach(l=>out.push({ latlngs:l.map(([lon,lat])=>({lat,lon})), source:'imported', name }));
+  });
+  return out;
+}
+function extractRingsLL(geojson){
+  const out=[];
+  (geojson.features||[]).forEach(f=>{
+    const g=f.geometry; if(!g) return;
+    const name=(f.properties&&(f.properties.name))||'Imported reserve';
+    if(g.type==='Polygon') out.push({ ring:g.coordinates[0].map(([lon,lat])=>({lat,lon})), source:'imported', name });
+    else if(g.type==='MultiPolygon') g.coordinates.forEach(poly=>out.push({ ring:poly[0].map(([lon,lat])=>({lat,lon})), source:'imported', name }));
+  });
+  return out;
+}
+document.getElementById('importRoads').addEventListener('change', async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{ layers.roads = extractLinesLL(await readFileAsJSON(f)); setBadge('roadsBadge','IMPORTED'); drawVectorLayers(); if(world) recomputeAndRedraw(); }
+  catch(err){ document.getElementById('dataStatus').textContent='Could not parse roads GeoJSON.'; }
+});
+document.getElementById('importWater').addEventListener('change', async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{ layers.water = extractLinesLL(await readFileAsJSON(f)); setBadge('waterBadge','IMPORTED'); drawVectorLayers(); if(world) recomputeAndRedraw(); }
+  catch(err){ document.getElementById('dataStatus').textContent='Could not parse waterway GeoJSON.'; }
+});
+document.getElementById('importReserve').addEventListener('change', async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  try{ layers.reserves = extractRingsLL(await readFileAsJSON(f)); setBadge('reserveBadge','IMPORTED'); drawVectorLayers(); if(world) recomputeAndRedraw(); }
+  catch(err){ document.getElementById('dataStatus').textContent='Could not parse reserve GeoJSON.'; }
+});
+
+/* ============================================================
+   DRAW VECTOR LAYERS (roads / water / reserves / city core)
+   ============================================================ */
+function drawVectorLayers(){
+  vectorLayerGroup.clearLayers();
+  if(!grid) return;
+  const showRoads = document.getElementById('toggleRoads').checked;
+  const showWater = document.getElementById('toggleWater').checked;
+  const showReserve = document.getElementById('toggleReserve').checked;
+
+  if(showWater) layers.water.forEach(w=>{
+    L.polyline(w.latlngs.map(p=>[p.lat,p.lon]), { color:'#3E6E86', weight:5, opacity:.8 })
+      .bindTooltip(w.name).addTo(vectorLayerGroup);
+  });
+  if(showRoads) layers.roads.forEach(r=>{
+    L.polyline(r.latlngs.map(p=>[p.lat,p.lon]), { color:'#202B30', weight:2, opacity:.8, dashArray: r.source==='modeled'?'6,4':null })
+      .bindTooltip(r.name).addTo(vectorLayerGroup);
+  });
+  if(showReserve) layers.reserves.forEach(res=>{
+    L.polygon(res.ring.map(p=>[p.lat,p.lon]), { color:'#202B30', weight:1.4, dashArray:'4,3', fillColor:'#4C7A46', fillOpacity:.12 })
+      .bindTooltip(res.name).addTo(vectorLayerGroup);
+  });
+}
+['toggleRoads','toggleWater','toggleReserve'].forEach(id=>document.getElementById(id).addEventListener('change', drawVectorLayers));
+document.getElementById('toggleSuit').addEventListener('change', drawSuitability);
+document.getElementById('toggleSites').addEventListener('change', drawSites);
+
+/* ============================================================
+   MCDA COMPUTATION (meters-based)
+   ============================================================ */
+function buildWorld(){
+  const { COLS, ROWS, cells, project } = grid;
+  const rng = mulberry32(PARAMS.seed);
+  const coarseA = makeCoarseGrid(rng,7,5), coarseB = makeCoarseGrid(rng,13,9), coarseC = makeCoarseGrid(rng,9,6);
+
+  const roadXY = layers.roads.map(r=>r.latlngs.map(p=>project(p.lat,p.lon)));
+  const waterXY = layers.water.map(w=>w.latlngs.map(p=>project(p.lat,p.lon)));
+  const reserveXY = layers.reserves.map(res=>({ ring: res.ring.map(p=>project(p.lat,p.lon)), name:res.name }));
+  const utilXY = roadXY.map(path=>path.map(p=>({x:p.x, y:p.y+180}))); // modeled utility corridor, offset from road network
+
+  const center = cityCenterMarker.getLatLng();
+  const centerXY = project(center.lat, center.lng);
+
+  const raw = { slope:[], flood:[], road:[], util:[], demand:[] };
+  const eligible=[], reason=[];
+
+  for(let r=0;r<ROWS;r++){
+    const rowS=[],rowF=[],rowRd=[],rowU=[],rowD=[],rowE=[],rowRe=[];
+    for(let c=0;c<COLS;c++){
+      const cell = cells[r][c];
+      const u=c/(COLS-1), v=r/(ROWS-1);
+
+      let slopeVal;
+      if(elevationGrid){
+        const eps=1/Math.max(COLS,ROWS);
+        const h0 = sampleBilinear(elevationGrid.grid, elevationGrid.w, elevationGrid.h, u, v);
+        const hx = sampleBilinear(elevationGrid.grid, elevationGrid.w, elevationGrid.h, clamp(u+eps,0,1), v);
+        const hy = sampleBilinear(elevationGrid.grid, elevationGrid.w, elevationGrid.h, u, clamp(v+eps,0,1));
+        slopeVal = Math.hypot(hx-h0, hy-h0);
+      } else {
+        slopeVal = 0.6*sampleBilinear(coarseA,7,5,u,v) + 0.4*sampleBilinear(coarseB,13,9,u,v);
+      }
+
+      let dWater = Infinity;
+      waterXY.forEach(path=>{ if(path.length>1) dWater = Math.min(dWater, distToPolylineXY(cell.x,cell.y,path)); });
+      const texN = (sampleBilinear(coarseC,9,6,u,v)-0.5)*0.12;
+      const floodVal = clamp(1 - dWater/PARAMS.floodDecay, 0, 1) + texN;
+
+      let dRoad = Infinity;
+      roadXY.forEach(path=>{ if(path.length>1) dRoad = Math.min(dRoad, distToPolylineXY(cell.x,cell.y,path)); });
+      const roadVal = clamp(1 - dRoad/PARAMS.roadDecay, 0, 1);
+
+      let dUtil = Infinity;
+      utilXY.forEach(path=>{ if(path.length>1) dUtil = Math.min(dUtil, distToPolylineXY(cell.x,cell.y,path)); });
+      const utilVal = clamp(1 - dUtil/PARAMS.utilDecay, 0, 1);
+
+      const dCenter = Math.hypot(cell.x-centerXY.x, cell.y-centerXY.y);
+      const demandVal = gaussian(dCenter, PARAMS.demandPeak, PARAMS.demandSigma);
+
+      let elig=true, why=null;
+      if(dWater < PARAMS.waterwayBuffer){ elig=false; why='Waterway buffer'; }
+      else if(dCenter < PARAMS.coreBuffer){ elig=false; why='Urban growth boundary'; }
+      else{
+        for(const res of reserveXY){ if(pointInPolygonXY(cell.x,cell.y,res.ring)){ elig=false; why=res.name; break; } }
+      }
+
+      rowS.push(slopeVal); rowF.push(clamp(floodVal,0,1)); rowRd.push(roadVal); rowU.push(utilVal); rowD.push(demandVal);
+      rowE.push(elig); rowRe.push(why);
+    }
+    raw.slope.push(rowS); raw.flood.push(rowF); raw.road.push(rowRd); raw.util.push(rowU); raw.demand.push(rowD);
+    eligible.push(rowE); reason.push(rowRe);
+  }
+
+  function minMax(g){ let mn=Infinity,mx=-Infinity; for(const row of g) for(const v of row){ if(v<mn)mn=v; if(v>mx)mx=v; } return [mn,mx]; }
+  function normalize(g){ const [mn,mx]=minMax(g); const d=(mx-mn)||1; return g.map(row=>row.map(v=>(v-mn)/d)); }
+  const nSlope=normalize(raw.slope), nFlood=normalize(raw.flood), nRoad=normalize(raw.road), nUtil=normalize(raw.util), nDemand=normalize(raw.demand);
+
+  const score={slope:[],flood:[],road:[],util:[],demand:[]};
+  for(let r=0;r<ROWS;r++){
+    const s1=[],s2=[],s3=[],s4=[],s5=[];
+    for(let c=0;c<COLS;c++){
+      s1.push(1-nSlope[r][c]); s2.push(nFlood[r][c]); s3.push(nRoad[r][c]); s4.push(nUtil[r][c]); s5.push(nDemand[r][c]); // solar siting: closer to transmission is better
+    }
+    score.slope.push(s1); score.flood.push(s2); score.road.push(s3); score.util.push(s4); score.demand.push(s5);
+  }
+  return { eligible, reason, score };
+}
+
+let weights = { slope:20, flood:25, road:20, util:15, demand:20 };
+function computeComposite(w){
+  const total = w.slope+w.flood+w.road+w.util+w.demand || 1;
+  const nw = { slope:w.slope/total, flood:w.flood/total, road:w.road/total, util:w.util/total, demand:w.demand/total };
+  const g=[];
+  for(let r=0;r<grid.ROWS;r++){
+    const row=[];
+    for(let c=0;c<grid.COLS;c++){
+      if(!world.eligible[r][c]){ row.push(null); continue; }
+      row.push(nw.slope*world.score.slope[r][c]+nw.flood*world.score.flood[r][c]+nw.road*world.score.road[r][c]+nw.util*world.score.util[r][c]+nw.demand*world.score.demand[r][c]);
+    }
+    g.push(row);
+  }
+  return { grid:g, nw };
+}
+function nonMaxSuppress(compGrid,k,minSepCells){
+  const cells=[];
+  for(let r=0;r<grid.ROWS;r++) for(let c=0;c<grid.COLS;c++) if(compGrid[r][c]!=null) cells.push({r,c,v:compGrid[r][c]});
+  cells.sort((a,b)=>b.v-a.v);
+  const chosen=[];
+  for(const cell of cells){
+    if(chosen.length>=k) break;
+    let ok=true;
+    for(const ch of chosen){ if(Math.hypot(cell.r-ch.r,cell.c-ch.c) < minSepCells){ ok=false; break; } }
+    if(ok) chosen.push(cell);
+  }
+  return chosen;
+}
+
+function recomputeAndRedraw(){
+  world = buildWorld();
+  compositeCache = computeComposite(weights);
+  selectedSites = [];
+  drawSuitability();
+  drawSites();
+  updateEligStat();
+  buildResults();
+}
+
+/* ============================================================
+   RENDER: SUITABILITY GRID ON MAP
+   ============================================================ */
+function drawSuitability(){
+  suitLayerGroup.clearLayers();
+  if(!grid || !document.getElementById('toggleSuit').checked) return;
+  const { COLS, ROWS } = grid;
+  const b = grid.bounds;
+  const latStep = (b.getNorth()-b.getSouth())/ROWS, lonStep=(b.getEast()-b.getWest())/COLS;
+  const renderer = L.canvas({ padding:0.4 });
+  for(let r=0;r<ROWS;r++){
+    for(let c=0;c<COLS;c++){
+      const north = b.getNorth()-r*latStep, south=north-latStep;
+      const west = b.getWest()+c*lonStep, east=west+lonStep;
+      const val = world.eligible[r][c] ? compositeCache.grid[r][c] : null;
+      const style = val==null
+        ? { color:'#202B30', weight:0.4, fillColor:'#8A8168', fillOpacity:0.35 }
+        : { color:'#00000000', weight:0, fillColor: threeStop(val), fillOpacity:0.62 };
+      L.rectangle([[south,west],[north,east]], Object.assign({renderer}, style)).addTo(suitLayerGroup);
+    }
+  }
+}
+
+function updateEligStat(){
+  let n=0, tot=0;
+  for(let r=0;r<grid.ROWS;r++) for(let c=0;c<grid.COLS;c++){ tot++; if(world.eligible[r][c]) n++; }
+  document.getElementById('eligReadout').textContent = Math.round(n/tot*100)+'%';
+}
+
+/* ============================================================
+   RUN: AUTOMATED SITING
+   ============================================================ */
+document.getElementById('runBtn').addEventListener('click', runSiting);
+async function runSiting(){
+  if(!grid || animating) return;
+  animating = true;
+  const runBtn = document.getElementById('runBtn'); runBtn.disabled=true;
+  const runStatus = document.getElementById('runStatus'); runStatus.className='status-line active';
+  runStatus.textContent = 'Scoring eligible cells…';
+  compositeCache = computeComposite(weights);
+  drawSuitability();
+  await new Promise(res=>setTimeout(res,220));
+  runStatus.textContent = 'Selecting well-spaced candidate sites…';
+  const minSep = Math.max(3, Math.round(Math.min(grid.COLS,grid.ROWS)*0.12));
+  selectedSites = nonMaxSuppress(compositeCache.grid, 6, minSep);
+  await new Promise(res=>setTimeout(res,180));
+  drawSites();
+  buildResults();
+  runStatus.textContent = `Selection complete — ${selectedSites.length} candidate sites identified.`;
+  runStatus.className='status-line ok';
+  runBtn.disabled=false;
+  animating=false;
+}
+
+function drawSites(){
+  siteLayerGroup.clearLayers();
+  if(!document.getElementById('toggleSites').checked) return;
+  selectedSites.forEach((site,i)=>{
+    const cell = grid.cells[site.r][site.c];
+    const icon = L.divIcon({
+      className:'', iconSize:[26,34], iconAnchor:[13,32],
+      html:`<div style="width:26px;height:26px;border-radius:50% 50% 50% 0;background:#23303A;border:2px solid #C1481F;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;">
+              <span style="transform:rotate(45deg);color:#EDE8DA;font-family:'IBM Plex Mono',monospace;font-weight:700;font-size:11px;">${i+1}</span>
+            </div>`
+    });
+    const marker = L.marker([cell.lat,cell.lon], {icon}).addTo(siteLayerGroup);
+    marker.bindPopup(popupHTML(site,i));
+  });
+}
+function popupHTML(site,i){
+  const r=site.r,c=site.c, nw=compositeCache.nw;
+  const contribs = {
+    slope: nw.slope*world.score.slope[r][c], flood: nw.flood*world.score.flood[r][c],
+    road: nw.road*world.score.road[r][c], util: nw.util*world.score.util[r][c], demand: nw.demand*world.score.demand[r][c]
+  };
+  const total = Object.values(contribs).reduce((a,b)=>a+b,0)||1;
+  const labels = {slope:'Terrain',flood:'Transmission',road:'Road',util:'Substation',demand:'Grid demand'};
+  const colors = {slope:'#E0A526',flood:'#8A6D3B',road:'#C9A24B',util:'#B98A2E',demand:'#2B3A4A'};
+  const bars = Object.entries(contribs).map(([k,v])=>`<div style="width:${(v/total*100).toFixed(1)}%;background:${colors[k]}"></div>`).join('');
+  const dom = Object.entries(contribs).sort((a,b)=>b[1]-a[1])[0][0];
+  const cell = grid.cells[r][c];
+  return `<div style="font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:170px;">
+    <b>Site ${i+1} — Sector ${colLetters(c)}${r+1}</b><br>
+    ${cell.lat.toFixed(5)}, ${cell.lon.toFixed(5)}<br>
+    <div style="font-size:16px;font-weight:700;color:#4C7A46;margin:5px 0 3px;">${Math.round(site.v*100)}%</div>
+    <div style="display:flex;height:6px;border:1px solid #23303A;margin-bottom:5px;">${bars}</div>
+    Leading factor: <b>${labels[dom]}</b>
+  </div>`;
+}
+
+/* ============================================================
+   RESULTS DRAWER
+   ============================================================ */
+const FACTOR_META = { slope:{label:'Terrain Buildability', color:'#E0A526'}, flood:{label:'Transmission Proximity', color:'#8A6D3B'}, road:{label:'Road Access', color:'#C9A24B'}, util:{label:'Interconnection', color:'#B98A2E'}, demand:{label:'Grid Demand', color:'#2B3A4A'} };
+function siteZone(site){ return colLetters(site.c)+(site.r+1); }
+function buildResults(){
+  const body = document.getElementById('resultsBody');
+  const exportBtn = document.getElementById('exportBtn'), printBtn = document.getElementById('printBtn');
+  body.innerHTML='';
+  if(!selectedSites.length){
+    body.innerHTML = '<div class="empty-state">No siting run yet. Generate a study grid, then run automated siting to identify optimal parcels.</div>';
+    exportBtn.disabled=true; printBtn.disabled=true; return;
+  }
+  const list = document.createElement('div'); list.className='site-list';
+  selectedSites.forEach((site,i)=>{
+    const r=site.r,c=site.c, nw=compositeCache.nw;
+    const contribs = { slope:nw.slope*world.score.slope[r][c], flood:nw.flood*world.score.flood[r][c], road:nw.road*world.score.road[r][c], util:nw.util*world.score.util[r][c], demand:nw.demand*world.score.demand[r][c] };
+    const total = Object.values(contribs).reduce((a,b)=>a+b,0)||1;
+    const dom = Object.entries(contribs).sort((a,b)=>b[1]-a[1])[0][0];
+    const bars = Object.entries(contribs).map(([k,v])=>`<div style="width:${(v/total*100).toFixed(1)}%;background:${FACTOR_META[k].color}"></div>`).join('');
+    const card = document.createElement('div'); card.className='site-card';
+    card.innerHTML = `<div class="row1"><div style="display:flex;align-items:center;gap:8px;"><span class="rank">${i+1}</span><span class="zone">Sector ${siteZone(site)}</span></div><span class="score">${Math.round(site.v*100)}%</span></div>
+      <div class="breakdown">${bars}</div>
+      <div class="factor-tag"><span>Leading factor</span><b>${FACTOR_META[dom].label}</b></div>
+      <div class="factor-tag" style="margin-top:3px;"><span>Coordinates</span><b>${grid.cells[r][c].lat.toFixed(4)}, ${grid.cells[r][c].lon.toFixed(4)}</b></div>`;
+    card.addEventListener('click', ()=>{ map.panTo([grid.cells[r][c].lat, grid.cells[r][c].lon]); siteLayerGroup.eachLayer(l=>{}); });
+    list.appendChild(card);
+    setTimeout(()=>card.classList.add('show'), 40+i*80);
+  });
+  body.appendChild(list);
+  exportBtn.disabled=false; printBtn.disabled=false;
+}
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  if(!selectedSites.length) return;
+  let csv = 'rank,sector,lat,lon,composite_score_pct,leading_factor\n';
+  selectedSites.forEach((site,i)=>{
+    const r=site.r,c=site.c, nw=compositeCache.nw;
+    const contribs = { slope:nw.slope*world.score.slope[r][c], flood:nw.flood*world.score.flood[r][c], road:nw.road*world.score.road[r][c], util:nw.util*world.score.util[r][c], demand:nw.demand*world.score.demand[r][c] };
+    const dom = Object.entries(contribs).sort((a,b)=>b[1]-a[1])[0][0];
+    csv += `${i+1},${siteZone(site)},${grid.cells[r][c].lat.toFixed(6)},${grid.cells[r][c].lon.toFixed(6)},${Math.round(site.v*100)},${FACTOR_META[dom].label}\n`;
+  });
+  const blob = new Blob([csv],{type:'text/csv'});
+  const a = document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='solaris-pro-sites.csv'; a.click();
+});
+document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+
+/* ============================================================
+   CRITERIA SLIDERS
+   ============================================================ */
+const criteriaEls = Array.from(document.querySelectorAll('.criterion'));
+function refreshWeightLabels(){
+  const total = weights.slope+weights.flood+weights.road+weights.util+weights.demand || 1;
+  criteriaEls.forEach(el=>{
+    const key = el.dataset.key;
+    el.querySelector('.pct').textContent = Math.round(weights[key]/total*100)+'%';
+  });
+}
+criteriaEls.forEach(el=>{
+  const key = el.dataset.key;
+  el.querySelector('input[type=range]').addEventListener('input', function(){
+    weights[key] = parseInt(this.value,10);
+    refreshWeightLabels();
+    if(world){ compositeCache = computeComposite(weights); drawSuitability(); }
+  });
+});
+refreshWeightLabels();
+
+/* ============================================================
+   SCENARIOS (shared via window.storage, local fallback)
+   ============================================================ */
+const scenarioListEl = document.getElementById('scenarioList');
+const scenarioStatusEl = document.getElementById('scenarioStatus');
+let scenarios = []; let storageAvailable=null;
+async function probeStorage(){
+  if(!window.storage){ storageAvailable=false; return false; }
+  try{ await window.storage.set('__probe', String(Date.now()), true); storageAvailable=true; } catch(e){ storageAvailable=false; }
+  return storageAvailable;
+}
+function scenarioKey(id){ return `spro_scenario:${id}`; }
+async function loadScenarios(){
+  if(await probeStorage()){
+    try{
+      const listing = await window.storage.list('spro_scenario:', true);
+      const keys = (listing&&listing.keys)||[];
+      const loaded=[];
+      for(const k of keys){ try{ const res=await window.storage.get(k,true); if(res&&res.value) loaded.push(JSON.parse(res.value)); }catch(e){} }
+      loaded.sort((a,b)=>b.savedAt-a.savedAt);
+      scenarios = loaded;
+      scenarioStatusEl.textContent='Shared team library — visible to anyone using this tool.';
+    }catch(e){ storageAvailable=false; scenarioStatusEl.textContent='Local only this session.'; }
+  } else {
+    scenarioStatusEl.textContent='Local only this session — open via Claude to enable shared storage.';
+  }
+  renderScenarios();
+}
+function renderScenarios(){
+  scenarioListEl.innerHTML='';
+  scenarios.forEach(sc=>{
+    const chip=document.createElement('div'); chip.className='scenario-chip';
+    chip.innerHTML=`<span class="sc-name">${sc.name}</span><span class="sc-score">${sc.topScore}%</span><span class="sc-del">✕</span>`;
+    chip.addEventListener('click', async e=>{
+      if(e.target.classList.contains('sc-del')){
+        scenarios = scenarios.filter(s=>s.id!==sc.id); renderScenarios();
+        if(storageAvailable){ try{ await window.storage.delete(scenarioKey(sc.id),true);}catch(err){} }
+        return;
+      }
+      weights = Object.assign({},sc.weights);
+      criteriaEls.forEach(el=>{ el.querySelector('input[type=range]').value = weights[el.dataset.key]; });
+      refreshWeightLabels();
+      if(world){ compositeCache = computeComposite(weights); drawSuitability(); }
+      document.getElementById('runStatus').textContent = `Loaded scenario "${sc.name}" — run siting to re-rank sites.`;
+    });
+    scenarioListEl.appendChild(chip);
+  });
+}
+document.getElementById('saveScenarioBtn').addEventListener('click', async ()=>{
+  const nameInput = document.getElementById('scenarioName');
+  const name = nameInput.value.trim() || `Scenario ${scenarios.length+1}`;
+  if(scenarios.length>=5){ scenarioStatusEl.textContent='Limit of 5 — delete one to add another.'; return; }
+  const flatVals = compositeCache ? [].concat(...compositeCache.grid).filter(v=>v!=null) : [];
+  const topScore = selectedSites.length ? Math.round(selectedSites[0].v*100) : Math.round(Math.max(0,...flatVals,0)*100);
+  const sc = { id:'sc_'+Date.now()+'_'+Math.floor(Math.random()*1e4), name, weights:Object.assign({},weights), topScore, savedAt:Date.now() };
+  scenarios.unshift(sc); nameInput.value=''; renderScenarios();
+  if(storageAvailable){ try{ await window.storage.set(scenarioKey(sc.id), JSON.stringify(sc), true);}catch(e){} }
+});
+loadScenarios();
+
+/* ============================================================
+   MOBILE SIDEBAR TOGGLE (small screens)
+   ============================================================ */
+if(window.innerWidth < 880){
+  const toggle = document.createElement('button');
+  toggle.textContent='☰'; toggle.style.cssText='background:transparent;border:1px solid #4A5860;color:#EDE8DA;padding:6px 10px;cursor:pointer;font-size:14px;';
+  document.querySelector('header').prepend(toggle);
+  toggle.addEventListener('click', ()=>document.getElementById('sidebar').classList.toggle('open'));
+}
+
+})();
+</script>
+</body>
+</html>
