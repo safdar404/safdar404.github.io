@@ -55,6 +55,53 @@ An interactive ArcGIS and Python geospatial project covering Islamabad, combinin
 
 ---
 
+## Live AI & GeoAI Applications
+
+### HIS AI Agentic Solutions
+
+[**Open live app →**](https://his-ai-agentic-solutions.lovable.app/)
+
+An AI engineering and automation showcase connecting data, specialist agents, tools, validation and human approval in a clear workflow.
+
+- Synthetic document-review, GeoAI assessment and data-quality demonstrations.
+- A specialist-agent catalogue and visible execution logs, review briefs and approval checkpoints.
+- Explores AI engineering, retrieval-augmented generation, geospatial pipelines and business automation.
+
+<p align="center"><a href="https://his-ai-agentic-solutions.lovable.app/"><img src="./assets/live-ai-applications/his-agentic-app.jpg" alt="HIS AI Agentic Solutions — Actual homepage and synthetic workflow sandbox." width="100%" /></a></p>
+<p align="center"><em>Actual homepage and synthetic workflow sandbox.</em></p>
+
+**Focus:** Agentic workflows · Human review · GeoAI
+
+### GeoSentinel AI
+
+[**Open live app →**](https://geosentinel-ai-1.ai.studio/)
+
+A geospatial decision-support dashboard demonstrating flood intelligence and municipal incident-management workflows, with the Nullah Lai and Margalla catchment as a featured context.
+
+- Basin selection, map-based incident triage, risk summaries and analytical views.
+- Evidence fusion, incident intelligence, work-order verification and GeoAI-agent interfaces.
+- Connects the observe → assess → act → verify workflow in one interactive application.
+
+<p align="center"><a href="https://geosentinel-ai-1.ai.studio/"><img src="./assets/live-ai-applications/geosentinel-app.jpg" alt="GeoSentinel AI — Actual command-center interface; displayed telemetry and metrics are demonstration content unless independently verified." width="100%" /></a></p>
+<p align="center"><em>Actual command-center interface; displayed telemetry and metrics are demonstration content unless independently verified.</em></p>
+
+**Focus:** Web GIS · Flood intelligence · Incident workflows
+
+### AI HealthAssist
+
+[**Open live app →**](https://ai-healthassist.ai.studio/)
+
+An educational clinical decision-support prototype combining structured intake, symptom and vital-sign capture, clinical history, laboratory inputs and geographic context.
+
+- A five-stage intake workflow and preset clinical test scenarios.
+- Interactive calculator views for MAP/pulse pressure, eGFR, CHA₂DS₂-VASc and BMI/BSA.
+- Demonstrates clinician-oriented review and public-health surveillance interfaces.
+
+<p align="center"><a href="https://ai-healthassist.ai.studio/"><img src="./assets/live-ai-applications/healthassist-app.jpg" alt="AI HealthAssist — Actual calculator panel, cropped to exclude patient identifiers. Educational prototype; not a substitute for clinical diagnosis or treatment." width="100%" /></a></p>
+<p align="center"><em>Actual calculator panel, cropped to exclude patient identifiers. Educational prototype; not a substitute for clinical diagnosis or treatment.</em></p>
+
+**Focus:** Structured intake · Clinical calculators · Health GIS
+
 ## Other featured live projects
 
 - [Pakistan Infrastructure GIS Command Centre](https://pmu-pdp-infrastructure-gis.neat-grove-8624.chatgpt.site/) — GIS dashboard for infrastructure and transportation planning, project monitoring and spatial decision support.
