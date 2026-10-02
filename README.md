@@ -32,6 +32,23 @@ A three-application AI/GeoAI spatial decision-support case study combining **Pyt
 - GIS / remote sensing / MCDA
 - GitHub Pages deployment
 
+## Islamabad Feature Intelligence
+
+[**Open the live Islamabad dashboard**](https://islamabad-feature-intelligence.safdarwatto7714.chatgpt.site)
+
+An interactive ArcGIS and Python geospatial project covering Islamabad, combining **16,704 OSM building footprints** with **228,921 additional Microsoft ML footprints** into a **245,625-feature Building Footprints view**. Residential, commercial, industrial, other tagged use and unknown-use categories have independent filters and polygon colors.
+
+- Reference roads, waterways, water bodies and land-use areas alongside Sentinel-2 vegetation, water and built-up / bare-soil screening.
+- Dated Sentinel-2B imagery (23 February 2026), spectral indices and unsupervised ML clusters for broad land-cover context.
+- Interactive 3D-style pie and bar charts with category area, percentage and source details; Power BI-ready data and setup kit.
+- Shapefile ZIPs for ten vector datasets, GeoJSON, raster data, map/chart PNG and PDF exports, and analysis reports.
+
+**Tools:** ArcGIS Maps SDK for JavaScript · Python · GeoPandas · Rasterio · scikit-learn · Sentinel-2 · OpenStreetMap · Microsoft Global ML Building Footprints
+
+*Building footprints are reference geometry, not legal cadastral parcels. Source coverage is incomplete, ML property use is unknown, and spectral candidates require validation. The dashboard provides Power BI-ready materials rather than an embedded Power BI report.*
+
+---
+
 ## Other featured live projects
 
 - [Pakistan Infrastructure GIS Command Centre](https://pmu-pdp-infrastructure-gis.neat-grove-8624.chatgpt.site/) — GIS dashboard for infrastructure and transportation planning, project monitoring and spatial decision support.
