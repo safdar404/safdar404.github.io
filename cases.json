@@ -1,0 +1,74 @@
+[
+  {
+    "id": "nwc",
+    "title": "NWC Wastewater Network GIS",
+    "description": "Utility-GIS structuring, mapping and quality-controlled network intelligence for operational use.",
+    "image": "assets/case-studies/nwc-wastewater-gis.jpg",
+    "alt": "NWC wastewater network GIS asset map in Riyadh",
+    "tags": [
+      "Enterprise GIS",
+      "Utilities",
+      "Data QA"
+    ]
+  },
+  {
+    "id": "pdma",
+    "title": "PDMA Punjab Flood Decision Support",
+    "description": "Flood exposure, evacuation access and early-warning mapping for Chenab and Sutlej influence areas.",
+    "image": "assets/case-studies/pdma-flood-intelligence.jpg",
+    "alt": "PDMA Punjab flood inundation and early-warning map",
+    "tags": [
+      "Risk mapping",
+      "Remote sensing",
+      "DRR"
+    ]
+  },
+  {
+    "id": "fgeha",
+    "title": "FGEHA Enterprise Geodatabase",
+    "description": "CAD-to-GIS conversion, cadastral topology and infrastructure databases for Islamabad sectors.",
+    "image": "assets/case-studies/fgeha-cad-gis.jpg",
+    "alt": "FGEHA cadastral and infrastructure geodatabase quality-assurance map",
+    "tags": [
+      "Cadastre",
+      "Topology",
+      "ArcGIS"
+    ]
+  },
+  {
+    "id": "crop",
+    "title": "Crop & Wheat Intelligence",
+    "description": "Satellite crop monitoring, estimation and predictive spatial analytics for agricultural decisions.",
+    "image": "assets/case-studies/terrasense-wheat-estimation.jpg",
+    "alt": "TerraSense satellite wheat crop area estimation map",
+    "tags": [
+      "GEE",
+      "Sentinel",
+      "GeoAI"
+    ]
+  },
+  {
+    "id": "infrastructure",
+    "title": "Integrated Spatial Systems",
+    "description": "GIS, GNSS, field information and database workflows for infrastructure coordination.",
+    "image": "assets/case-studies/riyadh-roads-gnss.jpg",
+    "alt": "Riyadh road infrastructure and GNSS survey integration map",
+    "tags": [
+      "GNSS",
+      "Web GIS",
+      "Automation"
+    ]
+  },
+  {
+    "id": "taif",
+    "title": "Mining Site Spatial Assessment",
+    "description": "Environmental and geospatial screening supporting site understanding and evidence-based assessment.",
+    "image": "assets/case-studies/taif-mining-suitability.jpg",
+    "alt": "Taif mining site UAV orthomosaic, survey control and contours map",
+    "tags": [
+      "Suitability",
+      "Terrain",
+      "RS"
+    ]
+  }
+]
