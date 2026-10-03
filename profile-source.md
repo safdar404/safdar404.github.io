@@ -1,10 +1,6 @@
-# Portfolio source
-
-This portfolio and its project catalogue are generated from [the GitHub profile README](https://github.com/safdar404/safdar404). Edit that README for shared content. The workflow checks for updates every six hours and can be run manually.
-
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/safdar404/safdar404/main/profile-banner.svg" alt="Muhammad Safdar — Data Science, AI/ML, GeoAI and Spatial Intelligence" width="100%" />
+<img src="./profile-banner.svg" alt="Muhammad Safdar — Data Science, AI/ML, GeoAI and Spatial Intelligence" width="100%" />
 
 [![Portfolio](https://img.shields.io/badge/PORTFOLIO-VISIT-f5c85b?style=for-the-badge&logo=githubpages&logoColor=041019)](https://safdar404.github.io/)
 [![GeoAI Suite](https://img.shields.io/badge/GEOAI%20SUITE-EXPLORE-1bdcff?style=for-the-badge&logo=googlemaps&logoColor=white)](https://safdar404.github.io/geoai-site-intelligence/)
@@ -24,7 +20,7 @@ I transform spatial, engineering and business data into validated analysis, prod
 ---
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/safdar404/safdar404/main/profile-metrics.svg" alt="Professional snapshot: 15+ years GIS/GeoAI, 20+ people trained, 3 GeoAI suite apps, 5 resilience workflows, 10+ applied AI projects" width="100%" />
+<img src="./profile-metrics.svg" alt="Professional snapshot: 15+ years GIS/GeoAI, 20+ people trained, 3 GeoAI suite apps, 5 resilience workflows, 10+ applied AI projects" width="100%" />
 </p>
 
 ## What I deliver
@@ -58,7 +54,7 @@ An end-to-end sales analytics case study using the supplied Superstore workbook.
 **Findings:** 2020 sales reached $733,215, up 20.4% from 2019. Technology generated $498,095 in sales and $90,458 in profit. Furniture generated $414,289 in sales but only $9,978 in profit; Tables alone lost $11,092. The West contributed the highest regional profit at $67,861.
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/superstore-performance.svg" alt="Six Superstore charts: monthly sales trend, category sales, regional profit, segment share, subcategory profit, and regional quarterly sales heatmap" width="100%" />
+  <img src="./superstore-performance.svg" alt="Six Superstore charts: monthly sales trend, category sales, regional profit, segment share, subcategory profit, and regional quarterly sales heatmap" width="100%" />
 </p>
 
 **Model and quality checks:** Order Date links to a Date dimension; measures cover sales, profit, margin, distinct orders, units and average order value. The workbook's Returns sheet has 296 distinct IDs, with **zero matches** against Orders, so a return rate is excluded. The public dashboard uses grouped figures without customer or order identifiers.
@@ -77,7 +73,7 @@ An end-to-end sales analytics case study using the supplied Superstore workbook.
 
 A new analysis of **4,446 laptop listings** and **$205.07 million in reported sales**. It compares brands, CPU families, price bands and graphics types, with brand-level pricing and coverage of ratings and stock. The dashboard filters by brand and graphics configuration.
 
-<p align="center"><img src="https://raw.githubusercontent.com/safdar404/safdar404/main/laptop-performance.svg" alt="Laptop analytics charts showing sales by brand, CPU mix, price bands, and graphics configuration" width="100%" /></p>
+<p align="center"><img src="./laptop-performance.svg" alt="Laptop analytics charts showing sales by brand, CPU mix, price bands, and graphics configuration" width="100%" /></p>
 
 **Data quality:** 537 rows have reported sales that differ from price × units by more than $1, and the dataset has no transaction dates. The supplied archive includes a Power BI report credited to Sridhar Kamali; this independent dashboard uses its CSV and does not claim authorship of that report.
 
@@ -87,7 +83,7 @@ A new analysis of **4,446 laptop listings** and **$205.07 million in reported sa
 
 A customer-sales case study drawn from a file labeled as a hiring assessment. After removing one exact duplicate, **99 purchases total 34,400 source currency units** across 2016–2019. The public dashboard explores year, country, product and age-band mix without customer names or identifiers.
 
-<p align="center"><img src="https://raw.githubusercontent.com/safdar404/safdar404/main/customer-purchases.svg" alt="Customer purchase charts showing annual amount, product and country comparisons, and age-band mix" width="100%" /></p>
+<p align="center"><img src="./customer-purchases.svg" alt="Customer purchase charts showing annual amount, product and country comparisons, and age-band mix" width="100%" /></p>
 
 **Data quality:** Mixed date strings were interpreted day-first; the source does not specify a currency. The dashboard documents both assumptions.
 
@@ -121,7 +117,7 @@ An interactive ArcGIS and Python geospatial project covering Islamabad, combinin
 
 ## ⭐ Featured project — GeoAI Site Intelligence Suite
 
-<a href="https://safdar404.github.io/geoai-site-intelligence/"><img src="https://raw.githubusercontent.com/safdar404/safdar404/main/geoai-site-intelligence.svg" alt="GeoAI Site Intelligence Suite workflow and three GIS applications" width="100%" /></a>
+<a href="https://safdar404.github.io/geoai-site-intelligence/"><img src="./geoai-site-intelligence.svg" alt="GeoAI Site Intelligence Suite workflow and three GIS applications" width="100%" /></a>
 
 [**MERIDIAN PRO**](https://safdar404.github.io/geoai-site-intelligence/meridian-pro.html) · [**GEOSENTINEL PRO**](https://safdar404.github.io/geoai-site-intelligence/geosentinel-pro.html) · [**SOLARIS PRO**](https://safdar404.github.io/geoai-site-intelligence/solaris-pro.html) · [Methodology](https://github.com/safdar404/safdar404.github.io/tree/main/geoai-site-intelligence)
 
