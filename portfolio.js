@@ -10,7 +10,7 @@ let category='All projects',expanded=false;
 function updateGallery(){
  const term=search.value.trim().toLowerCase();
  const matched=cards.filter(card=>{const data=projects.find(p=>p.id===card.dataset.project);return(category==='All projects'||data.category===category)&&[data.title,data.description,...data.tags].join(' ').toLowerCase().includes(term)});
- const limit=expanded||category!=='All projects'||term?matched.length:6;
+ const limit=expanded||category!=='All projects'||term?matched.length:9;
  cards.forEach(card=>card.hidden=!matched.includes(card)||matched.indexOf(card)>=limit);
  const visible=Math.min(limit,matched.length);
  document.getElementById('result-count').textContent=`Showing ${visible} of ${matched.length} projects`;
@@ -57,3 +57,9 @@ dialog.addEventListener('close',()=>{if(opener)opener.focus()});
 document.getElementById('print-portfolio').addEventListener('click',()=>window.print());
 const navObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){nav.querySelectorAll('a').forEach(a=>{const current=a.hash==='#'+entry.target.id;a.classList.toggle('active',current);if(current)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}})},{rootMargin:'-15% 0px -60% 0px'});['work','about','experience','contact'].forEach(id=>navObserver.observe(document.getElementById(id)));
 document.querySelectorAll('.work-image img').forEach(img=>img.addEventListener('error',()=>{const label=el('div',img.alt||'Project preview','project-placeholder');img.replaceWith(label)}));
+
+// Client-side brief preparation; visitor reviews and sends in their own mail app.
+document.querySelectorAll('[data-service]').forEach(a=>a.addEventListener('click',()=>{category=a.dataset.service;expanded=true;search.value='';updateGallery()}));
+const briefForm=document.getElementById('brief-form');
+briefForm.addEventListener('submit',event=>{event.preventDefault();const area=document.getElementById('brief-area').value;const goal=document.getElementById('brief-goal').value.trim();const data=document.getElementById('brief-data').value.trim();if(!goal)return;const body='Project area: '+area+'\n\nObjective:\n'+goal+'\n\nAvailable data and timeline:\n'+(data||'To discuss');const action=document.getElementById('brief-email');action.href='mailto:safdar404@gmail.com?subject='+encodeURIComponent('Project enquiry: '+area)+'&body='+encodeURIComponent(body);action.hidden=false;document.getElementById('brief-feedback').textContent='Your draft is ready. Review it in your email app before sending.';});
+
