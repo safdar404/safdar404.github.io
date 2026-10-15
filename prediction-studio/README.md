@@ -39,3 +39,7 @@ node prediction-studio/test.cjs
 Tests cover ROC ties, undefined metrics, OLS coefficients, deterministic non-overlapping partitions, CSV validation and escaping, all five sample workflows, perfect-line holdout evaluation, duplicate capacity dates and zero-demand stock.
 
 This is an exploratory workbench, not a clinical diagnostic tool, causal model or regulatory forecasting system. Model performance depends on representative data and an appropriate independent evaluation design.
+
+## SVG dashboard images
+
+After loading valid data, select **Preview SVG** to inspect the complete vector dashboard or **Dashboard SVG ↓** to download it. The export contains all active-workflow metric cards and charts, decision signals, provenance, assumptions and methods. It also includes classifier threshold comparisons or regression model details when relevant. A twelve-row record preview is included independently of table search; use Rows CSV for the entire dataset. The SVG is self-contained and editable, with no external fonts or raster screenshots. Synthetic examples remain explicitly labelled. Each workflow exports its own current dataset; unrelated tabs are not combined.
