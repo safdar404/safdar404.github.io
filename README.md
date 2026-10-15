@@ -34,15 +34,17 @@ All 26 projects are documented here: the 18 entries below and the eight applied 
 
 #### Islamabad Feature Intelligence
 
-[![Islamabad Sentinel-2 false color, NDVI and land-cover analysis](https://safdar404.github.io/assets/islamabad-feature-intelligence/sentinel2-analysis-map.png)](https://islamabad-feature-intelligence.safdarwatto7714.chatgpt.site)
+[![Islamabad Sentinel-2 analysis preview](https://safdar404.github.io/assets/islamabad-feature-intelligence/sentinel2-analysis-map.png)](https://islamabad-feature-intelligence.safdarwatto7714.chatgpt.site/)
 
-Explore 245,625 combined OSM and Microsoft ML building references with category colors and filters, mapped roads and land use, and dated Sentinel-2 spectral screening. Interactive 3D-style charts show area, percentage and source details.
+Explore 245,909 OSM, Microsoft ML and supplied-reference footprint features in an expanded map with on-demand controls and docked feature details. Switch between 2D and 3D, with independent single-, double- or triple-storey height scenarios by building type.
 
-**ArcGIS · Python · GeoAI · Sentinel-2 · Shapefile**
+**ArcGIS · Python · GeoAI · 3D GIS · Sentinel-2 · Shapefile**
 
-[Open live dashboard](https://islamabad-feature-intelligence.safdarwatto7714.chatgpt.site)
+[Open live dashboard](https://islamabad-feature-intelligence.safdarwatto7714.chatgpt.site/)
 
-Includes shapefile ZIPs for ten vector datasets, map/chart PNG and PDF exports, reports and a Power BI-ready kit. Building references are not legal parcels; source coverage and classifications require review.
+Includes category filters, bounded topology corrections, component splits, supplied F-7 additions, shapefile downloads, PNG/PDF map and chart exports, reports and a Power BI-ready kit.
+
+Residential 6,152; Commercial 272; Industrial 23; Other tagged use 366; Use unknown 239,096. Heights of 3, 6 and 9 m are user-selected assumptions, not measurements. Building references are not legal parcels; roof alignment and source completeness remain unverified.
 
 #### GeoAI Resilience Intelligence Suite
 
