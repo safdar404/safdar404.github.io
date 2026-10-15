@@ -3,16 +3,21 @@
     "id": "islamabad-feature-intelligence",
     "title": "Islamabad Feature Intelligence",
     "category": "GeoAI & GIS",
-    "description": "Explore 245,625 combined OSM and Microsoft ML building references with category colors and filters, mapped roads and land use, and dated Sentinel-2 spectral screening. Interactive 3D-style charts show area, percentage and source details.",
+    "description": "Explore 245,909 OSM, Microsoft ML and supplied-reference footprint features in an expanded map with on-demand controls and docked feature details. Switch between 2D and 3D, with independent single-, double- or triple-storey height scenarios by building type.",
     "paragraphs": [
-      "Explore 245,625 combined OSM and Microsoft ML building references with category colors and filters, mapped roads and land use, and dated Sentinel-2 spectral screening. Interactive 3D-style charts show area, percentage and source details.",
-      "Includes shapefile ZIPs for ten vector datasets, map/chart PNG and PDF exports, reports and a Power BI-ready kit. Building references are not legal parcels; source coverage and classifications require review."
+      "Explore 245,909 OSM, Microsoft ML and supplied-reference footprint features in an expanded map with on-demand controls and docked feature details. Switch between 2D and 3D, with independent single-, double- or triple-storey height scenarios by building type.",
+      "Includes category filters, bounded topology corrections, component splits, supplied F-7 additions, shapefile downloads, PNG/PDF map and chart exports, reports and a Power BI-ready kit.",
+      "Residential 6,152; Commercial 272; Industrial 23; Other tagged use 366; Use unknown 239,096. Heights of 3, 6 and 9 m are user-selected assumptions, not measurements. Building references are not legal parcels; roof alignment and source completeness remain unverified."
     ],
-    "points": [],
+    "points": [
+      "Full-width map by default; legends, height notes and settings sit outside the canvas.",
+      "Independent 3/6/9 m scenarios for Residential, Commercial, Industrial, Other tagged use and Use unknown."
+    ],
     "tags": [
       "ArcGIS",
       "Python",
       "GeoAI",
+      "3D GIS",
       "Sentinel-2",
       "Shapefile"
     ],
@@ -24,10 +29,10 @@
     ],
     "image": "assets/islamabad-feature-intelligence/sentinel2-analysis-map.png",
     "alt": "Islamabad Sentinel-2 false color, NDVI and land-cover analysis",
-    "cardSummary": "Explore building references, roads and Sentinel-2 screening in one spatial workspace.",
+    "cardSummary": "Explore 245,909 footprint references with a clear map and 3D height scenarios by building type.",
     "highlight": [
-      "245,625",
-      "Building references"
+      "245,909",
+      "Reference footprints"
     ]
   },
   {
