@@ -23,7 +23,12 @@
       }
     ],
     "image": "assets/islamabad-feature-intelligence/sentinel2-analysis-map.png",
-    "alt": "Islamabad Sentinel-2 false color, NDVI and land-cover analysis"
+    "alt": "Islamabad Sentinel-2 false color, NDVI and land-cover analysis",
+    "cardSummary": "Explore building references, roads and Sentinel-2 screening in one spatial workspace.",
+    "highlight": [
+      "245,625",
+      "Building references"
+    ]
   },
   {
     "id": "resilience",
@@ -56,7 +61,12 @@
       }
     ],
     "image": "assets/selected-projects/resilience.jpg",
-    "alt": "GeoAI Resilience Intelligence Suite — application screenshot"
+    "alt": "GeoAI Resilience Intelligence Suite — application screenshot",
+    "cardSummary": "Five spatial workflows for urban growth, floods, utilities, drainage and Earth observation.",
+    "highlight": [
+      "5 workflows",
+      "Spatial decision support"
+    ]
   },
   {
     "id": "his-agentic",
@@ -83,7 +93,12 @@
       }
     ],
     "image": "assets/live-ai-applications/his-agentic-app.jpg",
-    "alt": "HIS AI Agentic Solutions interface"
+    "alt": "HIS AI Agentic Solutions interface",
+    "cardSummary": "Connect specialist agents, tools and validation through a clear human-review workflow.",
+    "highlight": [
+      "Agents + tools",
+      "Human review built in"
+    ]
   },
   {
     "id": "ai-healthassist",
@@ -115,7 +130,12 @@
       }
     ],
     "image": "assets/live-ai-applications/healthassist-app.jpg",
-    "alt": "AI HealthAssist — application screenshot"
+    "alt": "AI HealthAssist — application screenshot",
+    "cardSummary": "Structured intake, clinical calculators and geographic context for educational health analysis.",
+    "highlight": [
+      "Intake → insight",
+      "Educational prototype"
+    ]
   },
   {
     "id": "floodops",
@@ -147,7 +167,12 @@
       }
     ],
     "image": "assets/selected-projects/floodops.jpg",
-    "alt": "GeoSentinel FloodOps — application screenshot"
+    "alt": "GeoSentinel FloodOps — application screenshot",
+    "cardSummary": "Explore modeled flood exposure, incidents and review-oriented response recommendations.",
+    "highlight": [
+      "Map → review",
+      "Illustrative flood scenarios"
+    ]
   },
   {
     "id": "python-lab",
@@ -180,7 +205,12 @@
       }
     ],
     "image": "assets/selected-projects/python-lab.jpg",
-    "alt": "Python & AI Analytics Lab — application screenshot"
+    "alt": "Python & AI Analytics Lab — application screenshot",
+    "cardSummary": "Follow four Python projects from data preparation to modeling and evaluation.",
+    "highlight": [
+      "4 projects",
+      "Classification to forecasting"
+    ]
   },
   {
     "id": "pakistan-flood",
@@ -212,8 +242,14 @@
         "url": "https://github.com/safdar404/Pakistan-National-Flood-Intelligence"
       }
     ],
-    "image": "assets/portfolio-previews/pakistan-flood.svg",
-    "alt": "Pakistan National Flood Intelligence — project overview graphic"
+    "image": "",
+    "alt": "Pakistan National Flood Intelligence — project overview graphic",
+    "previewLabel": "Source-backed implementation",
+    "highlight": [
+      "35 districts",
+      "Qualitative screening"
+    ],
+    "cardSummary": "Screen districts, inspect dated flood context and explore response-planning scenarios."
   },
   {
     "id": "prediction",
@@ -245,7 +281,12 @@
       }
     ],
     "image": "assets/selected-projects/prediction.jpg",
-    "alt": "Prediction Studio — application screenshot"
+    "alt": "Prediction Studio — application screenshot",
+    "cardSummary": "Upload CSVs to audit model results, hospital capacity, stock and device-event trends.",
+    "highlight": [
+      "4 CSV workflows",
+      "Browser-based analysis"
+    ]
   },
   {
     "id": "zarwa-bill",
@@ -277,8 +318,14 @@
         "url": "https://github.com/safdar404/HIS-Bill-Scanner"
       }
     ],
-    "image": "assets/portfolio-previews/zarwa-bill.svg",
-    "alt": "Zarwa Bill Scanner / HIS Bill Scanner — project overview graphic"
+    "image": "",
+    "alt": "Zarwa Bill Scanner / HIS Bill Scanner — project overview graphic",
+    "previewLabel": "Source-backed implementation",
+    "highlight": [
+      "OCR → CSV",
+      "Reviewable bill extraction"
+    ],
+    "cardSummary": "Extract invoice and receipt fields with OCR, then review them against the original bill."
   },
   {
     "id": "geosentinel",
@@ -305,7 +352,12 @@
       }
     ],
     "image": "assets/live-ai-applications/geosentinel-app.jpg",
-    "alt": "GeoSentinel AI interface"
+    "alt": "GeoSentinel AI interface",
+    "cardSummary": "Connect geographic context, municipal incidents and flood-intelligence workflows.",
+    "highlight": [
+      "Map + incidents",
+      "Geospatial decision support"
+    ]
   },
   {
     "id": "project-9",
@@ -332,8 +384,14 @@
         "url": "https://github.com/safdar404/safdar404.github.io/tree/main/laptop-intelligence"
       }
     ],
-    "image": "assets/portfolio-previews/laptop-performance.svg",
-    "alt": "Laptop sales analysis"
+    "image": "https://raw.githubusercontent.com/safdar404/safdar404/main/assets/project-screenshots/laptop-actual-dashboard.jpg",
+    "alt": "Laptop Sales & Pricing Intelligence — Actual dashboard · 4,446 listings",
+    "previewLabel": "Actual dashboard · 4,446 listings",
+    "highlight": [
+      "4,446 listings",
+      "Retail pricing intelligence"
+    ],
+    "cardSummary": "Explore laptop brands, price bands, reported sales and inventory quality."
   },
   {
     "id": "project-10",
@@ -360,8 +418,14 @@
         "url": "https://github.com/safdar404/safdar404.github.io/tree/main/customer-purchase-intelligence"
       }
     ],
-    "image": "assets/portfolio-previews/customer-purchases.svg",
-    "alt": "Customer purchase analysis"
+    "image": "https://raw.githubusercontent.com/safdar404/safdar404/main/assets/project-screenshots/customer-actual-dashboard.jpg",
+    "alt": "Customer Purchase Intelligence — Actual dashboard · 99 purchases",
+    "previewLabel": "Actual dashboard · 99 purchases",
+    "highlight": [
+      "2016–2019",
+      "Customer purchase analysis"
+    ],
+    "cardSummary": "Explore purchases by year, country, product and customer age band."
   },
   {
     "id": "project-11",
@@ -388,8 +452,14 @@
         "url": "https://github.com/safdar404/safdar404.github.io/tree/main/superstore-bi"
       }
     ],
-    "image": "assets/portfolio-previews/superstore-performance.svg",
-    "alt": "Superstore sales analysis"
+    "image": "https://raw.githubusercontent.com/safdar404/safdar404/main/assets/project-screenshots/superstore-actual-dashboard.jpg",
+    "alt": "Superstore Sales Intelligence — Actual dashboard · 5,899 order lines",
+    "previewLabel": "Actual dashboard · 5,899 order lines",
+    "highlight": [
+      "5,899 order lines",
+      "Sales & profitability"
+    ],
+    "cardSummary": "Track sales, profit, margins and regional performance with documented data QA."
   },
   {
     "id": "project-12",
@@ -417,8 +487,14 @@
         "url": "https://github.com/safdar404/safdar404.github.io/tree/main/geoai-site-intelligence"
       }
     ],
-    "image": "assets/portfolio-previews/geoai-site-intelligence.svg",
-    "alt": "GeoAI Site Intelligence Suite workflow"
+    "image": "https://raw.githubusercontent.com/safdar404/safdar404/main/assets/project-screenshots/meridian-actual-dashboard.jpg",
+    "alt": "GeoAI Site Intelligence Suite — Actual interface · modeled suitability",
+    "previewLabel": "Actual interface · modeled suitability",
+    "highlight": [
+      "3 applications",
+      "Spatial screening prototypes"
+    ],
+    "cardSummary": "Compare site suitability, flood-mitigation locations and utility-scale solar screening."
   },
   {
     "id": "infrastructure",
@@ -446,7 +522,12 @@
       }
     ],
     "image": "assets/selected-projects/infrastructure.jpg",
-    "alt": "Pakistan Infrastructure GIS Command Centre — application screenshot"
+    "alt": "Pakistan Infrastructure GIS Command Centre — application screenshot",
+    "cardSummary": "Bring utility networks, asset condition, field verification and project QA into one view.",
+    "highlight": [
+      "Assets + QA",
+      "Infrastructure GIS prototype"
+    ]
   },
   {
     "id": "planora",
@@ -479,7 +560,12 @@
       }
     ],
     "image": "assets/selected-projects/planora.jpg",
-    "alt": "Planora AI — CAD, BIM & GIS Flow — application screenshot"
+    "alt": "Planora AI — CAD, BIM & GIS Flow — application screenshot",
+    "cardSummary": "Explore a connected brief-to-design workflow across CAD, BIM, MEP, GIS and costing.",
+    "highlight": [
+      "CAD · BIM · GIS",
+      "Connected engineering workflow"
+    ]
   },
   {
     "id": "rag",
@@ -511,8 +597,14 @@
         "url": "https://github.com/safdar404/LangChain-RAG-Application"
       }
     ],
-    "image": "assets/portfolio-previews/rag-assistant.svg",
-    "alt": "LangChain RAG Document Assistant — project overview graphic"
+    "image": "",
+    "alt": "LangChain RAG Document Assistant — project overview graphic",
+    "previewLabel": "Source-backed implementation",
+    "highlight": [
+      "Retrieve → cite",
+      "Document intelligence"
+    ],
+    "cardSummary": "Trace documents from ingestion and semantic retrieval to answers with source context."
   },
   {
     "id": "mep-scanner",
@@ -545,7 +637,309 @@
         "url": "https://github.com/safdar404/HIS-MEP-Scanner-System."
       }
     ],
-    "image": "assets/portfolio-previews/mep-scanner.svg",
-    "alt": "MEP Scanner System — project overview graphic"
+    "image": "",
+    "alt": "MEP Scanner System — project overview graphic",
+    "previewLabel": "Source-backed implementation",
+    "highlight": [
+      "OCR + context",
+      "Engineering document review"
+    ],
+    "cardSummary": "Extract drawing components, equipment tags, dimensions and airflow with OCR."
+  },
+  {
+    "id": "ml-sonar",
+    "title": "Sonar Signal Classification",
+    "category": "AI & Data Science",
+    "description": "Rock-versus-mine classification from 60 sonar features with a scaled SVC pipeline and measured held-out evaluation.",
+    "paragraphs": [
+      "Rock-versus-mine classification from 60 sonar features with a scaled SVC pipeline and measured held-out evaluation.",
+      "Supplied tuned SVC dashboard; 42 test samples. This run differs from the earlier baseline evaluation.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "Accuracy 81.0% · ROC AUC 0.939 · Average precision 0.950"
+    ],
+    "tags": [
+      "Python",
+      "SVC",
+      "Signal classification"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#sonar"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/sonar.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/sonar.png",
+    "alt": "Sonar Signal Classification — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "81.0%",
+      "Test accuracy · supplied run"
+    ],
+    "cardSummary": "Classify rock and mine sonar signals with scaled SVC and inspect prediction errors."
+  },
+  {
+    "id": "ml-cancer",
+    "title": "Breast Cancer Classification",
+    "category": "AI & Data Science",
+    "description": "An educational PCA + SVC workflow showing malignant recall, confusion matrices and precision–recall evaluation.",
+    "paragraphs": [
+      "An educational PCA + SVC workflow showing malignant recall, confusion matrices and precision–recall evaluation.",
+      "Educational dataset evaluation; 3 missed malignant cases and 1 false positive in the displayed test set.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "Accuracy 96.5% · Malignant recall 92.9% · ROC AUC 0.990"
+    ],
+    "tags": [
+      "Python",
+      "PCA",
+      "Model evaluation"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#cancer"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/cancer.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/cancer.png",
+    "alt": "Breast Cancer Classification — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "92.9%",
+      "Malignant recall · educational"
+    ],
+    "cardSummary": "Evaluate PCA + SVC with malignant recall, confusion matrices and precision–recall."
+  },
+  {
+    "id": "ml-fraud",
+    "title": "Credit Card Fraud Detection",
+    "category": "AI & Data Science",
+    "description": "Imbalanced random-forest classification with validation threshold selection, missed-fraud analysis and false-alarm reporting.",
+    "paragraphs": [
+      "Imbalanced random-forest classification with validation threshold selection, missed-fraud analysis and false-alarm reporting.",
+      "Supplied notebook run at threshold 0.25: 82 detected frauds, 16 missed frauds and 11 false alarms. This differs from the earlier duplicate-removed experiment.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "Fraud recall 83.7% · Precision 88.2% · Average precision 0.861"
+    ],
+    "tags": [
+      "Random Forest",
+      "Threshold tuning",
+      "Precision–recall"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#fraud"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/fraud.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/fraud.png",
+    "alt": "Credit Card Fraud Detection — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "83.7%",
+      "Fraud recall · supplied run"
+    ],
+    "cardSummary": "Inspect rare-event classification, missed fraud and false alarms at a selected threshold."
+  },
+  {
+    "id": "ml-house-price",
+    "title": "House Price Prediction",
+    "category": "AI & Data Science",
+    "description": "California block-level median house-value regression with preprocessing, cross-validation, tuned gradient boosting and geographic error analysis.",
+    "paragraphs": [
+      "California block-level median house-value regression with preprocessing, cross-validation, tuned gradient boosting and geographic error analysis.",
+      "California housing evaluation with geographic and price-range error analysis.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "MAE $30,846 · RMSE $46,504 · R² 0.835"
+    ],
+    "tags": [
+      "Python",
+      "HistGradientBoosting",
+      "Geographic error analysis"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#house-price"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/house-price.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/house-price.png",
+    "alt": "House Price Prediction — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "$46,504",
+      "Test RMSE"
+    ],
+    "cardSummary": "Predict California house values and inspect errors by location and price range."
+  },
+  {
+    "id": "ml-insurance-cost",
+    "title": "Medical Insurance Cost Prediction",
+    "category": "AI & Data Science",
+    "description": "Insurance-charges regression comparing linear models and tree ensembles, with log-target prediction and subgroup error analysis.",
+    "paragraphs": [
+      "Insurance-charges regression comparing linear models and tree ensembles, with log-target prediction and subgroup error analysis.",
+      "Log-target random-forest evaluation with subgroup errors and feature importance; educational estimates.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "MAE 1,959.91 · RMSE 4,284.29 · R² 0.900"
+    ],
+    "tags": [
+      "Random Forest",
+      "Log-target regression",
+      "Error analysis"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#insurance-cost"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/insurance-cost.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/insurance-cost.png",
+    "alt": "Medical Insurance Cost Prediction — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "1,959.91",
+      "Test MAE · educational"
+    ],
+    "cardSummary": "Estimate insurance charges using log-target regression and subgroup error analysis."
+  },
+  {
+    "id": "ml-customer-segmentation",
+    "title": "Customer Segmentation",
+    "category": "AI & Data Science",
+    "description": "Income-and-spending customer segmentation with scaling, elbow and silhouette analysis, centroids and business profiles.",
+    "paragraphs": [
+      "Income-and-spending customer segmentation with scaling, elbow and silhouette analysis, centroids and business profiles.",
+      "Customer profiles, cluster sizes, elbow and silhouette analysis; cluster IDs are arbitrary.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "200 customers · 5 clusters · Silhouette 0.555"
+    ],
+    "tags": [
+      "K-Means",
+      "Silhouette analysis",
+      "Customer profiling"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#customer-segmentation"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/customer-segmentation.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/customer-segmentation.png",
+    "alt": "Customer Segmentation — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "5 clusters",
+      "200 customers · silhouette 0.555"
+    ],
+    "cardSummary": "Discover income-and-spending segments with cluster profiles and silhouette analysis."
+  },
+  {
+    "id": "ml-fake-news",
+    "title": "Fake News Text Classification",
+    "category": "AI & Data Science",
+    "description": "Article classification using cleaned title and body text, TF-IDF unigrams/bigrams and LinearSVC, with error and term-weight analysis.",
+    "paragraphs": [
+      "Article classification using cleaned title and body text, TF-IDF unigrams/bigrams and LinearSVC, with error and term-weight analysis.",
+      "TF-IDF and LinearSVC evaluation, term weights and text-length errors. Numeric class labels are retained; this model does not verify factual truth.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "Accuracy 95.4% · Macro F1 0.954 · ROC AUC 0.991"
+    ],
+    "tags": [
+      "TF-IDF",
+      "LinearSVC",
+      "NLP"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#fake-news"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/fake-news.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/fake-news.png",
+    "alt": "Fake News Text Classification — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "95.4%",
+      "Test accuracy · supplied run"
+    ],
+    "cardSummary": "Explore TF-IDF + LinearSVC, influential terms and article-classification errors."
+  },
+  {
+    "id": "ml-airline-forecast",
+    "title": "Airline Passenger Forecasting",
+    "category": "AI & Data Science",
+    "description": "Monthly passenger forecasting comparing ARIMA with log-scale seasonal SARIMAX, chronological evaluation and forecast uncertainty.",
+    "paragraphs": [
+      "Monthly passenger forecasting comparing ARIMA with log-scale seasonal SARIMAX, chronological evaluation and forecast uncertainty.",
+      "Historical passenger series, chronological validation, residuals and 1961 forecasts.",
+      "Results transcribed from the supplied dashboard screenshot; Streamlit deployment is pending."
+    ],
+    "points": [
+      "Log-SARIMAX RMSE 18.83 · Seasonal-naive RMSE 50.71 · ARIMA RMSE 86.81"
+    ],
+    "tags": [
+      "ARIMA",
+      "SARIMAX",
+      "Time series"
+    ],
+    "links": [
+      {
+        "label": "View collective dashboard",
+        "url": "applied-ml-analysis/#airline-forecast"
+      },
+      {
+        "label": "Open full-size image",
+        "url": "assets/ml-dashboards/airline-forecast.png"
+      }
+    ],
+    "image": "assets/ml-dashboards/airline-forecast.png",
+    "alt": "Airline Passenger Forecasting — original collective dashboard",
+    "previewLabel": "Original collective dashboard",
+    "highlight": [
+      "18.83",
+      "Log-SARIMAX test RMSE"
+    ],
+    "cardSummary": "Compare ARIMA and seasonal SARIMAX with historical validation and residual analysis."
   }
 ]

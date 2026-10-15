@@ -9,7 +9,7 @@ const reset=document.getElementById('reset-filters');
 let category='All projects',expanded=false;
 function updateGallery(){
  const term=search.value.trim().toLowerCase();
- const matched=cards.filter(card=>{const data=projects.find(p=>p.id===card.dataset.project);return(category==='All projects'||data.category===category)&&[data.title,data.description,...data.tags].join(' ').toLowerCase().includes(term)});
+ const matched=cards.filter(card=>{const data=projects.find(p=>p.id===card.dataset.project);return(category==='All projects'||data.category===category)&&[data.title,data.description,data.cardSummary||'',...data.tags].join(' ').toLowerCase().includes(term)});
  const limit=expanded||category!=='All projects'||term?matched.length:9;
  cards.forEach(card=>card.hidden=!matched.includes(card)||matched.indexOf(card)>=limit);
  const visible=Math.min(limit,matched.length);
@@ -62,4 +62,5 @@ document.querySelectorAll('.work-image img').forEach(img=>img.addEventListener('
 document.querySelectorAll('[data-service]').forEach(a=>a.addEventListener('click',()=>{category=a.dataset.service;expanded=true;search.value='';updateGallery()}));
 const briefForm=document.getElementById('brief-form');
 briefForm.addEventListener('submit',event=>{event.preventDefault();const area=document.getElementById('brief-area').value;const goal=document.getElementById('brief-goal').value.trim();const data=document.getElementById('brief-data').value.trim();if(!goal)return;const body='Project area: '+area+'\n\nObjective:\n'+goal+'\n\nAvailable data and timeline:\n'+(data||'To discuss');const action=document.getElementById('brief-email');action.href='mailto:safdar404@gmail.com?subject='+encodeURIComponent('Project enquiry: '+area)+'&body='+encodeURIComponent(body);action.hidden=false;document.getElementById('brief-feedback').textContent='Your draft is ready. Review it in your email app before sending.';});
+
 
