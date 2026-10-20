@@ -116,3 +116,9 @@ The public service diagnostic fetches a provider-listed public sample and one pu
 ### Satellite QA
 
 Synthetic raster assertions cover polygon masking, edge distances, reflectance scale/offset, NDVI/NDMI, cloud rejection, valid coverage and an allowlist for public C1 assets. A provider-listed public COG supports HTTP 206 range reads with CORS. This is not evidence that a farmer's private field has been successfully analysed; that still requires provider-specific sharing consent, a reviewed boundary and suitable imagery.
+
+## Compact visual interface
+
+The desktop interface uses a fixed application shell, independently scrollable content and a grouped navigation rail. All existing modules remain reachable. Mobile uses a module selector and a single-column content layout. Forms, KPI cards, charts and map panels use compact spacing; tables have bounded scroll areas. Secondary technical material is expandable while primary results, forms and safety notices remain visible. The Urdu header action opens its guidance section.
+
+Three AI-generated conceptual artwork assets provide crop, satellite and GeoAI page themes and overview shortcuts. They are bundled with the application; banners explicitly identify them as illustrations, not field evidence. Actual satellite raster data and explanatory symptom diagrams are kept separate. See [artwork provenance and final prompt set](assets/README.md).
