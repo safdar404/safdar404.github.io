@@ -1,0 +1,58 @@
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const html=fs.readFileSync(__dirname+'/../index.html','utf8');
+const script=html.slice(html.indexOf("'use strict';"),html.lastIndexOf('</script>'));
+new Function(script); // Parse the exact app JavaScript.
+class El{constructor(){this.value='';this.style={};this.dataset={};this.classList={toggle(){}};this._html=''}set innerHTML(v){this._html=v;const opts=[...v.matchAll(/<option value="([^"]*)">/g)].map(x=>x[1]);if(opts.length&&!opts.includes(this.value))this.value=opts[0];if(v==='' )this.value=''}get innerHTML(){return this._html}scrollIntoView(){} setAttribute(){} }
+const elements=new Map(),get=s=>{if(!elements.has(s))elements.set(s,new El());return elements.get(s)};
+const fieldSelects=Array.from({length:5},()=>new El());fieldSelects.push(get('#trendField'),get('#boundaryField'));
+const document={querySelector:get,querySelectorAll:s=>s==='.fieldSelect,#profileField'?[...fieldSelects,get('#profileField')]:[],addEventListener(){}};
+const memory=new Map(),localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
+const run=new Function('document','localStorage','crypto','window','confirm','assert',script+`
+assert.equal(db.fields.length,0);
+assert.ok($('#trendField').innerHTML.includes('No fields yet'));
+assert.equal($('#trendField').disabled,true);
+$('#fieldProvince').value='Punjab';$('#districtSearch').value='lah';districtOptions();assert.ok($('#fieldDistrict').innerHTML.includes('Lahore'));assert.ok(!$('#fieldDistrict').innerHTML.includes('Multan'));
+$('#fieldProvince').value='Sindh';$('#districtSearch').value='';districtOptions();assert.ok($('#fieldDistrict').innerHTML.includes('Hyderabad'));assert.ok(!$('#fieldDistrict').innerHTML.includes('Lahore'));
+districtOptions('Unlisted District');assert.equal($('#fieldDistrict').value,'__custom__');assert.equal($('#customDistrict').value,'Unlisted District');
+loadDemo(); assert.equal(db.fields.length,2); assert.ok(db.demo); assert.ok(validateBackup(db));
+for(const id of Object.keys(tabs))go(id);
+assert.ok($('#effect').innerHTML.includes('28.0%'));
+assert.ok($('#effect').innerHTML.includes('18.0%'));
+assert.ok($('#stats').innerHTML.includes('20.5'));
+assert.ok($('#indexTable').innerHTML.includes('Review'));
+assert.ok($('#reportBody').innerHTML.includes('EXAMPLE'));
+$('#fieldSearch').value='  MULTAN  ';renderFields();assert.equal(filteredFields().length,1);
+$('#fieldSearch').value='no-such-field';renderFields();assert.ok($('#fieldTable').innerHTML.includes('No fields match'));
+resetFilters();assert.equal(filteredFields().length,2);
+$('#provinceFilter').value='Punjab';refreshFilterOptions();$('#districtFilter').value='Hafizabad';renderFields();assert.equal(filteredFields().length,1);assert.equal(filteredFields()[0].crop,'Rice');
+$('#cropFilter').value='Cotton';renderFields();assert.equal(filteredFields().length,0);resetFilters();
+assert.equal($('#trendField').disabled,false);
+options($('#effectSpray'),[],'No applications yet');assert.ok($('#effectSpray').innerHTML.includes('No applications yet'));
+assert.ok(csvEncode([['=SUM(1,2)']]).startsWith('"\\\''));
+const original=JSON.stringify(db); const restored=JSON.parse(original);assert.ok(validateBackup(restored));assert.equal(JSON.stringify(db),original);
+db=blank(); db.fields=[{id:'f1',name:'Field',crop:'Wheat',district:'Lahore',province:'Punjab',area:2,sow:'2026-01-01',harvest:'2026-12-01',lat:31,lon:74}];
+assert.equal(incidence({affected:25,checked:100}),25);
+assert.equal(validDate('2026-02-30'),false);
+assert.equal(validDate('2026-02-28'),true);
+assert.equal(daydiff('2026-10-20','2026-10-21'),1);
+const idx={field:'f1',date:'2026-10-01',ndvi:0.5,ndmi:null,cloud:5,coverage:95,source:'scene'};
+assert.ok(validateIndex(idx)); assert.ok(!validateIndex({...idx,ndvi:1.1})); assert.ok(!validateIndex({...idx,field:'missing'}));
+assert.ok(good(idx)); assert.ok(!good({...idx,cloud:21})); assert.ok(!good({...idx,coverage:69}));
+assert.deepEqual(parseCSV('field,date,source\\r\\nf1,2026-10-01,"Scene, test"'),[['field','date','source'],['f1','2026-10-01','Scene, test']]);
+assert.deepEqual(parseCSV('a,b\\n"line\\nvalue","quoted ""text"""'),[['a','b'],['line\\nvalue','quoted "text"']]);
+assert.throws(()=>parseCSV('a,"unclosed'));
+assert.ok(validGeometry({type:'Polygon',coordinates:[[[70,30],[71,30],[71,31],[70,30]]]}));
+assert.ok(!validGeometry({type:'Polygon',coordinates:[[[70,30],[71,30],[71,31],[69,30]]]}));
+assert.ok(!validGeometry({type:'Polygon',coordinates:[[[100,30],[71,30],[71,31],[100,30]]]}));
+db.observations=[{field:'f1',date:'2026-10-02',method:'route A',affected:10,checked:100},{field:'f1',date:'2026-10-04',method:'route A',affected:9,checked:100},{field:'f1',date:'2026-10-05',method:'route B',affected:2,checked:100},{field:'f1',date:'2026-10-07',method:'route A',affected:5,checked:100}];
+const visits=matchedVisits({field:'f1',date:'2026-10-04T08:00',method:'route A'});
+assert.equal(visits.before.date,'2026-10-02'); assert.equal(visits.after.date,'2026-10-07');
+assert.equal(intervalEnd({date:'2026-10-01T08:00'},24).toISOString(),'2026-10-02T03:00:00.000Z');
+const b=blank();b.fields=db.fields; assert.ok(validateBackup(b)); assert.ok(!validateBackup({...b,fields:[...b.fields,...b.fields]}));
+assert.ok(!validateBackup({...b,indices:[{...idx,id:'i1',field:'unknown'}]}));
+assert.equal(esc('<img src=x onerror=alert(1)>'),'&lt;img src=x onerror=alert(1)&gt;');
+console.log('PASS: date validation, indices, cloud screening, CSV quoting, GeoJSON, comparable scouting, label timing, backups and HTML escaping.');
+
+clearTimeout(toast.timer);
+console.log('PASS: full app initialization, example workspace, nine screen renders, reports, comparison display, CSV formula escaping and backup round-trip.');`);
+run(document,localStorage,require('node:crypto'),{scrollTo(){}},()=>true,assert);
