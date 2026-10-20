@@ -382,3 +382,7 @@ Figures are transcribed from the supplied notebook-dashboard screenshots. Sonar 
 
 **Boundary:** data-preparation project, not a trained model or measured competition submission. Source package supplied for repository publication; public source URL pending.
 <!-- END SPECIALIZED-RAG-GEOAI-2026 -->
+
+
+### ▶ Interactive RAG & GeoAI Labs
+[Launch the browser demos](https://safdar404.github.io/rag-geoai-labs/) — working lexical evidence search, land-cover class explorer and CSV dataset audit. These are browser-side demos, not hosted versions of the full Python applications.
