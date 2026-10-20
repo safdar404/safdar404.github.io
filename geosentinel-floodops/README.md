@@ -85,3 +85,14 @@ crop,district,season,stage,ndvi,yield_kg_ha,source
 Use independently measured harvest labels, stage-consistent cloud-screened NDVI, traceable source identifiers and meaningful spatial/seasonal coverage. Avoid duplicate or leaked records. A single-index linear model is an exploratory baseline and omits major agronomic drivers.
 
 QA now also checks reference-unit conversions, source separation, crop-cut moisture correction, leave-one-district-out fitting, geographic distance and empirical semivariogram pair counts. Run the same Node regression command above.
+
+## Farm operations extension
+
+- Farm activities: field-linked tasks, due dates, priorities, open/completed status, overdue filtering and all-day iCalendar (.ics) export. Calendar text is escaped and folded; the visitor must import it in a calendar application. No cloud reminders are created.
+- Irrigation planner: locally sourced ET₀, Kc, period, effective rainfall, usable root-zone water and application efficiency calculate simplified net/gross depth, volume and optional pump duration. Saved plans retain the original field-area snapshot and can be marked applied after their date. This is not metered irrigation or a complete paddy/salinity/event-scheduling model. [FAO crop coefficient guidance](https://www.fao.org/4/X0490E/x0490e0b.htm) informs the ETc relationship; input values still need local verification.
+- Costs and returns: PKR expenses and sales with field filters, category charts, cash-ledger balances and CSV export. The balance is not full economic profit.
+- Yield/price scenarios: user-entered assumptions produce revenue, cost balance, break-even price/yield and a ±20% sensitivity matrix. No live market prices or guaranteed yields.
+- Action centre: record-based scouting/data freshness checks, harvest/label interval conflicts, outstanding follow-up, overdue activities and planned irrigation. Rules run on page rendering or explicit refresh, not as background notifications.
+- Optional `operations` data extends the existing v1 backup. Older backups without it remain valid; new task/cost/water references and numeric/date fields are validated. Deleting a field also removes its linked operations. Full JSON backups include these records.
+
+Regression checks cover water depths/area-volume conversion, zero-deficit and invalid-efficiency cases, scenario arithmetic, ledger totals, operation references in backups, overdue-task rules and iCalendar date/text handling.
