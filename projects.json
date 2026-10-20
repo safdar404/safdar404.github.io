@@ -1,5 +1,62 @@
 [
   {
+    "id": "land-cover-data-preparation",
+    "title": "Land Cover Dataset Preparation",
+    "category": "GeoAI & GIS",
+    "description": "CSV manifest auditing, duplicate checks and cleaned export.",
+    "paragraphs": [
+      "CSV manifest auditing, duplicate checks and cleaned export.",
+      "Interactive browser edition; original Python backend not deployed."
+    ],
+    "points": [
+      "CSV manifest auditing, duplicate checks and cleaned export."
+    ],
+    "tags": [
+      "Dataset QA",
+      "Land cover"
+    ],
+    "live": "https://safdar404.github.io/land-cover-data-preparation/",
+    "cardSummary": "CSV manifest auditing, duplicate checks and cleaned export."
+  },
+  {
+    "id": "geodistill-studio",
+    "title": "GeoDistill Studio",
+    "category": "GeoAI & GIS",
+    "description": "Local image inspection, pixel statistics and class balance.",
+    "paragraphs": [
+      "Local image inspection, pixel statistics and class balance.",
+      "Interactive browser edition; original Python backend not deployed."
+    ],
+    "points": [
+      "Local image inspection, pixel statistics and class balance."
+    ],
+    "tags": [
+      "GeoAI",
+      "Imagery"
+    ],
+    "live": "https://safdar404.github.io/geodistill-studio/",
+    "cardSummary": "Local image inspection, pixel statistics and class balance."
+  },
+  {
+    "id": "lexora-legal-rag",
+    "title": "Lexora Legal Research",
+    "category": "AI & Data Science",
+    "description": "Legal document passage retrieval, citations and text export.",
+    "paragraphs": [
+      "Legal document passage retrieval, citations and text export.",
+      "Interactive browser edition; original Python backend not deployed."
+    ],
+    "points": [
+      "Legal document passage retrieval, citations and text export."
+    ],
+    "tags": [
+      "Legal AI",
+      "Document search"
+    ],
+    "live": "https://safdar404.github.io/lexora-legal-rag/",
+    "cardSummary": "Legal document passage retrieval, citations and text export."
+  },
+  {
     "id": "islamabad-feature-intelligence",
     "title": "Islamabad Feature Intelligence",
     "category": "GeoAI & GIS",
