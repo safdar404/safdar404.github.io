@@ -6,6 +6,7 @@ https://safdar404.github.io/geosentinel-floodops/
 
 ## Implemented workflows
 
+- Explicit empty-state dropdown messages and setup actions; province-linked searchable district options (including a custom-district fallback); combined province/district/crop and text filters with result counts, reset actions and matching map markers.
 - Field registration, editing and deletion; province, district, variety, acres, irrigation, sowing, planned/actual harvest and yield records.
 - Leaflet/OpenStreetMap field markers and imported WGS84 Polygon/MultiPolygon boundaries.
 - Dated scouting visits with repeatable sampling methods, affected/checked plant counts, symptoms and pest counts.
@@ -49,7 +50,15 @@ Regional calendars beyond the illustrative Punjab lowland reference still need l
 
 ## Validation completed
 
-Node syntax check and a DOM-mock smoke test covering initialization, all nine screen renders, example data, reports, comparison values, CSV formula escaping and JSON backup round-trip. Core assertions cover dates, index ranges, quality flags, quoted CSV, geometry closure/bounds, matching scouting visits, Pakistan-time label intervals, backup references and HTML escaping. Visual browser layout and real map tile delivery were not tested in the build environment.
+Node syntax check and a DOM-mock smoke test covering initialization, all nine screen renders, example data, reports, comparison values, CSV formula escaping and JSON backup round-trip. Core assertions cover dates, index ranges, quality flags, quoted CSV, geometry closure/bounds, matching scouting visits, Pakistan-time label intervals, backup references and HTML escaping. Live Chromium QA on 21 October 2026 additionally verified province-linked district search (Punjab/Lahore and Sindh/Hyderabad), field registration, dropdown propagation, combined filters, no-result/reset behaviour, edit preservation, scouting validation, persistence after reload, measurement/application saves, guide selection, map controls, and JSON backup download/restore. Map controls loaded; third-party tile availability can vary.
+
+Run the automated regression suite from the repository root:
+
+```bash
+node geosentinel-floodops/tests/qa.cjs
+```
+
+The suite parses the actual application JavaScript and exercises rendering through a minimal DOM mock. It does not replace live browser testing. Printable layout, all external links, all mobile devices, and every possible import were not exhaustively tested.
 
 ## Production integrations still required
 
