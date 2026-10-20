@@ -2,8 +2,9 @@ const fs=require('node:fs'),assert=require('node:assert/strict');
 const html=fs.readFileSync(__dirname+'/../index.html','utf8');
 const script=html.slice(html.indexOf("'use strict';"),html.lastIndexOf('</script>'));
 new Function(script); // Parse the exact app JavaScript.
-class El{constructor(){this.value='';this.style={};this.dataset={};this.classList={toggle(){}};this._html=''}set innerHTML(v){this._html=v;const opts=[...v.matchAll(/<option value="([^"]*)">/g)].map(x=>x[1]);if(opts.length&&!opts.includes(this.value))this.value=opts[0];if(v==='' )this.value=''}get innerHTML(){return this._html}scrollIntoView(){} setAttribute(){} }
+class El{constructor(){this.value='';this.style={};this.dataset={};this.classList={toggle(){}};this._html=''}set innerHTML(v){this._html=v;const opts=[...v.matchAll(/<option value="([^"]*)">/g)].map(x=>x[1]);if(opts.length&&!opts.includes(this.value))this.value=opts[0];if(v==='' )this.value=''}get innerHTML(){return this._html}scrollIntoView(){} setAttribute(){} get selectedOptions(){return [{textContent:this.value}]} }
 const elements=new Map(),get=s=>{if(!elements.has(s))elements.set(s,new El());return elements.get(s)};
+get('#intelSource').value='reference';get('#intelCrop').value='Wheat';get('#intelSeason').value='2024-25';get('#intelMetric').value='yield';
 const fieldSelects=Array.from({length:5},()=>new El());fieldSelects.push(get('#trendField'),get('#boundaryField'));
 const document={querySelector:get,querySelectorAll:s=>s==='.fieldSelect,#profileField'?[...fieldSelects,get('#profileField')]:[],addEventListener(){}};
 const memory=new Map(),localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
@@ -53,6 +54,12 @@ assert.ok(!validateBackup({...b,indices:[{...idx,id:'i1',field:'unknown'}]}));
 assert.equal(esc('<img src=x onerror=alert(1)>'),'&lt;img src=x onerror=alert(1)&gt;');
 console.log('PASS: date validation, indices, cloud screening, CSV quoting, GeoJSON, comparable scouting, label timing, backups and HTML escaping.');
 
+const cut=cropCut([[2,2],[4,4]],20,10,1);assert.ok(Math.abs(cut.yieldHa-8888.8888889)<.001);assert.throws(()=>cropCut([[2,0]],10,10,1));
+const training=Array.from({length:18},(_,n)=>({crop:'Wheat',district:'D'+n%3,season:'2024-25',stage:'flowering',ndvi:.2+n*.03,yield_kg_ha:1000+3000*(.2+n*.03),source:'TEST SYNTHETIC'}));const model=trainYield(training,true);assert.ok(Math.abs(model.slope-3000)<.001);assert.ok(model.rmse<.001);assert.equal(model.folds.length,18);assert.equal(model.districts,3);assert.throws(()=>trainYield(training.slice(0,5)));assert.throws(()=>trainYield(training.map(r=>({...r,district:'same'}))));
+const bins=empiricalVariogram([{lat:30,lon:70,z:5},{lat:30.1,lon:70.1,z:15},{lat:30.2,lon:70.2,z:25}]);assert.equal(bins.reduce((s,b)=>s+b.n,0),3);assert.ok(haversine({lat:30,lon:70},{lat:30,lon:70})===0);
+$('#intelSource').value='reference';$('#intelCrop').value='Wheat';$('#intelSeason').value='2024-25';const ir=intelRows();assert.equal(ir.length,4);assert.equal(ir[0].area,6532700);assert.equal(ir[0].yield,3146.8);renderIntelligence();assert.ok($('#intelNote').innerHTML.includes('not field-validated'));
+$('#intelSource').value='farm';renderIntelligence();assert.ok($('#intelNote').innerHTML.includes('not provincial'));assert.ok(leafVisual('Leaf spots / lesions').includes('<circle'));
+console.log('PASS: crop-cut conversion, spatially held-out regression, reference units, data separation, geographic distances and semivariogram pair counts.');
 clearTimeout(toast.timer);
-console.log('PASS: full app initialization, example workspace, nine screen renders, reports, comparison display, CSV formula escaping and backup round-trip.');`);
+console.log('PASS: full app initialization, example workspace, all screen renders, reports, comparison display, CSV formula escaping and backup round-trip.');`);
 run(document,localStorage,require('node:crypto'),{scrollTo(){}},()=>true,assert);
