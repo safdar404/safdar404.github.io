@@ -946,5 +946,35 @@
       "Log-SARIMAX test RMSE"
     ],
     "cardSummary": "Compare ARIMA and seasonal SARIMAX with historical validation and residual analysis."
+  },
+  {
+    "id": "geosentinel-drain-floodops",
+    "title": "GeoSentinel Drain FloodOps",
+    "category": "GeoAI & GIS",
+    "description": "A GeoSentinel project focused on drainage and flood operations.",
+    "paragraphs": [
+      "A GeoSentinel project focused on drainage and flood operations.",
+      "ChatGPT sign-in is required to access the application."
+    ],
+    "points": [],
+    "tags": [
+      "Drainage",
+      "Flood operations",
+      "GIS"
+    ],
+    "links": [
+      {
+        "label": "Open app · sign-in required",
+        "url": "https://geosentinel-drain-floodops.neat-grove-8624.chatgpt.site/"
+      }
+    ],
+    "image": "",
+    "alt": "GeoSentinel Drain FloodOps project",
+    "previewLabel": "Drainage & flood operations",
+    "cardSummary": "A GeoSentinel project focused on drainage and flood operations.",
+    "highlight": [
+      "Drain + Flood",
+      "GeoSentinel project"
+    ]
   }
 ]
