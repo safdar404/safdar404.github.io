@@ -63,3 +63,25 @@ The suite parses the actual application JavaScript and exercises rendering throu
 ## Production integrations still required
 
 For continuous farm monitoring: authenticated shared storage, reviewed region/variety calendars, a server-side satellite ingestion and zonal statistics pipeline, scheduled jobs and alerts, and validated crop/pest image models with measured performance and human review. Do not describe the current application as an autonomous national monitoring service.
+
+## Regional intelligence, yield lab and crop issue atlas
+
+- Published reference dashboard: Wheat and Rice, seasons 2022–23 through 2024–25, four provinces. Area, production and yield come from [Space4Climate's historical crop-estimation tables](https://space4climate.gov.pk/historical-data-on-crop-estimation/), retrieved 21 October 2026. The publisher attributes these to satellite estimation and states they were not field-validated. Values are a reference snapshot, not a live statistics service.
+- Proportional-symbol maps at approximate province centres; bar charts, seasonal comparisons, production shares, area–yield scatter and downloadable evidence tables. No fabricated province boundaries.
+- Separate province/district/crop aggregation of registered fields; actual production includes only fields with actual harvest date and actual yield. These holdings are not a representative provincial sample.
+- Illustrated symptom cards, ground-check explanations, observed symptom distributions, field points and imported polygon boundaries coloured by observed incidence. Display bands are not pest-action thresholds.
+- Descriptive empirical semivariograms using great-circle distance, one crop, and latest observation per field in a 7-day window. At least five distinct observed locations required; no kriging, significance test or prediction surface is claimed.
+- Crop-cut estimator using total sample mass/area and an explicit measured-to-target moisture adjustment. Sample min/max are descriptive, not confidence bounds.
+- Trainable ordinary-least-squares yield baseline from labelled NDVI/yield CSV. At least 15 rows and 3 districts, one crop and one stage protocol; validation leaves each district out. RMSE, MAE, R² and held-out mean-baseline RMSE are reported. Prediction outside the training NDVI range is blocked. No independent-season validation or calibrated prediction interval is provided.
+- Synthetic training demonstration is explicitly labelled; its scores do not demonstrate real-world model skill. Uploaded training rows remain in tab memory and are not included in farm backups. Download the model/validation JSON to retain its parameters and model card.
+- Power BI handoff provides field facts CSV, coordinates, DAX measures and setup instructions. There is no native .pbix, embedded live Power BI report or server connection.
+
+Training CSV header:
+
+```csv
+crop,district,season,stage,ndvi,yield_kg_ha,source
+```
+
+Use independently measured harvest labels, stage-consistent cloud-screened NDVI, traceable source identifiers and meaningful spatial/seasonal coverage. Avoid duplicate or leaked records. A single-index linear model is an exploratory baseline and omits major agronomic drivers.
+
+QA now also checks reference-unit conversions, source separation, crop-cut moisture correction, leave-one-district-out fitting, geographic distance and empirical semivariogram pair counts. Run the same Node regression command above.
