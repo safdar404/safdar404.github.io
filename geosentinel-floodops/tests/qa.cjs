@@ -6,7 +6,7 @@ class El{constructor(){this.value='';this.style={};this.dataset={};this.classLis
 const elements=new Map(),get=s=>{if(!elements.has(s))elements.set(s,new El());return elements.get(s)};
 get('#intelSource').value='reference';get('#intelCrop').value='Wheat';get('#intelSeason').value='2024-25';get('#intelMetric').value='yield';
 const fieldSelects=Array.from({length:5},()=>new El());fieldSelects.push(get('#trendField'),get('#boundaryField'));
-const document={querySelector:get,querySelectorAll:s=>s==='.fieldSelect,#profileField'?[...fieldSelects,get('#profileField')]:[],addEventListener(){}};
+const document={getElementById:id=>get("#"+id),querySelector:get,querySelectorAll:s=>s==='.fieldSelect,#profileField'?[...fieldSelects,get('#profileField')]:[],addEventListener(){}};
 const memory=new Map(),localStorage={getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)};
 const run=new Function('document','localStorage','crypto','window','confirm','assert',script+`
 assert.equal(db.fields.length,0);
@@ -70,6 +70,9 @@ const patch=value=>({data:new Uint16Array(100).fill(value),width:10,height:10,fa
 console.log('PASS: field polygon masking, boundary distance, scale/offset reflectance, NDVI/NDMI, cloud exclusion and satellite asset allowlist.');
 const navIds=NAV_GROUPS.flatMap(g=>g[2]);assert.equal(new Set(navIds).size,Object.keys(tabs).length);assert.ok(Object.keys(tabs).every(id=>navIds.includes(id)));go('yieldlab');assert.ok($('#pageIllustration').src.endsWith('geoai-v1.webp'));go('fields');assert.ok($('#pageIllustration').src.endsWith('satellite-v1.webp'));go('overview');assert.ok($('#pageIllustration').src.endsWith('crops-v1.webp'));
 console.log('PASS: all modules remain reachable in compact navigation and crop/satellite/GeoAI art switches by page.');
+assert.equal(aiRetrieve('zzzzqqq',AI_KB).length,0);assert.ok(aiRetrieve('pesticide monitoring',AI_KB).length>0);assert.ok(aiRetrieve('فصل',AI_KB).length>0);assert.equal(aiAnswer('zzzzqqq').length,0);
+$('#mlDemo').onclick();assert.ok(mlState.synthetic);assert.ok(mlState.mae<mlState.baselineMAE);assert.ok(mlState.rmse>=mlState.mae);assert.throws(()=>mlFit(mlState.rows.slice(0,10)));assert.throws(()=>mlFit([...mlState.rows,mlState.rows[0]]));let constant=mlState.rows.map(r=>({...r,ndmi:0}));assert.throws(()=>mlFit(constant));$('#mlComparable').checked=true;$('#mlNDVI').value='0.5';$('#mlNDMI').value='0.2';$('#mlArea').value='2';$('#mlForm').onsubmit({preventDefault(){}});assert.ok($('#mlResult').innerHTML.includes('Demonstration only'));$('#mlNDVI').value='1';$('#mlForm').onsubmit({preventDefault(){}});assert.ok($('#mlResult').textContent.includes('outside training range'));assert.ok(aiAudit().issues.some(i=>i.page==='fields'));
+console.log('PASS: RAG relevance and abstention, Urdu retrieval, multivariable training, district holdouts, baseline comparison, duplicate and constant-feature rejection, predictions and extrapolation blocking, workspace QA.');
 clearTimeout(toast.timer);
 console.log('PASS: full app initialization, example workspace, all screen renders, reports, comparison display, CSV formula escaping and backup round-trip.');`);
 run(document,localStorage,require('node:crypto'),{scrollTo(){}},()=>true,assert);
