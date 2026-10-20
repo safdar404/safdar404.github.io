@@ -36,7 +36,7 @@ YOUR_EXISTING_FIELD_ID,2026-10-01,0.6,0.2,5,95,ACTUAL_SCENE_ID_AND_PROCESSING_ME
 
 Dates use YYYY-MM-DD. NDVI/NDMI must lie in [-1,1]; NDMI can be blank. Cloud and valid coverage are percentages in [0,100]. Field IDs must already exist and source provenance is mandatory. Future acquisition dates are rejected. Invalid CSV rows reject the entire import; existing field/date/source duplicates are skipped.
 
-Cloud >20% or valid coverage <70% flags a measurement for review and excludes it from comparisons. These are portal screening defaults, not universal agronomic thresholds. Values should be calculated from reviewed field boundaries and atmospherically corrected, cloud/shadow-masked imagery. No live satellite feed is connected.
+Cloud >20% or valid coverage <70% flags a measurement for review and excludes it from comparisons. These are portal screening defaults, not universal agronomic thresholds. Values should be calculated from reviewed field boundaries and atmospherically corrected, cloud/shadow-masked imagery. Live Satellite Check now supports opt-in public scene search and browser-side COG analysis; continuous background ingestion is not connected.
 
 Boundary imports accept one Polygon/MultiPolygon feature, with closed rings and coordinates within a broad Pakistan bounding extent (60–78 longitude, 23–38 latitude). Bounding-box checks do not establish national jurisdiction or polygon topology. Self-intersections, holes, overlap, alignment and cadastral validity require GIS review. Registered area remains farmer-entered; it is not calculated from imported geometry.
 
@@ -96,3 +96,23 @@ QA now also checks reference-unit conversions, source separation, crop-cut moist
 - Optional `operations` data extends the existing v1 backup. Older backups without it remain valid; new task/cost/water references and numeric/date fields are validated. Deleting a field also removes its linked operations. Full JSON backups include these records.
 
 Regression checks cover water depths/area-volume conversion, zero-deficit and invalid-efficiency cases, scenario arithmetic, ledger totals, operation references in backups, overdue-task rules and iCalendar date/text handling.
+
+## Live Sentinel-2 field connection
+
+1. Register a crop field with coordinates, area and sowing dates. Optional consent on the registration form opens and runs the scene lookup after save.
+2. The provider-specific consent transmits only the field bounding box to Element 84 Earth Search. Farm names, finances and passwords are not transmitted. Consent resets on manual field selection. No client secret is stored on GitHub Pages.
+3. Import a reviewed WGS84 Polygon/MultiPolygon for field pixel analysis. A point/acreage alone permits nearby scene discovery only.
+4. Choose dates and maximum tile-cloud percentage. Public search uses `sentinel-2-c1-l2a`, returns up to 12 newest scenes, and is separate from the actual field mask.
+5. Analyse a scene inside the registered crop cycle. Whole field windows must lie inside the tile, be on a supported WGS84 UTM grid, and contain no more than 65,536 20 m analysis cells.
+6. Browser COG reads use GeoTIFF.js 2.1.3 and Proj4.js 2.11.0. Red/NIR 10 m cells are block-averaged to the aligned 20 m SCL/SWIR grid. Reflectance uses per-asset scale/offset, including nodata handling. Accept SCL classes 4/5/6, exclude centres within 10 m of polygon edges, then calculate median NDVI and NDMI.
+7. Saving requires at least 10 accepted cells, ≥70% of polygon area represented by accepted cells, ≤20% field cloud, and entered/polygon areas within a 25% screening tolerance. These are portal screening defaults, not agronomic action thresholds or legal boundary verification.
+8. Quality-screened records enter the existing index ledger with acquisition date, source, boundary/stage and valid-cell metadata. The last detailed analysis JSON can be downloaded; the displayed raster remains in tab memory.
+9. A matching non-synthetic crop/stage yield model can receive the measured NDVI through the explicit handoff. Model training and independent validation are still required; no universal pretrained yield model is supplied.
+
+Scene search, field location suitability, crop identity and disease diagnosis are different checks. The app flags low canopy/low moisture and comparable-stage declines as scouting cues; it does not diagnose a particular pathogen/pest, establish pesticide causality/residue safety or verify land ownership. A scene before sowing or after recorded actual harvest cannot be used to assess the registered crop.
+
+The public service diagnostic fetches a provider-listed public sample and one public raster pixel without sending any field location. Catalog availability has no service guarantee. CORS/network failures, missing assets, grid misalignment, inadequate resolution and low clear-pixel coverage produce explicit withheld/error results rather than fabricated values.
+
+### Satellite QA
+
+Synthetic raster assertions cover polygon masking, edge distances, reflectance scale/offset, NDVI/NDMI, cloud rejection, valid coverage and an allowlist for public C1 assets. A provider-listed public COG supports HTTP 206 range reads with CORS. This is not evidence that a farmer's private field has been successfully analysed; that still requires provider-specific sharing consent, a reviewed boundary and suitable imagery.
