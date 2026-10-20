@@ -60,6 +60,7 @@ const bins=empiricalVariogram([{lat:30,lon:70,z:5},{lat:30.1,lon:70.1,z:15},{lat
 $('#intelSource').value='reference';$('#intelCrop').value='Wheat';$('#intelSeason').value='2024-25';const ir=intelRows();assert.equal(ir.length,4);assert.equal(ir[0].area,6532700);assert.equal(ir[0].yield,3146.8);renderIntelligence();assert.ok($('#intelNote').innerHTML.includes('not field-validated'));
 $('#intelSource').value='farm';renderIntelligence();assert.ok($('#intelNote').innerHTML.includes('not provincial'));assert.ok(leafVisual('Leaf spots / lesions').includes('<circle'));
 console.log('PASS: crop-cut conversion, spatially held-out regression, reference units, data separation, geographic distances and semivariogram pair counts.');
+let captured=null;download=(name,text,type)=>{captured={name,text,type}};exportBI();const factRows=parseCSV(captured.text);assert.ok(factRows[0].includes('latitude'));assert.ok(factRows[0].includes('longitude'));assert.ok(factRows.every(r=>r.length===factRows[0].length));assert.throws(()=>empiricalVariogram(Array.from({length:301},()=>({lat:30,lon:70,z:2}))));
 clearTimeout(toast.timer);
 console.log('PASS: full app initialization, example workspace, all screen renders, reports, comparison display, CSV formula escaping and backup round-trip.');`);
 run(document,localStorage,require('node:crypto'),{scrollTo(){}},()=>true,assert);
