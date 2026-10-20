@@ -1,5 +1,7 @@
 # AgriSentinel Pakistan — فصل نگہبان
 
+![AgriSentinel Pakistan logo](assets/agrisentinel-logo-v1.webp)
+
 Pakistan-focused crop and farmer decision-support portal by Muhammad Safdar. Replaces the former GeoSentinel FloodOps page at the existing URL:
 
 https://safdar404.github.io/geosentinel-floodops/
@@ -122,3 +124,12 @@ Synthetic raster assertions cover polygon masking, edge distances, reflectance s
 The desktop interface uses a fixed application shell, independently scrollable content and a grouped navigation rail. All existing modules remain reachable. Mobile uses a module selector and a single-column content layout. Forms, KPI cards, charts and map panels use compact spacing; tables have bounded scroll areas. Secondary technical material is expandable while primary results, forms and safety notices remain visible. The Urdu header action opens its guidance section.
 
 Three AI-generated conceptual artwork assets provide crop, satellite and GeoAI page themes and overview shortcuts. They are bundled with the application; banners explicitly identify them as illustrations, not field evidence. Actual satellite raster data and explanatory symptom diagrams are kept separate. See [artwork provenance and final prompt set](assets/README.md).
+
+
+## AI solution centre
+
+Local workspace QA with change watching and JSON audits; cited lexical retrieval and extractive answers with session-only TXT/Markdown uploads; multivariable k-nearest-neighbour yield training with district-held-out validation, baseline comparison and extrapolation blocking. No cloud LLM or human live-chat service is connected.
+
+## Brand assets
+
+Logo files: [transparent PNG](assets/agrisentinel-logo-v1.png), [web WebP](assets/agrisentinel-logo-v1.webp). See [logo provenance and prompt](assets/LOGO.md).

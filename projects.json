@@ -144,22 +144,24 @@
   },
   {
     "id": "floodops",
-    "title": "GeoSentinel FloodOps",
+    "title": "AgriSentinel Pakistan",
     "category": "GeoAI & GIS",
-    "description": "An interactive global flood and water-intelligence demonstration linking geographic context, modeled exposure, incidents, missions and review-oriented recommendations.",
+    "description": "Monitor crop fields, review satellite indices, track pesticide follow-up and explore source-cited guidance and harvest models.",
     "paragraphs": [
-      "An interactive global flood and water-intelligence demonstration linking geographic context, modeled exposure, incidents, missions and review-oriented recommendations.",
-      "Actual interface screenshot. Displayed alerts, exposure values and operational metrics are illustrative; they are not verified live events or losses."
+      "Monitor crop fields, review satellite indices, track pesticide follow-up and explore source-cited guidance and harvest models.",
+      "Includes field registration and boundaries, scouting, live Sentinel-2 checks with consent, regional statistics, farm operations, a local QA agent, extractive RAG guidance and trainable yield predictors.",
+      "Browser-local records. Yield models require labelled training data; vegetation indices do not establish disease or pesticide residues."
     ],
     "points": [
-      "Leaflet map views for flood exposure, critical assets, events and modeled financial risk.",
-      "Intelligence Center, Digital Twin, 4D Simulation, Data Fabric and governance workspaces.",
-      "Recommendation review and approval interfaces illustrating the observe → assess → decide → act workflow."
+      "Crop and satellite monitoring with traceable records.",
+      "Local QA, cited guidance retrieval and district-held-out ML validation."
     ],
     "tags": [
-      "Leaflet",
-      "Flood intelligence",
-      "Human review"
+      "GeoAI",
+      "Sentinel-2",
+      "Agriculture",
+      "RAG",
+      "ML"
     ],
     "links": [
       {
@@ -171,12 +173,12 @@
         "url": "https://github.com/safdar404/safdar404.github.io/tree/main/geosentinel-floodops"
       }
     ],
-    "image": "assets/selected-projects/floodops.jpg",
-    "alt": "GeoSentinel FloodOps — application screenshot",
-    "cardSummary": "Explore modeled flood exposure, incidents and review-oriented response recommendations.",
+    "image": "geosentinel-floodops/assets/agrisentinel-logo-v1.webp",
+    "alt": "AgriSentinel Pakistan logo with crop and satellite emblem",
+    "cardSummary": "Monitor crop fields, review satellite indices, track pesticide follow-up and explore source-cited guidance and harvest models.",
     "highlight": [
-      "Map → review",
-      "Illustrative flood scenarios"
+      "Crop → insight",
+      "Farmer decision support"
     ]
   },
   {

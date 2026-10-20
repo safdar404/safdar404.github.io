@@ -68,17 +68,17 @@ A five-program spatial decision-support suite supported by a Python research too
 
 Actual suite homepage. Research and demonstration software; the browser does not run licensed ArcGIS Pro or local QGIS.
 
-#### GeoSentinel FloodOps
+#### AgriSentinel Pakistan
 
-[![GeoSentinel FloodOps — application screenshot](https://safdar404.github.io/assets/selected-projects/floodops.jpg)](https://safdar404.github.io/geosentinel-floodops/)
+[![AgriSentinel Pakistan logo](https://safdar404.github.io/geosentinel-floodops/assets/agrisentinel-logo-v1.webp)](https://safdar404.github.io/geosentinel-floodops/)
 
-An interactive global flood and water-intelligence demonstration linking geographic context, modeled exposure, incidents, missions and review-oriented recommendations.
+Monitor crop fields, review satellite indices, track pesticide follow-up and explore source-cited guidance and harvest models.
 
-**Leaflet · Flood intelligence · Human review**
+**GeoAI · Sentinel-2 · Agriculture · RAG · ML**
 
 [View project](https://safdar404.github.io/geosentinel-floodops/) · [Source](https://github.com/safdar404/safdar404.github.io/tree/main/geosentinel-floodops)
 
-Actual interface screenshot. Displayed alerts, exposure values and operational metrics are illustrative; they are not verified live events or losses.
+Browser-local decision support. RAG uses cited extractive passages; ML requires uploaded harvest data.
 
 #### Pakistan National Flood Intelligence
 
@@ -347,3 +347,4 @@ Historical passenger forecasts with chronological validation, residuals and 1961
 
 Figures are transcribed from the supplied notebook-dashboard screenshots. Sonar and fraud results refer to these displayed runs and differ from earlier comparison experiments. These are educational evaluations; clinical and operational validation are not established. Text classification does not establish factual truth. Streamlit hosting is pending.
 <!-- ML-DASHBOARDS-END -->
+
