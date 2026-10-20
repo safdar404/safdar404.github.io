@@ -6,7 +6,7 @@ A responsive showcase of GIS, GeoAI, Python, applied AI, engineering tools and b
 
 ## Features
 
-- 26 distinct project entries, with a compact six-project initial view.
+- 27 distinct project entries, with a compact six-project initial view.
 - Category filters, keyword search, full project details and live/source links.
 - Six professional map case studies with full-resolution viewing.
 - Career timeline, credentials, professional resume and direct contact links.
@@ -28,9 +28,19 @@ GitHub Pages serves the default branch. Existing application folders and their i
 <!-- PORTFOLIO-CATALOG-START -->
 ## Project portfolio
 
-All 26 projects are documented here: the 18 entries below and the eight applied ML dashboards in the following section. [Open the searchable portfolio](https://safdar404.github.io/).
+All 27 projects are documented here: the 19 entries below and the eight applied ML dashboards in the following section. [Open the searchable portfolio](https://safdar404.github.io/).
 
 ### GeoAI & GIS
+
+#### GeoSentinel Drain FloodOps
+
+A GeoSentinel project focused on drainage and flood operations.
+
+**Drainage · Flood operations · GIS**
+
+[Open application](https://geosentinel-drain-floodops.neat-grove-8624.chatgpt.site/)
+
+ChatGPT sign-in is required to access the application.
 
 #### Islamabad Feature Intelligence
 
