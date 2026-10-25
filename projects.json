@@ -1,5 +1,245 @@
 [
   {
+    "id": "sulemanai",
+    "title": "Suleman AI",
+    "category": "AI & Data Science",
+    "description": "Chat with saved conversation history and explore data, charts and creative tools.",
+    "cardSummary": "Chat with saved conversation history and explore data, charts and creative tools.",
+    "paragraphs": [
+      "Chat with saved conversation history and explore data, charts and creative tools.",
+      "AI features depend on the configured API and model availability.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "Chat history",
+      "Data exploration",
+      "OpenAI API"
+    ],
+    "tags": [
+      "Streamlit",
+      "Chat history",
+      "Data exploration",
+      "OpenAI API"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://suleman-ai.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/sulemanai"
+      }
+    ],
+    "image": "assets/streamlit-suite/sulemanai.svg",
+    "alt": "Suleman AI branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Conversation & exploration",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
+    "id": "finwisai",
+    "title": "FinWise AI",
+    "category": "AI & Data Science",
+    "description": "Explore monthly spending, savings ratios and educational budgeting insights.",
+    "cardSummary": "Explore monthly spending, savings ratios and educational budgeting insights.",
+    "paragraphs": [
+      "Explore monthly spending, savings ratios and educational budgeting insights.",
+      "Educational finance prototype; does not connect to banks or provide professional financial advice.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "Python calculations",
+      "Budgeting",
+      "LangChain"
+    ],
+    "tags": [
+      "Streamlit",
+      "Python calculations",
+      "Budgeting",
+      "LangChain"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://finwis-ai.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/finwisai"
+      }
+    ],
+    "image": "assets/streamlit-suite/finwisai.svg",
+    "alt": "FinWise AI branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Personal finance intelligence",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
+    "id": "ragstudio",
+    "title": "RAG Studio",
+    "category": "AI & Data Science",
+    "description": "Ask questions across PDFs, Word documents and images with source-aware retrieval.",
+    "cardSummary": "Ask questions across PDFs, Word documents and images with source-aware retrieval.",
+    "paragraphs": [
+      "Ask questions across PDFs, Word documents and images with source-aware retrieval.",
+      "Document content is sent to the configured API. Review extracted text and cited answers.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "Hybrid search",
+      "Document Q&A",
+      "Citations"
+    ],
+    "tags": [
+      "Streamlit",
+      "Hybrid search",
+      "Document Q&A",
+      "Citations"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://ragstudios.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/ragstudio"
+      }
+    ],
+    "image": "assets/streamlit-suite/ragstudio.svg",
+    "alt": "RAG Studio branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Document intelligence",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
+    "id": "medical-ai-assistant",
+    "title": "MediGuide AI",
+    "category": "AI & Data Science",
+    "description": "Explore structured symptom guidance, warning signs and questions for a healthcare professional.",
+    "cardSummary": "Explore structured symptom guidance, warning signs and questions for a healthcare professional.",
+    "paragraphs": [
+      "Explore structured symptom guidance, warning signs and questions for a healthcare professional.",
+      "Educational prototype, not a diagnosis or clinically validated triage service.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "Symptom inputs",
+      "Safety rules",
+      "Patient guidance"
+    ],
+    "tags": [
+      "Streamlit",
+      "Symptom inputs",
+      "Safety rules",
+      "Patient guidance"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://medical-ai-assistants.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/medical-ai-assistant"
+      }
+    ],
+    "image": "assets/streamlit-suite/medical-ai-assistant.svg",
+    "alt": "MediGuide AI branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Educational health guidance",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
+    "id": "marketmind",
+    "title": "MarketMind AI",
+    "category": "AI & Data Science",
+    "description": "Turn a business brief into an evidence-linked research draft with human approval.",
+    "cardSummary": "Turn a business brief into an evidence-linked research draft with human approval.",
+    "paragraphs": [
+      "Turn a business brief into an evidence-linked research draft with human approval.",
+      "Included research corpus is fictional. Local corpus search is not live web research.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "Bounded agent loop",
+      "Evidence review",
+      "Human approval"
+    ],
+    "tags": [
+      "Streamlit",
+      "Bounded agent loop",
+      "Evidence review",
+      "Human approval"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://markeetmind.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/marketmind"
+      }
+    ],
+    "image": "assets/streamlit-suite/marketmind.svg",
+    "alt": "MarketMind AI branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Business research workflow",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
+    "id": "supportpearlz",
+    "title": "SupportPearlz",
+    "category": "AI & Data Science",
+    "description": "Answer support questions from a document knowledge base with citations and retrieval controls.",
+    "cardSummary": "Answer support questions from a document knowledge base with citations and retrieval controls.",
+    "paragraphs": [
+      "Answer support questions from a document knowledge base with citations and retrieval controls.",
+      "Demonstration uses fictional Pearlz Home Systems documentation.",
+      "AI-powered features require a user-provided API key; provider charges may apply."
+    ],
+    "points": [
+      "FAISS retrieval",
+      "Cited answers",
+      "Conversation memory"
+    ],
+    "tags": [
+      "Streamlit",
+      "FAISS retrieval",
+      "Cited answers",
+      "Conversation memory"
+    ],
+    "links": [
+      {
+        "label": "Open application",
+        "url": "https://supportpearlzai.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/supportpearlz"
+      }
+    ],
+    "image": "assets/streamlit-suite/supportpearlz.svg",
+    "alt": "SupportPearlz branded project overview, not an application screenshot",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Grounded customer support",
+      "Python · Streamlit · AI"
+    ]
+  },
+  {
     "id": "land-cover-data-preparation",
     "title": "Land Cover Dataset Preparation",
     "category": "GeoAI & GIS",
