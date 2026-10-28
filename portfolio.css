@@ -44,3 +44,16 @@ html[data-theme=dark] .work-card{--tone:#56d9d6;--tint:#193c47}html[data-theme=d
 @media(max-width:520px){.hero h1{font-size:58px}.hero-visual{height:230px}.hero .eyebrow{font-size:8px}.hero-trust{gap:9px}.services-strip{grid-template-columns:1fr;gap:8px}.services-strip>a{display:grid;grid-template-columns:1fr 1.15fr;gap:3px 10px;padding:12px 15px}.services-strip span{grid-column:1;font-size:8px}.services-strip strong{grid-column:1;font-size:18px;margin:0}.services-strip small{grid-column:2;grid-row:1 / 3;align-self:center;font-size:10px}.work-grid{grid-template-columns:1fr;gap:16px}.work-image,.dashboard-card .work-image{height:175px;min-height:175px}.work-body{padding:16px}.work-body h3{min-height:0;font-size:21px}.work-summary{font-size:12px;min-height:0;margin-bottom:11px}.project-highlight{flex-wrap:nowrap;min-height:39px}.tags span{font-size:9px}.tags{min-height:0}.project-link,.detail-button{font-size:11px;min-height:32px;display:inline-flex;align-items:center}.source-link{font-size:10px}.work-body .eyebrow{font-size:8px}.section-title h2{font-size:34px}.project-toolbar{padding:8px}.filter{font-size:9px;white-space:normal}.search{min-width:0}.brand strong{font-size:12px}.brand small{font-size:9px}.hero-identity small{font-size:9px}.summary-strip small{font-size:10px}.hero-buttons{gap:8px}.hero-buttons .button{font-size:11px;padding:11px 13px}.career-row{grid-template-columns:91px 1fr}.career-row time{font-size:10px}.contact-panel a strong{font-size:14px}.brief-section h2{font-size:30px}}
 @media(prefers-reduced-motion:reduce){.work-image img{transition:none}.work-card:hover{transform:none}}
 @media print{.hero h1 em{color:#111}.work-grid{grid-template-columns:repeat(2,1fr)}.work-card{box-shadow:none;border:1px solid #ccc}.preview-label,.preview-zoom{display:none}.work-summary{min-height:0}.hero-visual{display:none}.work-image,.dashboard-card .work-image{height:100px;min-height:100px}.work-body h3{min-height:0}.tags{min-height:0}}
+
+
+/* Live interfaces: retain each application's actual colours and full screenshot. */
+.actual-app-card .work-image{height:auto;min-height:0;aspect-ratio:1363/936;background:#0d0a20;overflow:hidden}
+.actual-app-card .work-image>a{display:block;width:100%;height:100%}
+.actual-app-card .work-image img{width:100%;height:100%;object-fit:contain;padding:0;transform:none}
+.actual-app-card:hover .work-image img{transform:none}
+.actual-app-card .work-body{gap:8px;padding:16px}
+.actual-app-card .work-body h3{min-height:0;margin-bottom:0;font-size:20px}
+.actual-app-card .work-summary{min-height:0;margin:0;line-height:1.55;font-size:12px}
+.actual-app-card .tags{min-height:0;margin:4px 0}
+.actual-app-card .preview-label{pointer-events:none;font-size:8px;background:#12132be8;color:#f0ebff}
+@media(max-width:520px){.actual-app-card .work-image{height:auto;min-height:0}.actual-app-card .work-body{padding:14px}}
