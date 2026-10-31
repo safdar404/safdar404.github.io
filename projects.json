@@ -1,5 +1,49 @@
 [
   {
+    "id": "traveltalk-realtime",
+    "title": "TravelTalk AI",
+    "emoji": "🎙️",
+    "category": "AI & Data Science",
+    "description": "A realtime travel voice advisor using browser WebRTC, conversational AI and traveler preferences.",
+    "cardSummary": "Talk naturally, interrupt replies and plan your trip with a realtime travel voice advisor.",
+    "paragraphs": [
+      "Speak through your browser microphone or send typed prompts, with language, voice, reply-length and traveler preference controls.",
+      "Browser WebRTC supports voice turns and interruptions. Captions, mute, session controls and transcript export make conversations reviewable.",
+      "Uses your own OpenAI API key and AI-generated voice. Travel advice is generated; no live booking, price, visa-verification or browsing integrations are connected. Agent artwork is branding, not an app screenshot."
+    ],
+    "points": [
+      "Origin, destination, dates, budget and interests guide travel conversations.",
+      "Realtime microphone/speaker connection with semantic voice activity detection and interruption support.",
+      "Typed messages, travel prompt buttons, mute, interrupt, captions and reconnect controls.",
+      "Configurable voice/language/session duration and downloadable transcript JSON."
+    ],
+    "tags": [
+      "Python",
+      "Streamlit",
+      "OpenAI Realtime",
+      "WebRTC",
+      "Voice AI",
+      "Travel"
+    ],
+    "links": [
+      {
+        "label": "Try TravelTalk AI",
+        "url": "https://traveltalk-realtime.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/traveladvisor-realtime"
+      }
+    ],
+    "image": "https://raw.githubusercontent.com/safdar404/traveladvisor-realtime/main/assets/agent.png",
+    "alt": "TravelTalk AI — travel voice agent avatar, not an interface screenshot",
+    "previewLabel": "Agent avatar · Realtime voice AI",
+    "highlight": [
+      "Speak · interrupt · explore",
+      "Realtime travel advisor"
+    ]
+  },
+  {
     "id": "voiceagent-ai",
     "title": "Voice Agent AI",
     "emoji": "🎙️",
