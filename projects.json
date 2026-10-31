@@ -1,5 +1,50 @@
 [
   {
+    "id": "voiceagent-ai",
+    "title": "Voice Agent AI",
+    "emoji": "🎙️",
+    "category": "AI & Data Science",
+    "description": "A conversational voice studio combining browser recording, speech transcription, contextual AI replies and generated speech.",
+    "cardSummary": "Speak or type a question, review the transcript and hear your AI response.",
+    "paragraphs": [
+      "Record in your browser or upload audio, review and edit the transcript, then send it to a conversational assistant.",
+      "Choose travel advisor, GeoAI/GIS tutor, interview coach or general assistance; adjust response length, voice and language.",
+      "Turn-based interaction with user-provided OpenAI API access. Audio and text are submitted to OpenAI; API charges apply. The preview is a branded overview, not a screenshot."
+    ],
+    "points": [
+      "Browser microphone recording, audio uploads and typed input.",
+      "Editable speech-to-text transcripts and multi-turn conversation history.",
+      "AI-generated voice replies, voice selection, optional autoplay and MP3 downloads.",
+      "English, Urdu, Portuguese, Arabic or match-the-user reply options.",
+      "Conversation JSON export, custom instructions and configurable models."
+    ],
+    "tags": [
+      "Python",
+      "Streamlit",
+      "OpenAI",
+      "Voice AI",
+      "Speech-to-text",
+      "Text-to-speech"
+    ],
+    "links": [
+      {
+        "label": "Try Voice Agent AI",
+        "url": "https://voiceagent-ai.streamlit.app/"
+      },
+      {
+        "label": "View source",
+        "url": "https://github.com/safdar404/voiceagent-ai"
+      }
+    ],
+    "image": "assets/voiceagent-ai/voiceagent-overview.svg",
+    "alt": "Voice Agent AI — branded conversational voice studio overview",
+    "previewLabel": "Branded project overview",
+    "highlight": [
+      "Speak → review → listen",
+      "Conversational voice AI"
+    ]
+  },
+  {
     "id": "resumeai",
     "title": "CareerRainbow AI",
     "emoji": "🌈",
