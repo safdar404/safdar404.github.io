@@ -67,11 +67,11 @@ em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--accent
 .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);background:color-mix(in srgb,var(--bg) 78%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
 .nav.scrolled{border-bottom-color:var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:-.01em}
+.brand{display:flex;align-items:center;gap:10px;white-space:nowrap;font-weight:600;letter-spacing:-.01em}
 .mono-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--accent-ink);font:italic 400 17px/1 var(--serif)}
 [data-theme="light"] .mono-mark{color:#fff}
 .links{display:flex;gap:4px}
-.links a{padding:8px 14px;border-radius:999px;color:var(--muted);font-size:14px;font-weight:500;transition:color .2s,background .2s}
+.links a{white-space:nowrap;padding:8px 14px;border-radius:999px;color:var(--muted);font-size:14px;font-weight:500;transition:color .2s,background .2s}
 .links a:hover,.links a.on{color:var(--text);background:var(--surface)}
 .nav-r{display:flex;align-items:center;gap:8px}
 .show-sm{display:none}
@@ -139,8 +139,10 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 /* cards */
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .featured{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.featured .card-big{grid-column:span 2;grid-row:span 2}
-.featured .card-big .card-media{aspect-ratio:auto;flex:1;min-height:320px}
+.featured .card-big{grid-column:span 2}
+.featured .card-big .card-media{aspect-ratio:996/340;background:#13123a}
+.featured .card-big .card-media img{object-position:center}
+.featured .card-big .card-body{padding:26px 28px 24px}
 .featured .card-big h3{font-size:30px}
 .featured .card-big .desc{font-size:16px}
 .card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s,box-shadow .35s}
@@ -148,7 +150,9 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 .card[hidden]{display:none}
 .card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--surface2);border-bottom:1px solid var(--line)}
 .card-media img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
-.fit-contain img{object-fit:contain;padding:18px;object-position:center}
+.fit-contain{background:radial-gradient(120% 90% at 50% 0%,color-mix(in srgb,var(--accent2) 14%,var(--surface2)),var(--surface2))}
+.fit-contain img{object-fit:contain;padding:22px;object-position:center}
+.card:hover .fit-contain img{transform:scale(1.03)}
 .card:hover .card-media img{transform:scale(1.04)}
 .art-label{position:absolute;left:12px;bottom:12px;font:500 10.5px/1 var(--mono);padding:6px 8px;border-radius:6px;background:color-mix(in srgb,var(--bg) 75%,transparent);color:var(--muted);backdrop-filter:blur(6px)}
 .status{position:absolute;top:12px;right:12px;display:inline-flex;align-items:center;gap:7px;font:500 11px/1 var(--mono);padding:7px 10px;border-radius:999px;background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(8px);color:var(--muted);border:1px solid var(--line)}
@@ -163,7 +167,8 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 .card h3{font-size:20px;letter-spacing:-.02em;line-height:1.2;margin:0 0 4px;font-weight:600}
 .tagline{color:var(--accent);font-size:14px;font-weight:500;margin:0 0 12px}
 .desc{color:var(--muted);font-size:14.5px;margin:0 0 14px}
-.note{font-size:12.5px;color:var(--warn);margin:-6px 0 12px}
+.note{display:flex;gap:6px;align-items:center;font-size:12.5px;color:var(--faint);margin:-6px 0 12px}
+.note::before{content:"i";display:grid;place-items:center;width:15px;height:15px;flex:none;border-radius:50%;border:1px solid var(--line2);font:600 9.5px/1 var(--mono)}
 .tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0 0 18px}
 .tags li{font:500 11.5px/1 var(--mono);padding:6px 9px;border-radius:7px;background:var(--surface2);color:var(--muted);border:1px solid var(--line)}
 .card-actions{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
@@ -272,7 +277,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   .split{grid-template-columns:1fr;gap:40px}
   .sticky{position:static}
 }
-@media (max-width:820px){
+@media (max-width:1024px){
   .links,.hide-sm{display:none}
   .show-sm{display:grid}
   .drawer{display:none;flex-direction:column;padding:8px 20px 20px;border-bottom:1px solid var(--line)}
@@ -288,20 +293,21 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 @media (max-width:620px){
   .wrap{width:calc(100% - 32px)}
   .grid,.featured,.studies,.skills,.techs,.edu,.cases{grid-template-columns:1fr}
-  .featured .card-big{grid-column:auto;grid-row:auto}
-  .featured .card-big .card-media{min-height:0;aspect-ratio:16/10}
+  .featured .card-big{grid-column:auto}
+  .featured .card-big .card-body{padding:22px 22px 20px}
   .featured .card-big h3{font-size:22px}
   .timeline li{grid-template-columns:1fr;gap:4px}
   .chips{flex-wrap:nowrap;overflow-x:auto;margin-inline:-16px;padding-inline:16px;scrollbar-width:none;width:calc(100% + 32px)}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:none}
   .hero{padding-top:44px}
+  .kicker{font-size:11.5px;padding:7px 12px;max-width:100%}
+  .kicker .k-x{display:none}
   .stats dd{font-size:32px}
   .btn-lg{width:100%;justify-content:center}
   .contact .btn-lg{font-size:14px}
   .marquee-t span{font-size:20px}
 }
-.featured .card-big .card-body{flex:none}
 </style>
 </head>
 <body>
@@ -342,7 +348,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   <div class="glow" aria-hidden="true"></div>
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <p class="kicker"><span class="dot-live"></span> Open to global opportunities · Pakistan &amp; GCC experience</p>
+      <p class="kicker"><span class="dot-live"></span> Open to global opportunities<span class="k-x"> · Pakistan &amp; GCC experience</span></p>
       <h1>I build AI that understands <em>place</em>, evidence &amp; people.</h1>
       <p class="lede">I’m <strong>Muhammad Safdar</strong> — a GIS specialist of 14+ years turned Generative AI &amp; GeoAI engineer. I ship Python applications that connect language models, reviewed tools and spatial data to real decisions.</p>
       <div class="cta">
@@ -468,21 +474,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
     <div class="card-actions"><a class="btn-sm primary" href="https://lulc-molusce-swat-agent.streamlit.app/" target="_blank" rel="noopener">Open app <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="btn-sm" href="https://github.com/safdar404/lulc-molusce-swat-agent" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg> Source</a></div>
   </div>
 </article>
-<article class="card reveal" data-cat="bi" data-search="superstore sales intelligence 5,899 lines · $1.342m sales · 13.1% margin sales, profit and margin across regions and categories; unmatched returns are excluded from return-rate calculations. power bi dax power query business intelligence">
-  <a class="card-media fit-cover" href="https://safdar404.github.io/superstore-bi/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/project-screenshots/superstore-actual-dashboard.jpg" alt="" loading="lazy" decoding="async">
-    <span class="status" data-status="safdar404-github-io-superstore-bi"><i></i><b>checking</b></span>
-  </a>
-  <div class="card-body">
-    <p class="eyebrow">Business Intelligence</p>
-    <h3>Superstore Sales Intelligence</h3>
-    <p class="tagline">5,899 lines · $1.342m sales · 13.1% margin</p>
-    <p class="desc">Sales, profit and margin across regions and categories; unmatched returns are excluded from return-rate calculations.</p>
-    
-    <ul class="tags"><li>Power BI</li><li>DAX</li><li>Power Query</li></ul>
-    <div class="card-actions"><a class="btn-sm primary" href="https://safdar404.github.io/superstore-bi/" target="_blank" rel="noopener">Open app <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a class="btn-sm" href="https://github.com/safdar404/safdar404.github.io/tree/main/superstore-bi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m8 7-5 5 5 5M16 7l5 5-5 5"/></svg> Source</a></div>
-  </div>
-</article></div>
+</div>
   </div>
 </section>
 
@@ -514,7 +506,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="genai" data-search="traveltalk ai realtime travel voice advisor browser webrtc voice with semantic turn detection and interruptions, travel preferences, captions, reconnect and json transcript export. openai realtime webrtc streamlit generative &amp; agentic ai">
   <a class="card-media fit-contain" href="https://traveltalk-realtime.streamlit.app/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/traveladvisor-realtime/main/assets/agent.png" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/traveladvisor-realtime/main/assets/agent.png" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="traveltalk-realtime-streamlit-app"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -559,7 +551,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="genai" data-search="healthassist v2 tool-calling health workspace intake, patient registry, vitals, labs and care tasks with seven bounded tools, openai/gemini, english/urdu and opt-in document sharing. tool calling openai / gemini retrieval generative &amp; agentic ai">
   <a class="card-media fit-contain" href="https://ai-healthassist.ai.studio/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/healthai/main/assets/healthassist-clinician.webp" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/healthai/main/assets/healthassist-clinician.webp" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="ai-healthassist-ai-studio"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -574,7 +566,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="genai" data-search="gharbuilder ai house design &amp; estimation agent requirements chat to concept floor plans, cad/3d geometry, bim/ifc, 4d schedule and itemised boq — with reviewed inputs and staged approval. agent studio cad bim / ifc generative &amp; agentic ai">
   <a class="card-media fit-contain" href="https://house-build-cad.streamlit.app/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/house-build-cad/main/assets/agent-mark.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/house-build-cad/main/assets/agent-mark.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="house-build-cad-streamlit-app"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -604,7 +596,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="genai" data-search="voice agent ai conversational voice studio record, upload or type; editable transcripts, multi-turn history and ai voice replies in english, urdu, portuguese or arabic with mp3 export. speech-to-text text-to-speech openai generative &amp; agentic ai">
   <a class="card-media fit-contain" href="https://voiceagent-ai.streamlit.app/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="assets/voiceagent-ai/voiceagent-overview.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="assets/voiceagent-ai/voiceagent-overview.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="voiceagent-ai-streamlit-app"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -694,7 +686,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="docs" data-search="langchain rag assistant load · embed · store · retrieve document assistant using openai embeddings and singlestore vector retrieval, returning answers with source snippets. langchain openai singlestore document intelligence">
   <a class="card-media fit-contain" href="https://langchain-rag-document-assistant.neat-grove-8624.chatgpt.site/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/langchain-rag.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/langchain-rag.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="langchain-rag-document-assistant-neat-grove-8624-chatgpt-site"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -784,7 +776,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="geoai" data-search="agrisentinel pakistan crop health · satellites · rag · ml monitor crop fields, review satellite indices, track pesticide follow-up and explore source-cited guidance and harvest models. sentinel-2 agriculture ml geoai &amp; gis">
   <a class="card-media fit-contain" href="https://safdar404.github.io/geosentinel-floodops/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://safdar404.github.io/geosentinel-floodops/assets/agrisentinel-logo-v1.webp" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="geosentinel-floodops/assets/agrisentinel-logo-v1.webp" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="safdar404-github-io-geosentinel-floodops"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -799,7 +791,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="geoai" data-search="pakistan flood intelligence 35 districts · 5 scenarios · 4 phases national flood screening with district markers and scenario views; river observations dated 5 august 2026, scenario scores qualitative. react typescript geojson geoai &amp; gis">
   <a class="card-media fit-contain" href="https://pakistan-flood-intelligence-2026.neat-grove-8624.chatgpt.site/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/pakistan-flood.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/pakistan-flood.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="pakistan-flood-intelligence-2026-neat-grove-8624-chatgpt-site"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -829,7 +821,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="geoai" data-search="geosentinel drain floodops drainage network operations drainage and flood-operations workspace in the geosentinel family. web gis drainage operations geoai &amp; gis">
   <a class="card-media fit-contain" href="https://geosentinel-drain-floodops.neat-grove-8624.chatgpt.site/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/drain-floodops.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/drain-floodops.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="geosentinel-drain-floodops-neat-grove-8624-chatgpt-site"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -1009,7 +1001,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="eng" data-search="zarwa / his bill scanner camera · ocr review · structured csv tesseract.js and pdf.js extract vendor, invoice, tax, totals and line items for review and csv export. tesseract.js react typescript engineering &amp; ocr">
   <a class="card-media fit-contain" href="https://his-bill-scanner.neat-grove-8624.chatgpt.site/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/bill-scanner.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/bill-scanner.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="his-bill-scanner-neat-grove-8624-chatgpt-site"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
@@ -1024,7 +1016,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 </article>
 <article class="card reveal" data-cat="eng" data-search="mep scanner system component tags · duct sizes · airflow extracts mep components, duct dimensions and airflow from drawings, keeping ocr confidence and source lines for review. python easyocr opencv engineering &amp; ocr">
   <a class="card-media fit-contain" href="https://mep-scanner-system.neat-grove-8624.chatgpt.site/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
-    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/mep-scanner.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Artwork</span>
+    <img src="https://raw.githubusercontent.com/safdar404/safdar404/main/assets/cards/mep-scanner.svg" alt="" loading="lazy" decoding="async"><span class="art-label">Illustration</span>
     <span class="status" data-status="mep-scanner-system-neat-grove-8624-chatgpt-site"><i></i><b>checking</b></span>
   </a>
   <div class="card-body">
