@@ -112,6 +112,41 @@ h1 em{font-size:1.08em;letter-spacing:-.01em}
 .cat-stats b{color:var(--text);font-weight:500}
 .console-f{font-size:11px;color:var(--faint);margin:16px 0 0;line-height:1.5}
 
+/* portrait */
+.portrait{position:relative;justify-self:center;width:min(440px,100%);margin:0}
+.p-stage{position:relative;aspect-ratio:1;display:grid;place-items:center}
+.p-orbit{position:absolute;inset:-4%;width:108%;height:108%;color:var(--line2);stroke-width:1;animation:spin 80s linear infinite}
+.p-orbit .dash{stroke-dasharray:2 8;color:var(--accent);opacity:.5;stroke:var(--accent)}
+.p-ring{position:absolute;inset:8%;border-radius:50%;background:conic-gradient(from 0deg,var(--accent),var(--accent2),transparent 40%,var(--accent) 70%,var(--accent2));animation:spin 14s linear infinite;filter:blur(.3px)}
+.p-ring::after{content:"";position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 28%,transparent),transparent);z-index:-1;filter:blur(18px)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.p-photo{position:absolute;inset:calc(8% + 5px);margin:0;border-radius:50%;overflow:hidden;background:var(--surface);box-shadow:0 0 0 6px var(--bg),0 30px 60px -20px rgba(0,0,0,.6)}
+.p-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 30%;filter:saturate(.88) contrast(1.03);transform:scale(1.04);transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.p-photo::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,transparent 55%,color-mix(in srgb,var(--bg) 35%,transparent));box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.portrait:hover .p-photo img{transform:scale(1.09)}
+.p-tag{position:absolute;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;font:500 12.5px/1 var(--sans);color:var(--text);background:color-mix(in srgb,var(--surface) 72%,transparent);border:1px solid var(--line2);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:var(--shadow);white-space:nowrap;animation:float 6s ease-in-out infinite}
+.p-tag svg{width:15px;height:15px;color:var(--accent)}
+.p-tag.t1{top:9%;left:-8%}
+.p-tag.t2{top:44%;right:-3%;animation-delay:-3s}
+@keyframes float{50%{transform:translateY(-8px)}}
+.p-live{position:absolute;left:-6%;bottom:2%;width:232px;padding:14px 16px 12px;border-radius:16px;font-family:var(--mono);background:color-mix(in srgb,var(--surface) 80%,transparent);border:1px solid var(--line2);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--shadow);animation:float 7s ease-in-out infinite;animation-delay:-1.5s}
+.p-live-h{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--faint)}
+.p-live-h .console-t{margin-left:auto;color:var(--accent);white-space:nowrap}
+.p-live-b{display:flex;align-items:flex-end;gap:10px;margin-top:10px}
+.p-live-b strong{font:600 38px/.9 var(--sans);letter-spacing:-.04em;color:var(--text)}
+.p-live-b span{font-size:11px;color:var(--muted);line-height:1.35}
+.p-live .bar{margin:12px 0 0;height:5px}
+.p-cap{text-align:center;margin:26px 0 0;font-size:14px;font-weight:600;color:var(--text)}
+.p-cap span{font-weight:400;color:var(--muted)}
+.p-cap span::before{content:" · "}
+@media (max-width:1080px){.portrait{width:min(400px,100%)}}
+@media (max-width:620px){
+  .portrait{width:min(320px,calc(100% - 40px))}
+  .p-tag{font-size:11px;padding:7px 11px}.p-tag.t1{left:-6%}.p-tag.t2{right:-4%}
+  .p-live{width:180px;left:-8%;padding:11px 13px 10px}.p-live-b strong{font-size:30px}
+  .p-cap span{display:block}.p-cap span::before{content:none}
+}
+
 .stats{display:grid;grid-template-columns:repeat(4,1fr);margin:64px 0 0;border:1px solid var(--line);border-radius:var(--r);background:color-mix(in srgb,var(--surface) 50%,transparent)}
 .stats div{padding:22px 24px;border-left:1px solid var(--line)}
 .stats div:first-child{border-left:0}
@@ -363,16 +398,22 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
         <li><a href="https://wa.me/923228792404" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 20.5 5 16a8.5 8.5 0 1 1 3.2 3.1z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.5-2-1-1 .8c-1-.5-2.3-1.8-2.8-2.8l.8-1-1-2z"/></svg></a></li>
       </ul>
     </div>
-    <aside class="console" aria-label="Live deployment status">
-      <div class="console-h"><span class="lights"><i></i><i></i><i></i></span><span>deployments.status</span><span class="console-t" id="checked">—</span></div>
-      <div class="console-b">
-        <div class="big-stat"><strong id="liveCount">37</strong><span>of 37 apps<br>responding</span></div>
-        <div class="bar"><span id="liveBar" style="width:100%"></span></div>
-        <ul class="cat-stats">
-          <li><span>Generative &amp; Agentic AI</span><b>12</b></li><li><span>Document Intelligence</span><b>3</b></li><li><span>GeoAI &amp; GIS</span><b>12</b></li><li><span>Machine Learning</span><b>3</b></li><li><span>Business Intelligence</span><b>3</b></li><li><span>Engineering &amp; OCR</span><b>3</b></li><li><span>Learning &amp; Growth</span><b>1</b></li>
-        </ul>
-        <p class="console-f">Health checks run every 6 h via GitHub Actions. Streamlit apps may take ~30 s to wake.</p>
+    <aside class="portrait" aria-label="Profile">
+      <div class="p-stage">
+        <svg class="p-orbit" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="196"/><circle cx="200" cy="200" r="168" class="dash"/><path d="M200 0v18M200 382v18M0 200h18M382 200h18"/></svg>
+        <div class="p-ring" aria-hidden="true"></div>
+        <figure class="p-photo">
+          <img src="https://github.com/safdar404.png?size=600" alt="Portrait of Muhammad Safdar" width="460" height="460" fetchpriority="high" decoding="async">
+        </figure>
+        <span class="p-tag t1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>GIS &amp; remote sensing · 14+ yrs</span>
+        <span class="p-tag t2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Generative AI &amp; GeoAI</span>
+        <div class="p-live" aria-label="Live deployment status">
+          <div class="p-live-h"><span class="dot-live"></span><span>live status</span><span class="console-t" id="checked">—</span></div>
+          <div class="p-live-b"><strong id="liveCount">37</strong><span>of 37 apps<br>responding</span></div>
+          <div class="bar"><span id="liveBar" style="width:100%"></span></div>
+        </div>
       </div>
+      <p class="p-cap">Muhammad Safdar <span>GIS → GenAI &amp; GeoAI Engineer</span></p>
     </aside>
   </div>
   <div class="wrap">
