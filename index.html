@@ -234,6 +234,16 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 .empty{color:var(--muted);text-align:center;padding:40px 0}
 
 /* ML studies */
+.n8n-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.n8n-card{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:22px;transition:transform .3s,border-color .3s}
+.n8n-card:hover{transform:translateY(-4px);border-color:#ea4b71}
+.n8n-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:12px;border-radius:12px;background:var(--surface2);border:1px dashed var(--line2);margin-bottom:16px;font:500 11.5px var(--mono);color:var(--muted)}
+.n8n-flow b{font-weight:500;background:var(--surface);border:1px solid var(--line2);border-radius:8px;padding:3px 8px;color:var(--text)}
+.n8n-flow i{font-style:normal;color:var(--faint)}
+.n8n-card h3{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
+.n8n-card p{font-size:14px;color:var(--muted);margin:0 0 12px}
+.n8n-ok{margin-top:auto;font:600 12px var(--sans);color:var(--ok)}
+@media (max-width:980px){.n8n-grid{grid-template-columns:1fr}}
 .studies{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .study{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden;transition:transform .3s,border-color .3s}
 .study:hover{transform:translateY(-4px);border-color:var(--accent)}
@@ -360,7 +370,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Muhammad Safdar — home"><span class="mono-mark">MS</span><span class="brand-t">Muhammad Safdar</span></a>
     <nav class="links" aria-label="Primary">
-      <a href="#work">Work</a><a href="#ml">ML studies</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+      <a href="#work">Work</a><a href="#ml">ML studies</a><a href="#n8n">Automation</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
     </nav>
     <div class="nav-r">
       <button class="icon-btn" id="theme" aria-label="Toggle colour theme"><span class="i-sun"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></span><span class="i-moon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></span></button>
@@ -369,7 +379,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
       <button class="icon-btn show-sm" id="menu" aria-label="Open menu" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
     </div>
   </div>
-  <div class="drawer" id="drawer"><a href="#work">Work</a><a href="#ml">ML studies</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a><a href="https://smhisresume.com/" target="_blank" rel="noopener">Résumé ↗</a></div>
+  <div class="drawer" id="drawer"><a href="#work">Work</a><a href="#ml">ML studies</a><a href="#n8n">Automation</a><a href="#experience">Experience</a><a href="#skills">Skills</a><a href="#contact">Contact</a><a href="https://smhisresume.com/" target="_blank" rel="noopener">Résumé ↗</a></div>
 </header>
 
 <main id="main">
@@ -1139,10 +1149,35 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   </div>
 </section>
 
-<section class="section alt" id="approach">
+<section class="section alt" id="n8n">
+  <div class="wrap">
+    <header class="sec-h reveal">
+      <p class="sec-k">04 — Workflow automation</p>
+      <h2>n8n workflows, <em>tested live.</em></h2>
+      <p class="sec-d">AI agents with tools, LLM chains and scheduled automations wired to Google Sheets, Gmail and Contacts. Each was run end-to-end on n8n Cloud and is published; JSON exports are downloadable.</p>
+    </header>
+    <div class="n8n-grid">
+<a class="n8n-card reveal" href="n8n-automations/#ai-agent-email-assistant">
+  <div class="n8n-flow"><b>💬 Chat</b><i>→</i><b>🤖 AI Agent</b><i>⇢</i><b>Sheets tool</b><b>Gmail tool</b></div>
+  <h3>AI Agent Email Assistant</h3><p>Ask in plain English to email a customer by name; the agent finds their address in a Google Sheet, writes the email and sends it via Gmail.</p>
+  <span class="n8n-ok">● Tested · OpenAI + memory + 2 tools</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#motivational-quote-generator">
+  <div class="n8n-flow"><b>⏰ 7 AM daily</b><i>→</i><b>✨ LLM Chain</b><i>→</i><b>Sheets</b><i>→</i><b>Gmail</b></div>
+  <h3>Motivational Quote Generator</h3><p>Every morning an LLM writes a fresh quote and tip, then emails each recipient in a Google Sheet a personalised “Good morning” message.</p>
+  <span class="n8n-ok">● Tested · live schedule run verified</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#new-client-requests">
+  <div class="n8n-flow"><b>📄 New row</b><i>→</i><b>Gmail</b><i>→</i><b>Contacts</b><i>→</i><b>Notify</b></div>
+  <h3>New Client Requests</h3><p>New client rows in a Google Sheet trigger an instant thank-you email, a new Google Contact and an internal notification.</p>
+  <span class="n8n-ok">● Tested · Sheets trigger + Contacts</span></a>
+    </div>
+    <p class="more reveal"><a class="btn btn-ghost" href="n8n-automations/">View all n8n workflows <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
+  </div>
+</section>
+
+<section class="section" id="approach">
   <div class="wrap split">
     <header class="sec-h sticky reveal">
-      <p class="sec-k">04 — How I build</p>
+      <p class="sec-k">05 — How I build</p>
       <h2>Useful AI is <em>bounded, cited and reviewable.</em></h2>
       <p class="sec-d">Fourteen years of government and infrastructure GIS taught me that decisions need provenance. I carry that into every model, agent and map I ship.</p>
       <ul class="principles">
@@ -1160,10 +1195,10 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   </div>
 </section>
 
-<section class="section" id="experience">
+<section class="section alt" id="experience">
   <div class="wrap split">
     <header class="sec-h sticky reveal">
-      <p class="sec-k">05 — Experience</p>
+      <p class="sec-k">06 — Experience</p>
       <h2>14+ years of <em>spatial delivery</em> for government &amp; industry.</h2>
       <p class="sec-d">Disaster management, infrastructure, agriculture and urban planning across Pakistan and Saudi Arabia — now paired with Python, GeoAI and agentic AI.</p>
       <a class="btn btn-ghost" href="https://smhisresume.com/" target="_blank" rel="noopener">Full résumé <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
@@ -1187,10 +1222,10 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   </div>
 </section>
 
-<section class="section alt" id="skills">
+<section class="section" id="skills">
   <div class="wrap">
     <header class="sec-h reveal">
-      <p class="sec-k">06 — Toolkit</p>
+      <p class="sec-k">07 — Toolkit</p>
       <h2>A stack that spans <em>models, maps and dashboards.</em></h2>
     </header>
     <div class="skills"><div class="skill reveal"><h3>Generative AI</h3><ul><li>OpenAI SDK</li><li>Claude</li><li>LangChain</li><li>Hugging Face</li><li>RAG</li><li>Tool calling</li><li>FAISS</li><li>SingleStore</li></ul></div>
@@ -1215,7 +1250,7 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 
 <section class="section contact" id="contact">
   <div class="wrap contact-in reveal">
-    <p class="sec-k">07 — Contact</p>
+    <p class="sec-k">08 — Contact</p>
     <h2>Let’s build <em>useful intelligence.</em></h2>
     <p class="sec-d">Hiring for GenAI, GeoAI or GIS — or have a spatial problem that needs an agent?</p>
     <div class="cta center">
