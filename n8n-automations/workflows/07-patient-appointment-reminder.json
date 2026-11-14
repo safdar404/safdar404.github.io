@@ -347,7 +347,7 @@
     {
       "parameters": {
         "operation": "send",
-        "phoneNumberId": "=+10000000000",
+        "phoneNumberId": "YOUR_WHATSAPP_PHONE_NUMBER_ID",
         "recipientPhoneNumber": "={{  $json.phone_e164.replace(\"+\", \"\") }}",
         "textBody": "={{  $json.sms_text }}",
         "additionalFields": {}
