@@ -240,6 +240,8 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
 .n8n-flow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:12px;border-radius:12px;background:var(--surface2);border:1px dashed var(--line2);margin-bottom:16px;font:500 11.5px var(--mono);color:var(--muted)}
 .n8n-flow b{font-weight:500;background:var(--surface);border:1px solid var(--line2);border-radius:8px;padding:3px 8px;color:var(--text)}
 .n8n-flow i{font-style:normal;color:var(--faint)}
+.n8n-img{aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#f0f0f0;border:1px solid var(--line2);margin-bottom:16px;display:grid;place-items:center}
+.n8n-img img{width:100%;height:100%;object-fit:contain}
 .n8n-card h3{font-size:17px;margin:0 0 6px;letter-spacing:-.01em}
 .n8n-card p{font-size:14px;color:var(--muted);margin:0 0 12px}
 .n8n-ok{margin-top:auto;font:600 12px var(--sans);color:var(--ok)}
@@ -1158,15 +1160,15 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
     </header>
     <div class="n8n-grid">
 <a class="n8n-card reveal" href="n8n-automations/#ai-agent-email-assistant">
-  <div class="n8n-flow"><b>💬 Chat</b><i>→</i><b>🤖 AI Agent</b><i>⇢</i><b>Sheets tool</b><b>Gmail tool</b></div>
+  <div class="n8n-img"><img src="n8n-automations/canvas-02-ai-agent-email-assistant.png" alt="n8n canvas of the AI Agent Email Assistant workflow" loading="lazy" decoding="async"></div>
   <h3>AI Agent Email Assistant</h3><p>Ask in plain English to email a customer by name; the agent finds their address in a Google Sheet, writes the email and sends it via Gmail.</p>
   <span class="n8n-ok">● Tested · OpenAI + memory + 2 tools</span></a>
 <a class="n8n-card reveal" href="n8n-automations/#motivational-quote-generator">
-  <div class="n8n-flow"><b>⏰ 7 AM daily</b><i>→</i><b>✨ LLM Chain</b><i>→</i><b>Sheets</b><i>→</i><b>Gmail</b></div>
+  <div class="n8n-img"><img src="n8n-automations/canvas-03-motivational-quote-generator.png" alt="n8n canvas of the Motivational Quote Generator workflow" loading="lazy" decoding="async"></div>
   <h3>Motivational Quote Generator</h3><p>Every morning an LLM writes a fresh quote and tip, then emails each recipient in a Google Sheet a personalised “Good morning” message.</p>
   <span class="n8n-ok">● Tested · live schedule run verified</span></a>
 <a class="n8n-card reveal" href="n8n-automations/#new-client-requests">
-  <div class="n8n-flow"><b>📄 New row</b><i>→</i><b>Gmail</b><i>→</i><b>Contacts</b><i>→</i><b>Notify</b></div>
+  <div class="n8n-img"><img src="n8n-automations/canvas-01-new-client-requests.png" alt="n8n canvas of the New Client Requests workflow" loading="lazy" decoding="async"></div>
   <h3>New Client Requests</h3><p>New client rows in a Google Sheet trigger an instant thank-you email, a new Google Contact and an internal notification.</p>
   <span class="n8n-ok">● Tested · Sheets trigger + Contacts</span></a>
     </div>
