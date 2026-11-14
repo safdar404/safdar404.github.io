@@ -1,0 +1,494 @@
+{
+  "name": "Patient Appointment Reminder & No-Show Recovery",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "0aea27b2-61d6-414d-9216-7d8a53902083",
+      "name": "Daily 9AM Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Appointments",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "8603a0aa-66a3-4a11-be61-b3b91b286918",
+      "name": "Get Appointments",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        224,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n//  BUILD REMINDER QUEUE\n//  Mode: Run Once for All Items\n//\n//  Reads every row of the Appointments sheet and returns only the\n//  rows that (a) fall on the target date, (b) are still live,\n//  (c) have not already been reminded, and (d) have a contact\n//  channel the patient has consented to.\n//  It also pre-renders the SMS text and the HTML email body so the\n//  messaging nodes stay trivial.\n// ============================================================\n\n// ---------- 0. Clinic configuration ----------\nconst CLINIC_NAME  = 'Northside Family Clinic';\nconst CLINIC_PHONE = '+10000000000';\nconst CLINIC_TZ    = 'Asia/Karachi';\nconst LEAD_DAYS    = 1;                 // remind 1 day before\n\n// ---------- 1. Work out the target date in CLINIC time ----------\n//  Never use new Date() here. The n8n server may run in UTC while\n//  the clinic runs in PKT, which silently shifts the target day.\nconst nowLocal   = DateTime.now().setZone(CLINIC_TZ);\nconst targetDate = nowLocal.plus({ days: LEAD_DAYS }).toFormat('yyyy-MM-dd');\nconst runDate    = nowLocal.toFormat('yyyy-MM-dd');\n\n// ---------- 2. Small helpers ----------\nconst clean  = (v) => String(v ?? '').trim();\nconst isTrue = (v) => clean(v).toUpperCase() === 'TRUE';\n\nconst E164  = /^\\+[1-9]\\d{7,14}$/;\nconst EMAIL = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]{2,}$/;\n\nconst esc = (v) => clean(v)\n  .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');\n\n// ---------- 3. Walk every row ----------\nconst queue = [];\n\nfor (const item of $input.all()) {\n  const r = item.json;\n\n  // 3a. date filter\n  if (clean(r.appointment_date) !== targetDate) continue;\n\n  // 3b. only live bookings\n  if (clean(r.status).toLowerCase() !== 'scheduled') continue;\n\n  // 3c. idempotency guard - never remind the same row twice\n  if (clean(r.reminder_sent).toUpperCase() === 'YES') continue;\n\n  // 3d. consent + contact validation\n  const phoneOk = E164.test(clean(r.phone_e164)) && isTrue(r.consent_sms);\n  const emailOk = EMAIL.test(clean(r.email))     && isTrue(r.consent_email);\n\n  let channel = null;\n  let skip_reason = null;\n\n  const preferred = clean(r.preferred_channel).toLowerCase();\n  if      (preferred === 'sms'   && phoneOk) channel = 'sms';\n  else if (preferred === 'email' && emailOk) channel = 'email';\n  else if (phoneOk)                          channel = 'sms';\n  else if (emailOk)                          channel = 'email';\n  else {\n    skip_reason = (!isTrue(r.consent_sms) && !isTrue(r.consent_email))\n      ? 'no_consent_on_file'\n      : 'invalid_contact_details';\n  }\n\n  // 3e. human-readable date/time\n  const when = DateTime.fromFormat(\n    clean(r.appointment_date) + ' ' + clean(r.appointment_time),\n    'yyyy-MM-dd HH:mm',\n    { zone: CLINIC_TZ }\n  );\n  const readable_date = when.isValid\n    ? when.toFormat('cccc d LLLL') : clean(r.appointment_date);\n  const readable_time = when.isValid\n    ? when.toFormat('h:mm a')      : clean(r.appointment_time);\n\n  const first_name = clean(r.patient_first_name) || 'there';\n  const clinician  = clean(r.clinician);\n  const location   = clean(r.location);\n  const apptId     = clean(r.appointment_id);\n\n  // 3f. pre-render the SMS  (no clinical detail - see PHI note)\n  const sms_text =\n    CLINIC_NAME + ': Hi ' + first_name + ', reminder of your appointment on ' +\n    readable_date + ' at ' + readable_time + ' with ' + clinician +\n    ' (' + location + '). Ref ' + apptId +\n    '. Reply C to cancel or call ' + CLINIC_PHONE + '.';\n\n  // 3g. pre-render the email\n  const email_subject =\n    'Appointment reminder - ' + readable_date + ' at ' + readable_time;\n\n  const row = (label, value, first) =>\n    '<tr><td style=\"padding:8px;border:1px solid #dde3ec;' + (first ? 'width:34%;' : '') +\n      'background:#f6faf9;font-weight:bold;\">' + label + '</td>' +\n      '<td style=\"padding:8px;border:1px solid #dde3ec;\">' + value + '</td></tr>';\n\n  const email_html =\n    '<div style=\"font-family:Arial,Helvetica,sans-serif;max-width:600px;' +\n    'margin:0 auto;color:#1f2933;line-height:1.6;\">' +\n      '<h2 style=\"margin:0 0 4px;color:#0b6b5b;\">Appointment Reminder</h2>' +\n      '<p style=\"margin:0 0 20px;color:#6b7280;font-size:13px;\">' +\n        esc(CLINIC_NAME) + '</p>' +\n      '<p>Hi ' + esc(first_name) + ',</p>' +\n      '<p>This is a reminder of your upcoming appointment.</p>' +\n      '<table style=\"width:100%;border-collapse:collapse;font-size:14px;' +\n      'margin:18px 0;\">' +\n        row('Date', esc(readable_date), true) +\n        row('Time', esc(readable_time)) +\n        row('Clinician', esc(clinician)) +\n        row('Location', esc(location)) +\n        row('Reference', esc(apptId)) +\n      '</table>' +\n      '<p>Please arrive 10 minutes early. To cancel or reschedule, call ' +\n        '<strong>' + esc(CLINIC_PHONE) + '</strong> at least 24 hours ' +\n        'beforehand so we can offer the slot to another patient.</p>' +\n      '<p style=\"margin-top:22px;\">Kind regards,<br><strong>' +\n        esc(CLINIC_NAME) + '</strong></p>' +\n      '<hr style=\"border:none;border-top:1px solid #e3e8ef;margin:24px 0 10px;\">' +\n      '<p style=\"font-size:11px;color:#9aa5b1;margin:0;\">' +\n        'Automated reminder. Please do not reply with medical information; ' +\n        'this mailbox is not monitored by clinical staff.</p>' +\n    '</div>';\n\n  queue.push({\n    json: {\n      row_number:       r.row_number,\n      appointment_id:   apptId,\n      first_name,\n      phone_e164:       clean(r.phone_e164),\n      email:            clean(r.email),\n      clinician,\n      location,\n      appointment_date: clean(r.appointment_date),\n      readable_date,\n      readable_time,\n      channel,\n      has_valid_contact: channel !== null,\n      skip_reason,\n      sms_text,\n      email_subject,\n      email_html,\n      target_date: targetDate,\n      run_date: runDate\n    }\n  });\n}\n\n// An empty array is a valid, healthy result: it simply means no\n// appointments are scheduled for the target date.\nreturn queue;\n"
+      },
+      "id": "94e03955-95ae-+10000000000cd6f5e8f44e",
+      "name": "Build Reminder Queue",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cond-valid-contact",
+              "leftValue": "={{ $json.has_valid_contact }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "id": "f61b33be-caa9-4b55-b9da-cadc8ebc2f7b",
+      "name": "Has Valid Contact?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        656,
+        304
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-sms",
+                    "leftValue": "={{ $json.channel }}",
+                    "rightValue": "sms",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "sms"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "route-email",
+                    "leftValue": "={{ $json.channel }}",
+                    "rightValue": "email",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "email"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "44a0f69d-7770-4e01-8389-f6b1136b5fc5",
+      "name": "Route by Channel",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        896,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "={{ $json.email_subject }}",
+        "message": "={{ $json.email_html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "a67d39ab-b491-41e5-8e3c-a87b83017ca0",
+      "name": "Send Email Reminder",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1168,
+        304
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "9bc1d0b5-7735-4ffe-ad28-9dba0af17895",
+      "name": "Merge Channels",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1408,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Appointments",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Build Reminder Queue').item.json.row_number }}",
+            "reminder_sent": "YES",
+            "reminder_channel": "={{ $('Build Reminder Queue').item.json.channel }}",
+            "reminder_sent_at": "={{ $now.setZone('Asia/Karachi').toFormat('yyyy-MM-dd HH:mm') }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "id": "d0905763-d445-4a94-9efa-3a99778609c1",
+      "name": "Mark Reminder Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1616,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Exceptions",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "run_date": "={{ $json.run_date }}",
+            "appointment_id": "={{ $json.appointment_id }}",
+            "appointment_date": "={{ $json.appointment_date }}",
+            "reason": "={{ $json.skip_reason }}"
+          },
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "id": "a645eba5-5a62-425e-a59d-894512f688cd",
+      "name": "Log Skipped Records",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        896,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n//  SUMMARISE RUN\n//  Mode: Run Once for All Items\n//  Counts what happened and renders one Slack message.\n// ============================================================\n\n// Items arriving here are the rows we successfully updated.\nconst sentCount = $input.all().length;\n\n// Reach back to the queue for the full picture, including skips.\nconst queue   = $('Build Reminder Queue').all().map(i => i.json);\nconst total   = queue.length;\nconst skipped = queue.filter(q => !q.has_valid_contact);\n\nconst bySms   = queue.filter(q => q.channel === 'sms').length;\nconst byEmail = queue.filter(q => q.channel === 'email').length;\n\n// Group the skip reasons so the front desk knows what to fix.\nconst reasons = {};\nfor (const s of skipped) {\n  reasons[s.skip_reason] = (reasons[s.skip_reason] || 0) + 1;\n}\nconst reasonText = Object.entries(reasons)\n  .map(([k, v]) => k.replace(/_/g, ' ') + ': ' + v)\n  .join(', ') || 'none';\n\nconst runDate    = queue[0]?.run_date    ?? DateTime.now().toFormat('yyyy-MM-dd');\nconst targetDate = queue[0]?.target_date ?? 'n/a';\n\nconst summary =\n  '*Appointment Reminder Run - ' + runDate + '*\\n' +\n  'Appointments on ' + targetDate + ': *' + total + '*\\n' +\n  'Reminders sent: *' + sentCount + '*  (SMS ' + bySms +\n  ', Email ' + byEmail + ')\\n' +\n  'Skipped: *' + skipped.length + '*  (' + reasonText + ')';\n\nreturn [{\n  json: { run_date: runDate, target_date: targetDate, total,\n          sent: sentCount, skipped: skipped.length,\n          by_sms: bySms, by_email: byEmail, summary }\n}];\n"
+      },
+      "id": "9ce7de3f-3fd0-421d-a40a-e3e813e67ca3",
+      "name": "Summarise Run",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "YOUR_SLACK_CHANNEL",
+          "mode": "name"
+        },
+        "text": "={{ $json.summary }}",
+        "otherOptions": {
+          "mrkdwn": true
+        }
+      },
+      "id": "1fe76b04-b78a-4da9-a423-d904fc9eebd9",
+      "name": "Post Daily Summary",
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        2064,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# 1. COLLECT\n\nRuns every morning at 09:00 clinic time.\nReads the whole Appointments sheet, then the Code node\nfilters to tomorrow, validates consent and contact\ndetails, and pre-renders both message bodies.",
+        "height": 460,
+        "width": 620,
+        "color": 7
+      },
+      "id": "20211f06-017a-4a94-b917-475fe55a57ce",
+      "name": "Sticky Collect",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        144
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# 2. DECIDE & SEND\n\nPatients without consent or with a\nmalformed phone/email go to the Exceptions sheet instead\nof being silently dropped. Everyone else is routed to the\nchannel they agreed to.",
+        "height": 640,
+        "width": 640,
+        "color": 5
+      },
+      "id": "63f46c86-394e-43f3-a26b-c6e615cae3d0",
+      "name": "Sticky Decide",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        608,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# 3. RECORD & REPORT\n\nThe sheet write-back is the\nidempotency guard: a row marked YES is never picked up\nagain, so a re-run cannot double-text a patient.\nSlack gets one summary per run, not one per patient.",
+        "height": 460,
+        "width": 700,
+        "color": 4
+      },
+      "id": "8d5f8afa-d0c7-4091-95e7-ff36a31180bd",
+      "name": "Sticky Record",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1344,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "=+10000000000",
+        "recipientPhoneNumber": "={{  $json.phone_e164.replace(\"+\", \"\") }}",
+        "textBody": "={{  $json.sms_text }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1.1,
+      "position": [
+        1152,
+        128
+      ],
+      "id": "f9757c85-ad22-4054-9f61-80678be666e1",
+      "name": "Send WhatsApp Reminder"
+    }
+  ],
+  "connections": {
+    "Daily 9AM Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get Appointments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Appointments": {
+      "main": [
+        [
+          {
+            "node": "Build Reminder Queue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Reminder Queue": {
+      "main": [
+        [
+          {
+            "node": "Has Valid Contact?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Valid Contact?": {
+      "main": [
+        [
+          {
+            "node": "Route by Channel",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Log Skipped Records",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route by Channel": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Email Reminder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email Reminder": {
+      "main": [
+        [
+          {
+            "node": "Merge Channels",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge Channels": {
+      "main": [
+        [
+          {
+            "node": "Mark Reminder Sent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mark Reminder Sent": {
+      "main": [
+        [
+          {
+            "node": "Summarise Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarise Run": {
+      "main": [
+        [
+          {
+            "node": "Post Daily Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp Reminder": {
+      "main": [
+        [
+          {
+            "node": "Merge Channels",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

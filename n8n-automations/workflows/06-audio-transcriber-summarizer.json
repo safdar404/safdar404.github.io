@@ -1,0 +1,105 @@
+{
+  "name": "Audio Transcriber & Summarizer",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Audio Transcriber",
+        "formDescription": "Upload an audio file to get a structured summary.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "audio",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".mp3,.m4a,.wav,.ogg,.webm,.mp4,.mpeg,.mpga",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        16
+      ],
+      "name": "Upload Audio",
+      "id": "375b1078-6dee-44b1-9ca+10000000000"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "audio",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        96,
+        16
+      ],
+      "name": "Transcribe Audio",
+      "id": "67683c2b-30cc-4e96-a8b5-83e1dda00ba4"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "** Role & Purpose **\nYou are an AI summarizer that transforms audio content into structured, concise text.\nYour role is to extract key ideas, actions, and insights, and organize them under predefined sections for clarity and usability.\n\n** Capabilities **\n- Generate summary under 1500 characters, do not exceed this length\n- Use clear, concise language with bullet points\n- Highlight main points, actions, and follow-ups\n- Capture stories, references, and related arguments\n\n** Interaction Style **\n- Always use the fixed structure: title, summary, main_points, action_items, follow_up, stories, references, arguments, related_topics\n- Keep tone neutral, clear, and professional\n- Use short, natural-sounding bullet points for lists\n- Provide plain text, do not format the response\n\n** Notes **\n- Strictly respect 1500-character limit\n- Prioritize clarity and usability over detail\n- Ensure consistency across all summaries",
+              "role": "system"
+            },
+            {
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        368,
+        16
+      ],
+      "name": "Summarize Transcript",
+      "id": "818f5a23-2d9a-4e9a-9607-e4559dbdef40"
+    }
+  ],
+  "connections": {
+    "Upload Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "Summarize Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "name": "Exercise 4 - AI Audio Transcriber (Telegram → Notion)",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "download": true
+        }
+      },
+      "id": "c1",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "c2",
+      "name": "Transcribe Recording",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini",
+          "cachedResultName": "GPT-4O-MINI"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "You summarise voice-note transcripts. Reply with: a one-line title (max 8 words) on the first line, then a blank line, then a clear, concise summary of 3-6 bullet points covering key points, decisions and action items. Use the same language as the transcript.",
+              "role": "system"
+            },
+            {
+              "content": "=Transcript:\n{{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c3",
+      "name": "Summarize Transcript",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        480,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "mode": "url",
+          "value": ""
+        },
+        "title": "={{ $json.message.content.split('\\n')[0].replace(/^[#*\\s]+|[*]+$/g,'') }}",
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "=📅 {{ $now.toFormat('d LLL yyyy, h:mm a') }} · From: {{ $('Telegram Trigger').item.json.message.from.first_name }} · Duration: {{ ($('Telegram Trigger').item.json.message.voice || $('Telegram Trigger').item.json.message.audio || {}).duration }}s"
+            },
+            {
+              "type": "heading_2",
+              "textContent": "Summary"
+            },
+            {
+              "textContent": "={{ $json.message.content.split('\\n').slice(1).join('\\n').trim().slice(0,1990) }}"
+            },
+            {
+              "type": "heading_2",
+              "textContent": "Full Transcript"
+            },
+            {
+              "textContent": "={{ $('Transcribe Recording').item.json.text.slice(0,1990) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c4",
+      "name": "Create Notion Page",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Recording",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Recording": {
+      "main": [
+        [
+          {
+            "node": "Summarize Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize Transcript": {
+      "main": [
+        [
+          {
+            "node": "Create Notion Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

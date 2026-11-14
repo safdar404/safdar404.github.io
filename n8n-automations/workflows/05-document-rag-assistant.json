@@ -1,0 +1,330 @@
+{
+  "name": "Document RAG Assistant",
+  "nodes": [
+    {
+      "id": "29d1311f-81b1-4762-8c2d-6919d9118244",
+      "name": "Google Drive Trigger",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        -64
+      ],
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "YOUR_DRIVE_FOLDER_ID",
+          "mode": "id"
+        },
+        "event": "fileCreated",
+        "options": {}
+      }
+    },
+    {
+      "id": "1be41901-aeae-4977-929b-7c33964bbbb0",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        0,
+        -64
+      ],
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_FILE_ID",
+          "mode": "id"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "9eb69e30-125f-467e-a6c3-62d4b37f083f",
+      "name": "Insert into Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.1,
+      "position": [
+        272,
+        -64
+      ],
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": "document_rag"
+      }
+    },
+    {
+      "id": "78cdc1af-e8ae-4747-b542-31bf512a6473",
+      "name": "Embeddings (Insert)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        176
+      ],
+      "parameters": {
+        "options": {}
+      }
+    },
+    {
+      "id": "e731566e-f59f-4127-bb5b-204ecc76f345",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        384,
+        176
+      ],
+      "parameters": {
+        "dataType": "binary",
+        "textSplittingMode": "custom",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "file_name",
+                "value": "={{ $('Google Drive Trigger').item.json.name }}"
+              },
+              {
+                "name": "file_id",
+                "value": "={{ $('Google Drive Trigger').item.json.id }}"
+              },
+              {
+                "name": "loaded_at",
+                "value": "={{ $now.toISO() }}"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "9d6f47c2-990a-4b99-b7f7-0172c5ab2c7c",
+      "name": "Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        464,
+        368
+      ],
+      "parameters": {
+        "chunkOverlap": 200,
+        "options": {}
+      }
+    },
+    {
+      "id": "d0cf7f4e-f779-4db2-9ea4-4736c9a94425",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        624
+      ],
+      "parameters": {
+        "options": {}
+      }
+    },
+    {
+      "id": "c7320e2c-728a-43c9-b743-06a31811376e",
+      "name": "RAG Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        64,
+        624
+      ],
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a Document Q&A Assistant. You answer questions using ONLY the content\nof the documents that have been loaded into the knowledge base.\n\n** Your tool **\nYou have one tool: document_knowledge_base\nIt runs a semantic search over the uploaded documents and returns the passages\nthat are closest in meaning to your query, plus the file name each came from.\n\n** Rules you must follow **\n\n1. Search before you answer.\n   Call the tool on every question about document content, even when you think\n   you already know the answer.\n\n2. Ground every claim.\n   State only facts that appear in the returned passages. Never fill a gap from\n   your own general knowledge, and never infer a number that is not written down.\n\n3. Admit what is missing.\n   If the passages do not contain the answer, reply with exactly this sentence:\n   \"I could not find that in the uploaded documents.\"\n   Then suggest a question the documents could answer. Do not guess.\n\n4. Paraphrase, do not copy.\n   Put the answer in your own words. Use a short direct quote only when the\n   exact wording matters, and keep it under one sentence.\n\n5. Cite your source.\n   Finish every grounded answer with a line in this exact form:\n   Source: <file_name>\n   Take file_name from the metadata attached to the passages you used. If you\n   used more than one file, list them separated by commas.\n\n6. Rewrite vague follow-ups.\n   The tool has no memory of the conversation. Before calling it, turn pronouns\n   and shorthand into a standalone query using the chat history. \"What about the\n   second one?\" must become a full question naming the thing.\n\n7. Split multi-part questions.\n   If a question needs several unrelated facts, call the tool more than once\n   with different phrasings rather than one broad query.\n\n** Style **\nAnswer in two to six sentences unless the user asks for more detail. Use a short\nbullet list when presenting parallel items. Be direct: do not open with\n\"Based on the documents provided\" or \"According to the context\"."
+        }
+      }
+    },
+    {
+      "id": "b1192910-2fdb-48db-a11f-147cf42e583f",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -32,
+        864
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {
+          "temperature": 0.1
+        }
+      }
+    },
+    {
+      "id": "d9f+10000000000d66-7f44c40dfa13",
+      "name": "Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        144,
+        864
+      ],
+      "parameters": {
+        "contextWindowLength": 10
+      }
+    },
+    {
+      "id": "732fe070-27f6-4b36-ab87-63a57252999a",
+      "name": "Document Knowledge Base",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        864
+      ],
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolName": "document_knowledge_base",
+        "toolDescription": "Semantic search over the documents the user has uploaded to the knowledge base. The input should be a complete, standalone question or a descriptive phrase about the information you need - not a single keyword. Returns the passages whose meaning is closest to your query, along with the name of the file each passage came from. Use this tool for every question about document content.",
+        "memoryKey": "document_rag"
+      }
+    },
+    {
+      "id": "fec559b1-0436-41e5-9048-118e39be4546",
+      "name": "Embeddings (Query)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        368,
+        1088
+      ],
+      "parameters": {
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Insert into Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings (Insert)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert into Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert into Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Document Knowledge Base": {
+      "ai_tool": [
+        [
+          {
+            "node": "RAG Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings (Query)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Document Knowledge Base",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
