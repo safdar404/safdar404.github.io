@@ -1155,8 +1155,8 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   <div class="wrap">
     <header class="sec-h reveal">
       <p class="sec-k">04 — Workflow automation</p>
-      <h2>n8n workflows, <em>tested live.</em></h2>
-      <p class="sec-d">AI agents with tools, LLM chains and scheduled automations wired to Google Sheets, Gmail and Contacts. Each was run end-to-end on n8n Cloud and is published; JSON exports are downloadable.</p>
+      <h2>n8n workflows, <em>built and tested live.</em></h2>
+      <p class="sec-d">Nine workflows: AI agents with tools, RAG over documents, CV screening, patient reminders and audio transcription, wired to Google Workspace, Slack, WhatsApp, Telegram and Notion. Built on n8n Cloud; JSON exports are downloadable.</p>
     </header>
     <div class="n8n-grid">
 <a class="n8n-card reveal" href="n8n-automations/#ai-agent-email-assistant">
@@ -1171,6 +1171,30 @@ h2{font-size:clamp(32px,4.4vw,54px);line-height:1.05;letter-spacing:-.03em;font-
   <div class="n8n-img"><img src="n8n-automations/canvas-01-new-client-requests.png" alt="n8n canvas of the New Client Requests workflow" loading="lazy" decoding="async"></div>
   <h3>New Client Requests</h3><p>New client rows in a Google Sheet trigger an instant thank-you email, a new Google Contact and an internal notification.</p>
   <span class="n8n-ok">● Tested · Sheets trigger + Contacts</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#patient-appointment-reminder">
+  <div class="n8n-img"><img src="n8n-automations/canvas-07-patient-appointment-reminder.png" alt="n8n canvas of the Patient Appointment Reminder &amp; No-Show Recovery workflow" loading="lazy" decoding="async"></div>
+  <h3>Patient Appointment Reminder &amp; No-Show Recovery</h3><p>Daily 9 AM run: finds tomorrow’s appointments, reminds each patient by WhatsApp or email, logs bad records and posts a Slack summary.</p>
+  <span class="n8n-ok">● Tested · Code + Switch + Slack</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#resume-ai-analyzer-web-form">
+  <div class="n8n-img"><img src="n8n-automations/canvas-08-resume-ai-analyzer-web-form.png" alt="n8n canvas of the Resume AI Analyzer (Web Form) workflow" loading="lazy" decoding="async"></div>
+  <h3>Resume AI Analyzer (Web Form)</h3><p>Applicants upload a PDF CV; an AI agent scores it, logs it to a sheet and emails a shortlist report or a thank-you.</p>
+  <span class="n8n-ok">● Tested · live form submissions</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#resume-ai-analyzer">
+  <div class="n8n-img"><img src="n8n-automations/canvas-09-resume-ai-analyzer.png" alt="n8n canvas of the Resume AI Analyzer (Gmail) workflow" loading="lazy" decoding="async"></div>
+  <h3>Resume AI Analyzer (Gmail)</h3><p>CVs emailed to the inbox are saved to Drive, scored by an AI agent and answered in the same Gmail thread.</p>
+  <span class="n8n-ok">● Tested · Gmail trigger + AI agent</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#document-rag-assistant">
+  <div class="n8n-img"><img src="n8n-automations/canvas-05-document-rag-assistant.png" alt="n8n canvas of the Document RAG Assistant workflow" loading="lazy" decoding="async"></div>
+  <h3>Document RAG Assistant</h3><p>Files dropped in a Drive folder are chunked and embedded; a RAG agent then answers questions only from those documents.</p>
+  <span class="n8n-ok">● Tested · embeddings + vector store</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#audio-transcriber-summarizer">
+  <div class="n8n-img"><img src="n8n-automations/canvas-06-audio-transcriber-summarizer.png" alt="n8n canvas of the Audio Transcriber &amp; Summarizer workflow" loading="lazy" decoding="async"></div>
+  <h3>Audio Transcriber &amp; Summarizer</h3><p>Upload audio through a form; Whisper transcribes it and an LLM returns a structured summary with actions.</p>
+  <span class="n8n-ok">● Published · Whisper + GPT-4o-mini</span></a>
+<a class="n8n-card reveal" href="n8n-automations/#ai-audio-transcriber-telegram-notion">
+  <div class="n8n-img"><img src="n8n-automations/canvas-04-ai-audio-transcriber-telegram-notion.png" alt="n8n canvas of the AI Audio Transcriber (Telegram → Notion) workflow" loading="lazy" decoding="async"></div>
+  <h3>AI Audio Transcriber (Telegram → Notion)</h3><p>Voice notes sent to a Telegram bot become titled, summarised Notion pages.</p>
+  <span class="n8n-ok" style="color:#f59e0b">● In progress · Telegram + Notion</span></a>
     </div>
     <p class="more reveal"><a class="btn btn-ghost" href="n8n-automations/">View all n8n workflows <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></p>
   </div>
