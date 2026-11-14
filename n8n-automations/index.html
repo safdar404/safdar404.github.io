@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>n8n Automations | Muhammad Safdar</title>
+<meta name="description" content="Tested and working n8n workflows: AI agents with tools, LLM chains, Google Sheets, Gmail and scheduled automation.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.dataset.theme='light'}catch(e){}</script>
+<style>
+:root{--bg:#0a0e17;--surface:#121a28;--surface2:#172133;--line:rgba(148,163,184,.14);--line2:rgba(148,163,184,.24);--text:#e7ecf3;--muted:#98a3b6;--faint:#6b768a;--accent:#5eead4;--accent2:#38bdf8;--accent-ink:#04201c;--n8n:#ea4b71;--ok:#22c55e;--r:18px;--sans:"Inter",ui-sans-serif,system-ui,sans-serif;--serif:"Instrument Serif",Georgia,serif;--mono:"JetBrains Mono",ui-monospace,monospace;color-scheme:dark}
+[data-theme="light"]{--bg:#f7f6f2;--surface:#fff;--surface2:#f3f2ee;--line:rgba(15,23,42,.10);--line2:rgba(15,23,42,.18);--text:#0f172a;--muted:#4b5565;--faint:#7a8494;--accent:#0d9488;--accent2:#0369a1;--accent-ink:#fff;--n8n:#d12f5a;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--accent)}
+.wrap{width:min(1100px,100% - 32px);margin-inline:auto}
+header.top{border-bottom:1px solid var(--line)}
+.top-in{display:flex;justify-content:space-between;align-items:center;height:64px;gap:12px}
+.brand{font-weight:700;letter-spacing:-.01em}
+.top a.back{font-size:14px;color:var(--muted)}.top a.back:hover{color:var(--accent)}
+.theme{background:none;border:1px solid var(--line2);color:var(--text);border-radius:999px;height:34px;padding:0 12px;font:500 13px var(--sans);cursor:pointer}
+.hero{padding:64px 0 28px}
+.k{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--n8n);margin:0 0 14px}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.03em;margin:0 0 16px}
+.lead{color:var(--muted);max-width:720px;margin:0}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0;padding:0;list-style:none}
+.stats li{border:1px solid var(--line2);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted)}
+.stats b{color:var(--text)}
+.wf{border:1px solid var(--line);background:var(--surface);border-radius:var(--r);padding:28px;margin:22px 0}
+.wf-h{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap}
+.wf-n{font:500 12px var(--mono);color:var(--faint);margin:0 0 6px}
+.wf h2{font-size:24px;letter-spacing:-.02em;margin:0 0 6px}
+.wf p{color:var(--muted);margin:0 0 12px;max-width:760px}
+.badge{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--sans);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent);padding:4px 10px;border-radius:999px;white-space:nowrap}
+.badge i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:20px 0 6px;padding:18px;border-radius:14px;background:var(--surface2);border:1px dashed var(--line2)}
+.node{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line2);border-radius:12px;padding:8px 12px;font-size:13.5px;font-weight:600}
+.node small{display:block;font:400 11px var(--mono);color:var(--faint)}
+.node .ic{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;flex:none}
+.trg .ic{background:color-mix(in srgb,var(--n8n) 18%,transparent)}
+.ai .ic{background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.app .ic{background:color-mix(in srgb,var(--accent2) 18%,transparent)}
+.arr{color:var(--faint);font-size:16px}
+.sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;padding-left:4px;font:500 11.5px var(--mono);color:var(--faint);width:100%}
+.sub .node{font-size:12.5px;padding:6px 10px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
+.cols h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
+.cols ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
+.cols li{margin:3px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.tags span{font:500 11.5px var(--mono);border:1px solid var(--line2);border-radius:6px;padding:2px 8px;color:var(--muted)}
+.dl{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:999px;background:var(--accent);color:var(--accent-ink);font-weight:600;font-size:14px;margin-top:18px}
+.dl:hover{filter:brightness(1.05)}
+.note{font-size:13.5px;color:var(--faint);border-top:1px solid var(--line);padding:22px 0 48px;margin-top:30px}
+code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;border-radius:5px}
+@media (max-width:720px){.cols{grid-template-columns:1fr}.wf{padding:20px}.hero{padding:40px 0 16px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap top-in">
+  <a class="brand" href="../">Muhammad Safdar</a>
+  <div style="display:flex;gap:14px;align-items:center"><a class="back" href="../#n8n">← Portfolio</a><button class="theme" id="theme" type="button">Theme</button></div>
+</div></header>
+
+<main class="wrap">
+<section class="hero">
+  <p class="k">Workflow automation · n8n</p>
+  <h1>n8n automations, <em>built and tested live.</em></h1>
+  <p class="lead">Production-style n8n workflows that combine triggers, LLMs, AI agents with tools, Google Sheets and Gmail. Each one below was executed end-to-end on n8n Cloud and is published (active). Download the JSON and import it into your own n8n.</p>
+  <ul class="stats"><li><b>3</b> workflows</li><li><b>End-to-end</b> tested on n8n Cloud</li><li>OpenAI · Google Sheets · Gmail · Google Contacts</li></ul>
+</section>
+
+<article class="wf" id="new-client-requests">
+  <div class="wf-h"><div><p class="wf-n">Workflow 01</p><h2>New Client Requests</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>Every time a new client request lands in a Google Sheet (e.g. from a web form), the client gets an instant thank-you email, is saved to Google Contacts, and I receive a summary notification.</p>
+  <div class="flow" role="img" aria-label="Google Sheets Trigger to Thank You Email to Add to Contacts to Notify Me">
+    <div class="node trg"><span class="ic">📄</span><span>Google Sheets Trigger<small>row added · every minute</small></span></div><span class="arr">→</span>
+    <div class="node app"><span class="ic">✉️</span><span>Thank-you email<small>Gmail · send</small></span></div><span class="arr">→</span>
+    <div class="node app"><span class="ic">👤</span><span>Add to Contacts<small>Google Contacts · create</small></span></div><span class="arr">→</span>
+    <div class="node app"><span class="ic">🔔</span><span>Notify me<small>Gmail · send</small></span></div>
+  </div>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Polls the sheet for new rows (name, email, phone, description)</li><li>Personalised reply to the client by name</li><li>Splits full name into given / family name for the contact</li><li>Sends an internal alert with the request details</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Multiple successful end-to-end runs on n8n Cloud</li><li>Published (active) on the Google Sheets trigger</li></ul></div>
+  </div>
+  <div class="tags"><span>Google Sheets Trigger</span><span>Gmail</span><span>Google Contacts</span><span>Expressions</span></div>
+  <a class="dl" href="workflows/01-new-client-requests.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="ai-agent-email-assistant">
+  <div class="wf-h"><div><p class="wf-n">Workflow 02</p><h2>AI Agent Email Assistant</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>A chat-driven AI agent. Ask it in plain English to email a customer by name — it looks the customer up in a Google Sheet database, writes a personalised email from your message and sends it through Gmail.</p>
+  <div class="flow" role="img" aria-label="Chat trigger to AI Agent with OpenAI model, memory, Google Sheets tool and Gmail tool">
+    <div class="node trg"><span class="ic">💬</span><span>Chat message<small>Chat Trigger</small></span></div><span class="arr">→</span>
+    <div class="node ai"><span class="ic">🤖</span><span>AI Agent<small>tool calling</small></span></div>
+    <div class="sub">uses ↳
+      <div class="node ai"><span class="ic">✨</span><span>OpenAI gpt-4o-mini</span></div>
+      <div class="node ai"><span class="ic">🧠</span><span>Simple Memory</span></div>
+      <div class="node app"><span class="ic">📄</span><span>Get Customers<small>Sheets tool</small></span></div>
+      <div class="node app"><span class="ic">✉️</span><span>Send Email<small>Gmail tool · $fromAI()</small></span></div>
+    </div>
+  </div>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Understands the request: who to email and what to say</li><li>Finds the customer's address in the sheet (Full Name, Email, Phone)</li><li>Never guesses an address — asks if no match or several matches</li><li>Composes and sends the email, then confirms recipient and subject</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Prompt: <i>“Send an email to Suleman Safdar thanking him for his order…”</i></li><li>Agent called <b>Get Customers</b> (4 rows) → <b>Send Email</b> (1 sent)</li><li>Small-talk messages correctly answered without tool calls</li></ul></div>
+  </div>
+  <div class="tags"><span>AI Agent</span><span>Tool calling</span><span>OpenAI</span><span>Memory</span><span>Google Sheets Tool</span><span>Gmail Tool</span></div>
+  <a class="dl" href="workflows/02-ai-agent-email-assistant.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="motivational-quote-generator">
+  <div class="wf-h"><div><p class="wf-n">Workflow 03</p><h2>Motivational Quote Generator</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>Every morning at 7 AM (Asia/Karachi) an LLM writes a fresh motivational quote with a one-line tip, and every recipient in a Google Sheet gets a personalised “Good morning {name}” email.</p>
+  <div class="flow" role="img" aria-label="Manual or 7 AM schedule trigger to Basic LLM Chain to Google Sheets to Gmail">
+    <div class="node trg"><span class="ic">⏰</span><span>Every day 7 AM<small>Schedule + manual test</small></span></div><span class="arr">→</span>
+    <div class="node ai"><span class="ic">✨</span><span>Generate Quote<small>Basic LLM Chain · gpt-4o-mini</small></span></div><span class="arr">→</span>
+    <div class="node app"><span class="ic">📄</span><span>Get Recipients<small>Google Sheets · read</small></span></div><span class="arr">→</span>
+    <div class="node app"><span class="ic">✉️</span><span>Send Quote Email<small>Gmail · one per recipient</small></span></div>
+  </div>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>One quote generated per day, shared across all recipients</li><li>Recipient list managed in a Google Sheet (Name, Email)</li><li>Manual trigger kept for testing alongside the schedule</li><li>Dated subject line: “Your Daily Motivation – {date}”</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Manual runs: all nodes green, email delivered</li><li>Live schedule test: fired automatically with no clicks and delivered the email</li></ul></div>
+  </div>
+  <div class="tags"><span>Schedule Trigger</span><span>Basic LLM Chain</span><span>OpenAI</span><span>Google Sheets</span><span>Gmail</span></div>
+  <a class="dl" href="workflows/03-motivational-quote-generator.json" download>Download workflow JSON</a>
+</article>
+
+<p class="note">Exports are sanitised: credentials, Google Sheet IDs and personal email addresses are removed. After importing, connect your own OpenAI, Google Sheets, Gmail and Google Contacts credentials and set <code>YOUR_GOOGLE_SHEET_ID</code>.</p>
+</main>
+<script>document.getElementById('theme').onclick=function(){var r=document.documentElement,n=r.dataset.theme==='light'?'dark':'light';r.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}</script>
+</body>
+</html>
