@@ -1,0 +1,167 @@
+{
+  "name": "Exercise 2 - AI Agent Email Assistant",
+  "nodes": [
+    {
+      "id": "a1",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "options": {}
+      }
+    },
+    {
+      "id": "a2",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        260,
+        0
+      ],
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an email assistant. When the user asks you to email a customer by name:\n1. Use the 'Get Customers' tool to look up the customer in the Google Sheet (columns: Full Name, Email Address, Phone Number). Match the name case-insensitively; partial first-name matches are OK if unique.\n2. If no customer matches, or several match, tell the user and ask for clarification. Never guess an email address.\n3. Write a short, professional, personalised email using the user's content. Greet the customer by first name. Sign off as 'Suleman'.\n4. Send it with the 'Send Email' tool to the email address from the sheet.\n5. Confirm to the user who it was sent to (name + email) and the subject."
+        }
+      }
+    },
+    {
+      "id": "a3",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        100,
+        220
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a4",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        240,
+        220
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "a5",
+      "name": "Get Customers",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        380,
+        220
+      ],
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Returns all customers from the customer database (Full Name, Email Address, Phone Number). Use it to find a customer's email address by name.",
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "YOUR_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gid=0",
+          "cachedResultName": "Sheet1"
+        },
+        "options": {}
+      }
+    },
+    {
+      "id": "a6",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        520,
+        220
+      ],
+      "parameters": {
+        "sendTo": "={{ $fromAI('To', 'Customer email address taken from the sheet', 'string') }}",
+        "subject": "={{ $fromAI('Subject', 'Email subject line', 'string') }}",
+        "emailType": "text",
+        "message": "={{ $fromAI('Message', 'Full plain-text email body', 'string') }}",
+        "options": {
+          "appendAttribution": false
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Customers": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

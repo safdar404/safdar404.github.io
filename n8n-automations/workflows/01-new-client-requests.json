@@ -1,0 +1,145 @@
+{
+  "name": "Exercise 1 - New Client Requests",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "YOUR_GOOGLE_SHEET_ID"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1"
+        },
+        "event": "rowAdded",
+        "options": {}
+      },
+      "name": "Google Sheets Trigger",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        16
+      ],
+      "id": "f5dc5dbb-b879-4e6a-a4a1-d6a1ebbb309a"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Google Sheets Trigger').item.json.email }}",
+        "subject": "Thank you for contacting us",
+        "emailType": "text",
+        "message": "=Hello {{ $('Google Sheets Trigger').item.json.name }}, thank you for contacting us. We will send more details soon",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Thank You Email to Client",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        32,
+        16
+      ],
+      "id": "9c75f1f8-30d5-47ee-98ee-1ce7ecd7f13d"
+    },
+    {
+      "parameters": {
+        "familyName": "={{  $('Google Sheets Trigger').item.json.name.split(' ').slice(1).join(' ') || '-' }}",
+        "givenName": "={{  $('Google Sheets Trigger').item.json.name.split(' ')[0] }}",
+        "additionalFields": {
+          "emailsUi": {
+            "emailsValues": [
+              {
+                "type": "work",
+                "value": "={{ $('Google Sheets Trigger').item.json.email }}"
+              }
+            ]
+          },
+          "phoneUi": {
+            "phoneValues": [
+              {
+                "type": "mobile",
+                "value": "={{  String($('Google Sheets Trigger').item.json['phone number']) }}"
+              }
+            ]
+          }
+        }
+      },
+      "name": "Add Client to Contacts",
+      "type": "n8n-nodes-base.googleContacts",
+      "typeVersion": 1,
+      "position": [
+        288,
+        16
+      ],
+      "id": "55baad24-83d7-48d8-97c8-88bed921b1e6"
+    },
+    {
+      "parameters": {
+        "sendTo": "you@example.com",
+        "subject": "=New client request: {{ $('Google Sheets Trigger').item.json.name }}",
+        "emailType": "text",
+        "message": "=A new client request was received.\n\nName: {{ $('Google Sheets Trigger').item.json.name }}\nEmail: {{ $('Google Sheets Trigger').item.json.email }}\nDescription: {{ $('Google Sheets Trigger').item.json.description }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "name": "Notify Me",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        544,
+        16
+      ],
+      "id": "cc744bb1-df3e-4e9d-b9bd-3c065de991d8"
+    }
+  ],
+  "connections": {
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Thank You Email to Client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Thank You Email to Client": {
+      "main": [
+        [
+          {
+            "node": "Add Client to Contacts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Client to Contacts": {
+      "main": [
+        [
+          {
+            "node": "Notify Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
