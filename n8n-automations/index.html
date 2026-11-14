@@ -44,6 +44,9 @@ h1{font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.03em;margin:
 .arr{color:var(--faint);font-size:16px}
 .sub{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;padding-left:4px;font:500 11.5px var(--mono);color:var(--faint);width:100%}
 .sub .node{font-size:12.5px;padding:6px 10px}
+.shot{margin:20px 0 6px;border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:#f0f0f0}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font:500 11.5px var(--mono);color:#6b768a;background:var(--surface2);padding:8px 12px;border-top:1px solid var(--line)}
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:18px}
 .cols h3{font:600 12px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 8px}
 .cols ul{margin:0;padding-left:18px;color:var(--muted);font-size:14.5px}
@@ -74,12 +77,7 @@ code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;borde
 <article class="wf" id="new-client-requests">
   <div class="wf-h"><div><p class="wf-n">Workflow 01</p><h2>New Client Requests</h2></div><span class="badge"><i></i>Tested · Active</span></div>
   <p>Every time a new client request lands in a Google Sheet (e.g. from a web form), the client gets an instant thank-you email, is saved to Google Contacts, and I receive a summary notification.</p>
-  <div class="flow" role="img" aria-label="Google Sheets Trigger to Thank You Email to Add to Contacts to Notify Me">
-    <div class="node trg"><span class="ic">📄</span><span>Google Sheets Trigger<small>row added · every minute</small></span></div><span class="arr">→</span>
-    <div class="node app"><span class="ic">✉️</span><span>Thank-you email<small>Gmail · send</small></span></div><span class="arr">→</span>
-    <div class="node app"><span class="ic">👤</span><span>Add to Contacts<small>Google Contacts · create</small></span></div><span class="arr">→</span>
-    <div class="node app"><span class="ic">🔔</span><span>Notify me<small>Gmail · send</small></span></div>
-  </div>
+  <figure class="shot"><a href="canvas-01-new-client-requests.png" target="_blank" rel="noopener"><img src="canvas-01-new-client-requests.png" alt="n8n canvas of the New Client Requests workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
   <div class="cols">
     <div><h3>What it does</h3><ul><li>Polls the sheet for new rows (name, email, phone, description)</li><li>Personalised reply to the client by name</li><li>Splits full name into given / family name for the contact</li><li>Sends an internal alert with the request details</li></ul></div>
     <div><h3>Tested</h3><ul><li>Multiple successful end-to-end runs on n8n Cloud</li><li>Published (active) on the Google Sheets trigger</li></ul></div>
@@ -91,16 +89,7 @@ code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;borde
 <article class="wf" id="ai-agent-email-assistant">
   <div class="wf-h"><div><p class="wf-n">Workflow 02</p><h2>AI Agent Email Assistant</h2></div><span class="badge"><i></i>Tested · Active</span></div>
   <p>A chat-driven AI agent. Ask it in plain English to email a customer by name — it looks the customer up in a Google Sheet database, writes a personalised email from your message and sends it through Gmail.</p>
-  <div class="flow" role="img" aria-label="Chat trigger to AI Agent with OpenAI model, memory, Google Sheets tool and Gmail tool">
-    <div class="node trg"><span class="ic">💬</span><span>Chat message<small>Chat Trigger</small></span></div><span class="arr">→</span>
-    <div class="node ai"><span class="ic">🤖</span><span>AI Agent<small>tool calling</small></span></div>
-    <div class="sub">uses ↳
-      <div class="node ai"><span class="ic">✨</span><span>OpenAI gpt-4o-mini</span></div>
-      <div class="node ai"><span class="ic">🧠</span><span>Simple Memory</span></div>
-      <div class="node app"><span class="ic">📄</span><span>Get Customers<small>Sheets tool</small></span></div>
-      <div class="node app"><span class="ic">✉️</span><span>Send Email<small>Gmail tool · $fromAI()</small></span></div>
-    </div>
-  </div>
+  <figure class="shot"><a href="canvas-02-ai-agent-email-assistant.png" target="_blank" rel="noopener"><img src="canvas-02-ai-agent-email-assistant.png" alt="n8n canvas of the AI Agent Email Assistant workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
   <div class="cols">
     <div><h3>What it does</h3><ul><li>Understands the request: who to email and what to say</li><li>Finds the customer's address in the sheet (Full Name, Email, Phone)</li><li>Never guesses an address — asks if no match or several matches</li><li>Composes and sends the email, then confirms recipient and subject</li></ul></div>
     <div><h3>Tested</h3><ul><li>Prompt: <i>“Send an email to Suleman Safdar thanking him for his order…”</i></li><li>Agent called <b>Get Customers</b> (4 rows) → <b>Send Email</b> (1 sent)</li><li>Small-talk messages correctly answered without tool calls</li></ul></div>
@@ -112,12 +101,7 @@ code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;borde
 <article class="wf" id="motivational-quote-generator">
   <div class="wf-h"><div><p class="wf-n">Workflow 03</p><h2>Motivational Quote Generator</h2></div><span class="badge"><i></i>Tested · Active</span></div>
   <p>Every morning at 7 AM (Asia/Karachi) an LLM writes a fresh motivational quote with a one-line tip, and every recipient in a Google Sheet gets a personalised “Good morning {name}” email.</p>
-  <div class="flow" role="img" aria-label="Manual or 7 AM schedule trigger to Basic LLM Chain to Google Sheets to Gmail">
-    <div class="node trg"><span class="ic">⏰</span><span>Every day 7 AM<small>Schedule + manual test</small></span></div><span class="arr">→</span>
-    <div class="node ai"><span class="ic">✨</span><span>Generate Quote<small>Basic LLM Chain · gpt-4o-mini</small></span></div><span class="arr">→</span>
-    <div class="node app"><span class="ic">📄</span><span>Get Recipients<small>Google Sheets · read</small></span></div><span class="arr">→</span>
-    <div class="node app"><span class="ic">✉️</span><span>Send Quote Email<small>Gmail · one per recipient</small></span></div>
-  </div>
+  <figure class="shot"><a href="canvas-03-motivational-quote-generator.png" target="_blank" rel="noopener"><img src="canvas-03-motivational-quote-generator.png" alt="n8n canvas of the Motivational Quote Generator workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
   <div class="cols">
     <div><h3>What it does</h3><ul><li>One quote generated per day, shared across all recipients</li><li>Recipient list managed in a Google Sheet (Name, Email)</li><li>Manual trigger kept for testing alongside the schedule</li><li>Dated subject line: “Your Daily Motivation – {date}”</li></ul></div>
     <div><h3>Tested</h3><ul><li>Manual runs: all nodes green, email delivered</li><li>Live schedule test: fired automatically with no clicks and delivered the email</li></ul></div>
