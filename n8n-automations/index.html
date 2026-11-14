@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>n8n Automations | Muhammad Safdar</title>
-<meta name="description" content="Tested and working n8n workflows: AI agents with tools, LLM chains, Google Sheets, Gmail and scheduled automation.">
+<meta name="description" content="Nine n8n workflows: AI agents with tools, RAG, CV screening, patient reminders, audio transcription, Google Workspace, Slack, WhatsApp and Notion.">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.dataset.theme=t;else if(matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.dataset.theme='light'}catch(e){}</script>
 <style>
@@ -34,6 +34,7 @@ h1{font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.03em;margin:
 .wf p{color:var(--muted);margin:0 0 12px;max-width:760px}
 .badge{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--sans);color:var(--ok);border:1px solid color-mix(in srgb,var(--ok) 40%,transparent);background:color-mix(in srgb,var(--ok) 10%,transparent);padding:4px 10px;border-radius:999px;white-space:nowrap}
 .badge i{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+.badge.wip{--ok:#f59e0b}
 .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:20px 0 6px;padding:18px;border-radius:14px;background:var(--surface2);border:1px dashed var(--line2)}
 .node{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line2);border-radius:12px;padding:8px 12px;font-size:13.5px;font-weight:600}
 .node small{display:block;font:400 11px var(--mono);color:var(--faint)}
@@ -70,8 +71,8 @@ code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;borde
 <section class="hero">
   <p class="k">Workflow automation · n8n</p>
   <h1>n8n automations, <em>built and tested live.</em></h1>
-  <p class="lead">Production-style n8n workflows that combine triggers, LLMs, AI agents with tools, Google Sheets and Gmail. Each one below was executed end-to-end on n8n Cloud and is published (active). Download the JSON and import it into your own n8n.</p>
-  <ul class="stats"><li><b>3</b> workflows</li><li><b>End-to-end</b> tested on n8n Cloud</li><li>OpenAI · Google Sheets · Gmail · Google Contacts</li></ul>
+  <p class="lead">Production-style n8n workflows that combine triggers, LLMs, AI agents with tools, RAG, Google Workspace, Slack, WhatsApp and Notion. Each one below is built on n8n Cloud; its status badge shows whether it is tested and published. Download the JSON and import it into your own n8n.</p>
+  <ul class="stats"><li><b>9</b> workflows</li><li><b>8</b> published on n8n Cloud</li><li>OpenAI · RAG · Google Sheets · Gmail · Drive · Slack · WhatsApp · Telegram · Notion</li></ul>
 </section>
 
 <article class="wf" id="new-client-requests">
@@ -110,7 +111,80 @@ code{font:500 .92em var(--mono);background:var(--surface2);padding:1px 6px;borde
   <a class="dl" href="workflows/03-motivational-quote-generator.json" download>Download workflow JSON</a>
 </article>
 
-<p class="note">Exports are sanitised: credentials, Google Sheet IDs and personal email addresses are removed. After importing, connect your own OpenAI, Google Sheets, Gmail and Google Contacts credentials and set <code>YOUR_GOOGLE_SHEET_ID</code>.</p>
+
+<article class="wf" id="patient-appointment-reminder">
+  <div class="wf-h"><div><p class="wf-n">Workflow 04</p><h2>Patient Appointment Reminder &amp; No-Show Recovery</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>A daily clinic automation. Every morning it reads the Appointments sheet, finds tomorrow’s patients, and reminds each one on the channel they consented to — WhatsApp or email. Invalid records are logged, not dropped, and the team gets one Slack summary per run.</p>
+  <figure class="shot"><a href="canvas-07-patient-appointment-reminder.png" target="_blank" rel="noopener"><img src="canvas-07-patient-appointment-reminder.png" alt="n8n canvas of the Patient Appointment Reminder workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Code node filters to tomorrow, skips cancelled or already-reminded rows and validates consent, phone and email</li><li>Routes each patient to WhatsApp or Gmail and pre-renders both message bodies</li><li>Marks the row <code>reminder_sent = YES</code> so a re-run never double-messages a patient</li><li>Patients with missing consent or bad contact details go to an Exceptions sheet</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Successful runs on n8n Cloud, both manual and on the 09:00 schedule</li><li>Published (active) on the daily Schedule Trigger</li></ul></div>
+  </div>
+  <div class="tags"><span>Schedule Trigger</span><span>Code (JavaScript)</span><span>IF / Switch</span><span>WhatsApp Business</span><span>Gmail</span><span>Google Sheets</span><span>Slack</span></div>
+  <a class="dl" href="workflows/07-patient-appointment-reminder.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="resume-ai-analyzer-web-form">
+  <div class="wf-h"><div><p class="wf-n">Workflow 05</p><h2>Resume AI Analyzer (Web Form)</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>A candidate-screening pipeline behind a public n8n form. Applicants upload a PDF CV; the workflow stores it in Google Drive, extracts the text, has an AI agent score the candidate and logs the result to a sheet — then emails a shortlist report or a polite thank-you depending on the score.</p>
+  <figure class="shot"><a href="canvas-08-resume-ai-analyzer-web-form.png" target="_blank" rel="noopener"><img src="canvas-08-resume-ai-analyzer-web-form.png" alt="n8n canvas of the Resume AI Analyzer (Web Form) workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Form collects name, email and CV (PDF) and saves the file to Google Drive</li><li>Information Extractor pulls structured fields (name, email, phone, skills…) from the CV</li><li>AI Agent writes an evaluation with a 1–5 score; a Code node parses it</li><li>Score ≥ 4 → recruiter report + shortlist email; otherwise a thank-you email</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Successful end-to-end runs via the live form (webhook) and manual tests</li><li>Published (active) on the Form Trigger</li></ul></div>
+  </div>
+  <div class="tags"><span>Form Trigger</span><span>Extract from File</span><span>Information Extractor</span><span>AI Agent</span><span>OpenAI</span><span>Google Drive</span><span>Google Sheets</span><span>Gmail</span></div>
+  <a class="dl" href="workflows/08-resume-ai-analyzer-web-form.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="resume-ai-analyzer">
+  <div class="wf-h"><div><p class="wf-n">Workflow 06</p><h2>Resume AI Analyzer (Gmail)</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>The inbox version of the CV screener. When an email with a PDF résumé arrives, the attachment is archived to Google Drive, parsed and scored by an AI agent, logged to a sheet, and the applicant gets a reply in the same Gmail thread.</p>
+  <figure class="shot"><a href="canvas-09-resume-ai-analyzer.png" target="_blank" rel="noopener"><img src="canvas-09-resume-ai-analyzer.png" alt="n8n canvas of the Resume AI Analyzer workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Gmail Trigger watches for emails with PDF résumé attachments</li><li>Uploads the CV to Drive, downloads it and extracts the text</li><li>Information Extractor + AI Agent produce structured fields and a scored evaluation</li><li>Replies in-thread: detailed report if score ≥ 4, otherwise a short thank-you</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Successful manual end-to-end run on n8n Cloud</li><li>Published (active) on the Gmail Trigger</li></ul></div>
+  </div>
+  <div class="tags"><span>Gmail Trigger</span><span>Google Drive</span><span>Extract from File</span><span>Information Extractor</span><span>AI Agent</span><span>OpenAI</span><span>Google Sheets</span><span>Gmail</span></div>
+  <a class="dl" href="workflows/09-resume-ai-analyzer.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="document-rag-assistant">
+  <div class="wf-h"><div><p class="wf-n">Workflow 07</p><h2>Document RAG Assistant</h2></div><span class="badge"><i></i>Tested · Active</span></div>
+  <p>Retrieval-augmented Q&amp;A over your own documents. Drop a file into a Google Drive folder and it is chunked, embedded and indexed automatically; then chat with an AI agent that answers only from those documents.</p>
+  <figure class="shot"><a href="canvas-05-document-rag-assistant.png" target="_blank" rel="noopener"><img src="canvas-05-document-rag-assistant.png" alt="n8n canvas of the Document RAG Assistant workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Drive Trigger picks up new files in a watched folder</li><li>Default Data Loader + recursive text splitter (with overlap) chunk the file, tagged with file name and ID</li><li>OpenAI embeddings stored in a vector store</li><li>RAG Agent (GPT-4o, low temperature, chat memory) uses the store as a search tool and refuses to answer beyond the documents</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Successful ingestion and chat runs on n8n Cloud</li><li>Published (active) on the Drive and chat triggers</li></ul></div>
+  </div>
+  <div class="tags"><span>Google Drive Trigger</span><span>Vector Store</span><span>OpenAI Embeddings</span><span>Text Splitter</span><span>AI Agent</span><span>Memory</span><span>RAG</span></div>
+  <a class="dl" href="workflows/05-document-rag-assistant.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="audio-transcriber-summarizer">
+  <div class="wf-h"><div><p class="wf-n">Workflow 08</p><h2>Audio Transcriber &amp; Summarizer</h2></div><span class="badge"><i></i>Active</span></div>
+  <p>Upload an audio file through an n8n form and get back a clean, structured summary: OpenAI Whisper transcribes the recording and an LLM organises it into key points, actions and follow-ups.</p>
+  <figure class="shot"><a href="canvas-06-audio-transcriber-summarizer.png" target="_blank" rel="noopener"><img src="canvas-06-audio-transcriber-summarizer.png" alt="n8n canvas of the Audio Transcriber &amp; Summarizer workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Form accepts mp3, m4a, wav, ogg, webm and mp4 uploads</li><li>OpenAI audio transcription turns speech into text</li><li>GPT-4o-mini summarises under 1,500 characters with bullet points</li><li>Highlights main points, action items and follow-ups</li></ul></div>
+    <div><h3>Tested</h3><ul><li>Published (active) on the Form Trigger</li></ul></div>
+  </div>
+  <div class="tags"><span>Form Trigger</span><span>OpenAI Whisper</span><span>OpenAI</span><span>Summarisation</span></div>
+  <a class="dl" href="workflows/06-audio-transcriber-summarizer.json" download>Download workflow JSON</a>
+</article>
+
+<article class="wf" id="ai-audio-transcriber-telegram-notion">
+  <div class="wf-h"><div><p class="wf-n">Workflow 09</p><h2>AI Audio Transcriber (Telegram → Notion)</h2></div><span class="badge wip"><i></i>In progress</span></div>
+  <p>Send a voice note to a Telegram bot and it lands in Notion as a titled, summarised page. The recording is transcribed, condensed into a title plus 3–6 bullet points, and saved with the date and sender.</p>
+  <figure class="shot"><a href="canvas-04-ai-audio-transcriber-telegram-notion.png" target="_blank" rel="noopener"><img src="canvas-04-ai-audio-transcriber-telegram-notion.png" alt="n8n canvas of the AI Audio Transcriber (Telegram → Notion) workflow" loading="lazy"></a><figcaption>Live n8n canvas · exported from n8n Cloud</figcaption></figure>
+  <div class="cols">
+    <div><h3>What it does</h3><ul><li>Telegram Trigger downloads incoming voice messages</li><li>OpenAI transcribes the audio</li><li>GPT-4o-mini writes a one-line title and a bullet summary in the transcript’s language</li><li>Creates a Notion page with the title, timestamp, sender and summary</li></ul></div>
+    <div><h3>Status</h3><ul><li>Built; Telegram and Notion credentials still being connected</li><li>Not yet published — will be marked tested after a live run</li></ul></div>
+  </div>
+  <div class="tags"><span>Telegram Trigger</span><span>OpenAI Whisper</span><span>OpenAI</span><span>Notion</span></div>
+  <a class="dl" href="workflows/04-ai-audio-transcriber-telegram-notion.json" download>Download workflow JSON</a>
+</article>
+
+<p class="note">Exports are sanitised: credentials, Google Sheet IDs and personal email addresses are removed. After importing, connect your own credentials (OpenAI, Google Sheets, Gmail, Google Drive, Google Contacts, Slack, WhatsApp, Telegram, Notion as needed) and replace placeholders such as <code>YOUR_GOOGLE_SHEET_ID</code> and <code>YOUR_DRIVE_FOLDER_ID</code>.</p>
 </main>
 <script>document.getElementById('theme').onclick=function(){var r=document.documentElement,n=r.dataset.theme==='light'?'dark':'light';r.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}}</script>
 </body>
